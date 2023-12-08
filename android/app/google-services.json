@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "921852475620",
+    "project_id": "mitsubishi-8c928",
+    "storage_bucket": "mitsubishi-8c928.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921852475620:android:235f5b3b713d6b238cd4f1",
+        "android_client_info": {
+          "package_name": "com.example.mitsubishi_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8MFUM7L6iLY9MnALEdm_E7lUMAErxVEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
