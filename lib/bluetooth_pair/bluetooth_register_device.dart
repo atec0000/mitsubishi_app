@@ -4,6 +4,8 @@ import 'package:mitsubishi_app/model/device.dart';
 import 'package:flutter_blufi/flutter_blufi.dart';
 
 import '../screens/home_screen.dart';
+import '../screens/tabs.dart';
+import '../widget/static_style.dart';
 
 class Bluetoothselectdevice extends StatefulWidget {
   Bluetoothselectdevice({Key? key}) : super(key: key);
@@ -25,7 +27,6 @@ class  _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
   @override
   void initState() {
     super.initState();
-    print('Getting devices');
     fetchData();
   }
 
@@ -69,22 +70,40 @@ class  _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-              'Register device'
-          ),
+          title: Text('新增設備'),
         ),
-        body:Center(
-          child: ElevatedButton(
-            onPressed: (){
-              var espBlufi = EspBlufi.instance.getMac();
-              _connectdevice(espBlufi);
-              print("Blue mac: $espBlufi");
-            },
-            child: Text('Register Device'),
-          ),
-        )
+
+        body:content()
     );
 
 
+  }
+
+  Widget content(){
+    var espBlufi = EspBlufi.instance.getMac();
+    return Center(
+      child: Column(
+        children: [
+          Text('請確認', style: TextStyle(fontSize: 24),),
+          Text(' • 行動裝置是否連上Wi-Fi環境', style: TextStyle(fontSize: 24),),
+          Text(' • 裝置燈是否正常', style: TextStyle(fontSize: 24),),
+          SizedBox(height: 20,),
+          Text('確認完請點擊', style: TextStyle(fontSize: 24),),
+          Theam().next_step_Buttons('註冊設備', context, () {_connectdevice(espBlufi); }),
+          SizedBox(height: 60,),
+          Text('若30秒後，裝置燈依舊沒有正常亮起', style: TextStyle(fontSize: 24),),
+          Text('請重新進行配對步驟', style: TextStyle(fontSize: 24),),
+          SizedBox(height: 20,),
+          Theam().next_step_Buttons('重新配對', context, () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TabsScreen(),
+              ),
+            );
+          }),
+        ],
+      ),
+    );
   }
 }

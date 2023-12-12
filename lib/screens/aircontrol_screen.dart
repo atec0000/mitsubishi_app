@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:mitsubishi_app/model/ac_status_ca51.dart';
 import 'package:mitsubishi_app/service/command_parser_ca51.dart';
@@ -26,9 +25,10 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
   bool isConnecting = false;
   bool connectionSuccess = false;
   AcStatusCa51 _acStatus = AcStatusCa51.off();
+  DataProcessing dataProcessing = DataProcessing();
   Timer? _debounce;
   bool _isLoading = false;
-  DataProcessing dataProcessing = DataProcessing();
+
 
 
 
@@ -51,6 +51,8 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
     });
 
     final connected = await _tcpService.connectToServer(widget.deviceMac);
+    List<int> codeset = idToCode(0x01, 114); // Pass the int to the function
+    _tcpService.sendCommand(codeset);
 
     setState(() {
       isConnecting = false; // Set connecting state to false after the attempt
@@ -228,6 +230,7 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                 Theam().buildCustomRectangle(context, "上下風向", _acStatus.windDirectionud, Icons.arrow_upward,(){get_winddirection_updown(17);}),
                 Theam().buildCustomRectangle(context, "左右風向", _acStatus.windDirectionlr, Icons.arrow_forward,(){_tcpService.sendCommand(get_winddirection_leftright(17));}),
                 Theam().buildCustomRectangleSwitch(context, "定時開關1小時"),
+
                 // 添加其他部件
                 // ...
               ],

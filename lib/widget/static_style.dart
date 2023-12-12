@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
@@ -100,13 +101,13 @@ class Theam {
     );
   }
 
-  static Widget ok_Buttons(String text, BuildContext context,
+  Widget next_step_Buttons(String text, BuildContext context,
       VoidCallback onPressed) {
     return InkWell(
       onTap: onPressed, // 将外部传递的函数设置为按钮的 onTap
       child: Container(
-        width: 150, // 设置按钮的宽度
-        height: 40, // 设置按钮的高度
+        width: 250, // 设置按钮的宽度
+        height: 50, // 设置按钮的高度
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
@@ -116,12 +117,13 @@ class Theam {
               Color.fromARGB(255, 0, 39, 73),
             ],
           ),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: Center(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 20,
               color: Colors.white,
             ),
           ),
@@ -278,6 +280,8 @@ class Theam {
     );
   }
 
+
+
   Widget buildCustomGradientRectangle(BuildContext context,  //模式選擇
       List<Widget> children,
       double height,
@@ -311,6 +315,69 @@ class Theam {
     );
   }
 }
+
+
+class CustomSlider_2 extends StatelessWidget {
+  final double value;
+  final double min;
+  final double max;
+  final double divisions;
+  final ValueChanged<double>? onChanged;
+  final ValueChanged<double>? onChangedEnd;
+
+  CustomSlider_2({
+    Key? key,
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.divisions,
+    this.onChanged,
+    this.onChangedEnd,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+      return SliderTheme(
+        data: SliderTheme.of(context).copyWith(
+          trackHeight: 4.0,
+          activeTrackColor: Colors.green,
+          thumbColor: Colors.white,
+        ),
+        child: Transform.scale(
+          scale: 1.5, // Adjust the scale factor as needed
+          child: SleekCircularSlider(
+            min: min,
+            max: max,
+            initialValue: value,
+            onChange: onChanged,
+            onChangeEnd: onChangedEnd,
+            appearance: CircularSliderAppearance(
+              customWidths: CustomSliderWidths(
+                trackWidth: 10.0,
+                progressBarWidth: 15.0,
+              ),
+              customColors: CustomSliderColors(
+                trackColor: Color.fromARGB(250, 59, 56, 56),
+                progressBarColors: [
+                  Color.fromARGB(197, 0, 108, 253),
+                  Color.fromARGB(197, 0, 39, 73),
+                ],
+              ),
+              infoProperties: InfoProperties(
+                modifier: (value) => '${value.toInt()}°C',
+                mainLabelStyle: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                ),
+              ),
+              startAngle: 0,
+              angleRange: 360,
+            ),
+          ),
+        ),
+      );
+    }
+  }
 
 
 
@@ -548,6 +615,7 @@ Widget buildCustomRow({
     ],
   );
 }
+
 
 
 

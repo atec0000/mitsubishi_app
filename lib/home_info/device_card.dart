@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../bluetooth_pair/bluetooth_screen.dart';
+import '../bluetooth_pair/pageswitch_blufi.dart';
 import '../model/ac_status_ca51.dart';
 import '../model/device.dart';
 import '../screens/aircontrol_screen.dart';
@@ -41,7 +42,7 @@ Widget buildCard(BuildContext context, Device device, AcStatusCa51 acStatus) {
       );
     },
     child: Container(
-      height: 200.0,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Card(
         elevation: 15,
@@ -157,7 +158,7 @@ Widget buildListView() {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BluetoothScreen(),
+                          builder: (context) =>  PageSwitcher(),
                         ),
                       );
                     },
@@ -168,16 +169,16 @@ Widget buildListView() {
             if (devices.length % 2 == 0) {
               cards.add(
                 buildEmptyCardWithButton(
-                  context,
-                      () {
-                    Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => BluetoothScreen(),
-                      ),
-                    );
-                  },
-                ),
+                          () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PageSwitcher(),
+                          ),
+                        );
+                      },
+                    ),
               );
             }
             }
