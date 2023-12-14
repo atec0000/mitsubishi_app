@@ -171,6 +171,21 @@ class ApiService {
     }
   }
 
+  Future<void> delDevice(int id) async {
+    try {
+      final response = await _dio.delete('/devices/$id');
+      if (response.statusCode == 204) {
+        print('Device deleted successfully');
+      } else {
+        print('HTTP Status: ${response.statusCode}');
+        throw Exception('Failed to del devices');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to del devices');
+    }
+  }
+
   Future<void> delsubDevice(int id) async {
     try {
       final response = await _dio.delete('/sub-devices/$id');
@@ -178,11 +193,11 @@ class ApiService {
         print('Device deleted successfully');
       } else {
         print('HTTP Status: ${response.statusCode}');
-        throw Exception('Failed to get devices');
+        throw Exception('Failed to del sub-devices');
       }
     } catch (e) {
       print('Error: $e');
-      throw Exception('Failed to get devices');
+      throw Exception('Failed to del sub-devices');
     }
   }
 

@@ -3,7 +3,6 @@ import 'package:mitsubishi_app/service/api_service.dart';
 import 'package:mitsubishi_app/model/device.dart';
 import 'package:flutter_blufi/flutter_blufi.dart';
 
-import '../screens/home_screen.dart';
 import '../screens/tabs.dart';
 import '../widget/static_style.dart';
 
@@ -58,7 +57,7 @@ class  _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => TabsScreen(),
         ),
       );
     } catch (error) {

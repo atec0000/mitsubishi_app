@@ -42,6 +42,10 @@ Widget buildCard(BuildContext context, Device device, AcStatusCa51 acStatus) {
         ),
       );
     },
+    onLongPress: () {
+      // 執行刪除裝置的操作
+      _showDeleteDialog(context, device);
+    },
     child: Container(
       height: cardSize,
       width: cardSize,
@@ -287,3 +291,34 @@ Widget buildEmptyCardWithButton(BuildContext context, ButtonCallback onPressed) 
     ),
   );
 }
+
+Future<void> _showDeleteDialog(BuildContext context, Device device) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('刪除裝置'),
+        content: Text('確定要刪除裝置嗎？'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // 關閉對話框
+            },
+            child: Text('取消'),
+          ),
+          TextButton(
+            onPressed: () async {
+              // 執行刪除裝置的操作
+              await _apiService.delDevice(device.deviceid);
+
+
+              Navigator.of(context).pop(); // 關閉對話框
+            },
+            child: Text('確定'),
+          ),
+        ],
+      );
+    },
+  );
+}
+

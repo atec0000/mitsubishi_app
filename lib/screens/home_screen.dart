@@ -46,12 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.black,
-        // title: Image.asset("assets/logo.png"),
-        title: Text('空調'),
+        backgroundColor: Colors.black,
+        title: Image.asset("assets/logo.png"),
         actions: [
-          IconButton(onPressed: () => fetchDevices(), icon: const Icon(Icons.refresh)),
-          IconButton(onPressed: _logout, icon: const Icon(Icons.logout))
+          IconButton(onPressed: () => fetchDevices(), icon: const Icon(Icons.refresh,color: Colors.white,)),
+          IconButton(onPressed: _logout, icon: const Icon(Icons.logout,color: Colors.white))
         ],
       ),
       body: buildListView(),
