@@ -231,6 +231,7 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                 Theam().buildCustomRectangle(context, "左右風向", _acStatus.windDirectionlr, Icons.arrow_forward,(){_tcpService.sendCommand(get_winddirection_leftright(17));}),
                 Theam().buildCustomRectangleSwitch(context, "定時開關1小時"),
 
+
                 // 添加其他部件
                 // ...
               ],

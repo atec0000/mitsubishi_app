@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -582,40 +581,94 @@ Widget build(BuildContext context) {
 }
 }
 
-
-
-Widget buildCustomRow({
-  Widget? topLeftWidget,
-  Widget? topRightWidget,
-  Widget? middleLeftWidget,
-  Widget? middleRightWidget,
-  Widget? bottomLeftWidget,
-  Widget? bottomRightWidget,
+Widget settingCard({
+  required String title,
+  required String subtitle,
+  required Color textColor,
+  required String imagePath,
+  required Widget nextPage,
+  required BuildContext context,
 }) {
-  return Row(
-    children: [
-      Expanded(
-        child: Column(
-          children: [
-            Expanded(child: topLeftWidget ?? Container()),
-            Expanded(child: middleLeftWidget ?? Container()),
-            Expanded(child: bottomLeftWidget ?? Container()),
-          ],
-        ),
+  return InkWell(
+      onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => nextPage,
       ),
-      Expanded(
-        child: Column(
-          children: [
-            Expanded(child: topRightWidget ?? Container()),
-            Expanded(child: middleRightWidget ?? Container()),
-            Expanded(child: bottomRightWidget ?? Container()),
+    );
+  },
+    child:Column(
+    children: <Widget>[
+      Padding(
+        padding: EdgeInsets.only(left: 2, right: 2),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Card(
+                      elevation: 0,
+                      color: Colors.transparent,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 55),
+                            child: ListTile(
+                              // trailing: Icon(
+                              //   Icons.navigate_next,
+                              //   color: textColor,
+                              //   size: 30,
+                              // ),
+                              title: Text(
+                                title,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                subtitle,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 5, top: 12),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: ClipOval(
+                  child: Container(
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.fill,
+                      width: 75,
+                      height: 75,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
     ],
+  ),
   );
 }
-
-
-
 

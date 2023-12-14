@@ -29,6 +29,7 @@ Future<void> fetchDevices() async {
 }
 
 Widget buildCard(BuildContext context, Device device, AcStatusCa51 acStatus) {
+  double cardSize = MediaQuery.of(context).size.width * 0.5;
   return InkWell(
     borderRadius: BorderRadius.circular(25.0),
     onTap: () {
@@ -42,8 +43,8 @@ Widget buildCard(BuildContext context, Device device, AcStatusCa51 acStatus) {
       );
     },
     child: Container(
-      height: MediaQuery.of(context).size.height * 0.25,
-      width: MediaQuery.of(context).size.width * 0.5,
+      height: cardSize,
+      width: cardSize,
       child: Card(
         elevation: 15,
         shape:RoundedRectangleBorder(
@@ -152,35 +153,80 @@ Widget buildListView() {
               if (devices.length.isOdd) {
                 // 在最後一行的下一格加入空白卡片中間有按鈕
                 cards.add(
-                  buildEmptyCardWithButton(
-                    context,
-                        () {
-                      Navigator.push(
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 50.0),
+                      child: buildEmptyCardWithButton(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) =>  PageSwitcher(),
-                        ),
-                      );
-                    },
+                            () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  PageSwitcher(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 );
               }
 
-            if (devices.length % 2 == 0) {
-              cards.add(
-                buildEmptyCardWithButton(
-                      context,
-                          () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PageSwitcher(),
-                          ),
-                        );
-                      },
+
+              if (devices.length % 2 == 0) {
+                cards.add(
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 50.0),
+                      child: buildEmptyCardWithButton(
+                        context,
+                            () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PageSwitcher(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
-              );
-            }
+                  ),
+                );
+              }
+              if (devices.isEmpty) {
+                final emptyCardWithButton = buildEmptyCardWithButton(
+                  context,
+                      () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PageSwitcher(),
+                      ),
+                    );
+                  },
+                );
+
+                return Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '請點擊這裡的',
+                        style: TextStyle(fontSize: 15),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(width: 8),
+                      emptyCardWithButton,
+                      SizedBox(width: 8),
+                      Text(
+                        '開始新增設備',
+                        style: TextStyle(fontSize: 15),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              }
             }
 
             return Row(
@@ -222,8 +268,8 @@ Widget buildEmptyCardWithButton(BuildContext context, ButtonCallback onPressed) 
         borderRadius: BorderRadius.circular(50.0),
         onTap: onPressed,
         child: Container(
-          width: 100, // Adjust the width as needed
-          height: 100, // Adjust the height as needed
+          width: 90, // Adjust the width as needed
+          height: 90, // Adjust the height as needed
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50.0), // Make it circular
             color: Colors.grey, // Transparent background

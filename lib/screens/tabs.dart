@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../main.dart';
+import '../setting/setting_screen.dart';
 import 'home_screen.dart';
 
 class TabsScreen extends StatefulWidget{
@@ -36,7 +37,7 @@ class _TabsScreenState extends State<TabsScreen> {
           activePage = Text('目前暫無內容');
           break;
         case 2:
-          activePage = Text('目前暫無內容');
+          activePage = SetScreen();
           break;
         default:
         // 如果有更多選項，可以在這裡添加其他選項的處理
@@ -55,9 +56,9 @@ class _TabsScreenState extends State<TabsScreen> {
       BottomNavigationBar(
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
-        backgroundColor: Colors.black,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.red,
+        backgroundColor:Colors.white.withOpacity(0.2),
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.indigo,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
           BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.microchip), label: 'Automation'),
