@@ -9,7 +9,7 @@ import '../widget/static_style.dart';
 
 Widget settingCard({
   required String title,
-  required String subtitle,
+  // required String subtitle,
   required Color textColor,
   // required String imagePath,
   required Widget nextPage,
@@ -67,14 +67,14 @@ Widget settingCard({
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                subtitle: Text(
-                                  subtitle,
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
+                                // subtitle: Text(
+                                //   subtitle,
+                                //   style: TextStyle(
+                                //     color: textColor,
+                                //     fontSize: 12,
+                                //     fontWeight: FontWeight.normal,
+                                //   ),
+                                // ),
                               ),
                             )
                           ],
@@ -211,6 +211,84 @@ Widget settingWithSwitch({
     ],
   );
 }
+// class MyCheckbox extends StatefulWidget {
+//   final String label;
+//
+//   MyCheckbox({required this.label});
+//
+//   @override
+//   _MyCheckboxState createState() => _MyCheckboxState();
+// }
+//
+// class _MyCheckboxState extends State<MyCheckbox> {
+//   bool isChecked = false;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () {
+//         setState(() {
+//           isChecked = !isChecked;
+//
+//           // 如果選中當前選項，取消其他選項的選中狀態
+//           if (isChecked) {
+//             for (MyCheckbox otherCheckbox in _getOtherCheckboxes()) {
+//               otherCheckbox.isChecked = false;
+//             }
+//           }
+//         });
+//       },
+//       child: Container(
+//         padding: EdgeInsets.all(16.0),
+//         child: Row(
+//           children: [
+//             Container(
+//               width: 25.0,
+//               height: 25.0,
+//               decoration: BoxDecoration(
+//                 border: Border.all(
+//                   color: Colors.blue,
+//                 ),
+//                 borderRadius: BorderRadius.circular(5.0),
+//               ),
+//               child: isChecked
+//                   ? Icon(
+//                 Icons.check,
+//                 size: 20.0,
+//                 color: Colors.blue,
+//               )
+//                   : null,
+//             ),
+//             SizedBox(width: 16.0),
+//             Text(widget.label),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+//
+//   // Helper function to get a list of other checkboxes in the same parent widget
+//   List<MyCheckbox> _getOtherCheckboxes() {
+//     List<MyCheckbox> otherCheckboxes = [];
+//
+//     if (mounted) {
+//       // Check if the current state is still mounted to avoid errors
+//       BuildContext? context = context;
+//       if (context != null) {
+//         context.visitAncestorElements((element) {
+//           if (element is StatefulElement &&
+//               element.widget is MyCheckbox &&
+//               element != this.context) {
+//             otherCheckboxes.add(element.widget as MyCheckbox);
+//           }
+//           return true;
+//         });
+//       }
+//     }
+//
+//     return otherCheckboxes;
+//   }
+// }
 
 class SettingWithRadioButton extends StatefulWidget {
   final String title;

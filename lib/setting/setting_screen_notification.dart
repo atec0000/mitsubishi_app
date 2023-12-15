@@ -27,7 +27,7 @@ class _SetNotificationState extends State<SetNotification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('通知設定'),
+        title: Text('推播設定'),
       ),
       body: settingcard(),
     );
@@ -36,7 +36,7 @@ class _SetNotificationState extends State<SetNotification> {
   Widget settingcard(){
     return Column(
       children: [
-        settingWithSwitch(title: Text('接收推播'), switchWidget: SwitchWidget(value: true,)),
+        settingWithSwitch(title: Text('推播設定'), switchWidget: SwitchWidget(value: true,)),
         settingWithSwitch(title: Text('狀態通知'), switchWidget: SwitchWidget(value: true,)),
         settingWithSwitch(title: Text('系統通知'), switchWidget: SwitchWidget(value: true,)),
         settingWithSwitch(title: Text('廣播通知'), switchWidget: SwitchWidget(value: true,)),

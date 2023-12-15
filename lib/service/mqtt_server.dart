@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:mitsubishi_app/service/secure_storage_service.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -37,19 +39,19 @@ Future<MqttServerClient> connect() async {
     print('Exception: $e');
     client.disconnect();
   }
-  // if (client.connectionStatus!.state == MqttConnectionState.connected) {
-  //   client.updates?.listen((event) {
-  //     var recv = event[0].payload as MqttPublishMessage;
-  //     var topicName = recv.variableHeader?.topicName;
-  //     //var bytes = recv.payload.message;
-  //     var message_string = Utf8Decoder().convert(recv.payload.message);
-  //     print("接收到的主题: $topicName, 消息: $message_string");
-  //   });
-  // }  else {
-  //   print(
-  //       'MQTT_LOGS::ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
-  //   client.disconnect();
-  // }
+  if (client.connectionStatus!.state == MqttConnectionState.connected) {
+    client.updates?.listen((event) {
+      var recv = event[0].payload as MqttPublishMessage;
+      var topicName = recv.variableHeader?.topicName;
+      //var bytes = recv.payload.message;
+      var message_string = Utf8Decoder().convert(recv.payload.message);
+      print("接收到的主题: $topicName, 消息: $message_string");
+    });
+  }  else {
+    print(
+        'MQTT_LOGS::ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
+    client.disconnect();
+  }
 
   return client;
 

@@ -51,27 +51,27 @@ class ApiService {
     ));
   }
 
-  Future<void>registration_check(String email) async{
-    try {
-      final respose = await _dio.post(
-          '/v1/user/check',
-          data: {
-            'email': email,
-          },
-      );
-      if (respose.statusCode == 400){
-        print("email error，please input again");
-      }
-      else if(respose.statusCode == 404){
-        print('OK');
-      }
-      else if(respose.statusCode == 409){
-        print('email exits,please input new email');
-      }
-    }catch (error) {
-      throw Exception('Failed to $error');
-    }
-  }
+  // Future<void>registration_check(String email) async{
+  //   try {
+  //     final respose = await _dio.post(
+  //         '/v1/user/check',
+  //         data: {
+  //           'email': email,
+  //         },
+  //     );
+  //     if (respose.statusCode == 400){
+  //       print("email error，please input again");
+  //     }
+  //     else if(respose.statusCode == 404){
+  //       print('OK');
+  //     }
+  //     else if(respose.statusCode == 409){
+  //       print('email exits,please input new email');
+  //     }
+  //   }catch (error) {
+  //     throw Exception('Failed to $error');
+  //   }
+  // }
 
   Future<Response<dynamic>>registration(String email,String password,) async{
     try {
@@ -114,7 +114,7 @@ class ApiService {
         _secureStorageService.saveRefreshToken(responseData['refresh_token']);
         _secureStorageService.saveEmail(email);
         final accessToken = await _secureStorageService.getAccessToken();
-        print("accessToken:登入後取出$accessToken");
+        //print("accessToken:登入後取出$accessToken");
       }
 
       return response;
@@ -147,7 +147,7 @@ class ApiService {
 
       try {
         final response = await _dio.post(
-          // '/oauth2/token',
+          //'/oauth2/token',
         '/v1/user/auth',
           data: {
             'refresh_token': refreshToken,

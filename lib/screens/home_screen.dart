@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/model/device.dart';
 import 'package:mitsubishi_app/service/secure_storage_service.dart';
 import 'package:mitsubishi_app/auth/login_screen.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
 
 import '../home_info/device_card.dart';
 import '../home_info/mqtt_connect.dart';
@@ -43,19 +44,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Image.asset("assets/logo.png"),
+        // backgroundColor: Colors.black,
+        // title: Image.asset("assets/logo.png"),
+        title: Text('空調'),
         actions: [
-          IconButton(onPressed: () => fetchDevices(), icon: const Icon(Icons.refresh,color: Colors.white,)),
-          IconButton(onPressed: _logout, icon: const Icon(Icons.logout,color: Colors.white))
+          IconButton(onPressed: () => fetchDevices(), icon: const Icon(Icons.refresh)),
+          IconButton(onPressed: _logout, icon: const Icon(Icons.logout))
         ],
       ),
       // body: buildListView(),
-      body: MqttConnectionScreen(),
+       body: MqttConnectionScreen(),
     );
   }
 

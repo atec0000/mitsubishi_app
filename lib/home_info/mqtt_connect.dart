@@ -42,6 +42,29 @@ class _MqttConnectionScreenState extends State<MqttConnectionScreen> {
       });
     }
   }
+  Future<void> _subscribeToTopic() async {
+    final topic = 'devices/112233445566';
+    if (_mqttClient != null && _mqttClient!.connectionStatus!.state == MqttConnectionState.connected) {
+      _mqttClient!.subscribe(topic, MqttQos.atMostOnce);
+      print('Subscribed to topic: $topic');
+    } else {
+      print('Not connected to MQTT broker');
+    }
+  }
+
+  Future<void> _publishMessage(String message) async {
+    final topic = 'devices/112233445566';
+    final message = 'Selina say,Hello.';
+    if (_mqttClient != null && _mqttClient!.connectionStatus!.state == MqttConnectionState.connected) {
+      final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
+      builder.addString(message);
+
+      _mqttClient!.publishMessage(topic, MqttQos.atMostOnce, builder.payload!);
+      print('Published to topic: $topic, message: $message');
+    } else {
+      print('Not connected to MQTT broker');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +88,16 @@ class _MqttConnectionScreenState extends State<MqttConnectionScreen> {
             ElevatedButton(
               onPressed: _disconnectFromMqttServer,
               child: Text('Disconnect'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _subscribeToTopic,
+              child: Text('Subscribe'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _publishMessage,
+              child: Text('Publish Message'),
             ),
           ],
         ),

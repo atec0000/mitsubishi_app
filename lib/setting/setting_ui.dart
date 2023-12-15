@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/setting/setting_widget.dart';
 
-class SetShock extends StatefulWidget{
+class SetUI extends StatefulWidget{
 
-  SetShock({Key? key}) : super(key: key);
+  SetUI({Key? key}) : super(key: key);
 
   @override
-  _SetShockState createState() => _SetShockState();
+  _SetUIState createState() => _SetUIState();
 }
 
-class _SetShockState extends State<SetShock> {
+class _SetUIState extends State<SetUI> {
 
 
   @override
@@ -24,7 +24,7 @@ class _SetShockState extends State<SetShock> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('震動設定'),
+        title: Text('介面設定'),
       ),
       body: settingcard(),
     );
@@ -33,7 +33,7 @@ class _SetShockState extends State<SetShock> {
   Widget settingcard(){
     return Column(
       children: [
-        SettingWithRadioButton(title: '預設', title2: '關閉', onValueChanged: (int ) {})
+
       ],
     );
 
