@@ -4,6 +4,7 @@ import 'package:mitsubishi_app/service/secure_storage_service.dart';
 import 'package:mitsubishi_app/auth/login_screen.dart';
 
 import '../home_info/device_card.dart';
+import '../home_info/mqtt_connect.dart';
 
 
 
@@ -53,7 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(onPressed: _logout, icon: const Icon(Icons.logout,color: Colors.white))
         ],
       ),
-      body: buildListView(),
+      // body: buildListView(),
+      body: MqttConnectionScreen(),
     );
   }
 

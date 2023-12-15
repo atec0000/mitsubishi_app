@@ -5,9 +5,10 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 
 class ApiService {
-  final String _baseUrl = 'https://apitest.aifaremote.com';
-  // final String _baseUrl ='https://api.wificontrolbox.com';
-  final String _clientId = 'cfRwMJsPFWqTobZ5';
+  // final String _baseUrl = 'https://apitest.aifaremote.com';
+  final String _baseUrl ='https://api.wificontrolbox.com';
+  // final String _clientId = 'cfRwMJsPFWqTobZ5';
+  final String _clientId = 'Ecp5TUQxtOjdQ24u';
 
   Dio _dio = Dio();
   final SecureStorageService _secureStorageService = SecureStorageService();
@@ -50,10 +51,55 @@ class ApiService {
     ));
   }
 
+  Future<void>registration_check(String email) async{
+    try {
+      final respose = await _dio.post(
+          '/v1/user/check',
+          data: {
+            'email': email,
+          },
+      );
+      if (respose.statusCode == 400){
+        print("email error，please input again");
+      }
+      else if(respose.statusCode == 404){
+        print('OK');
+      }
+      else if(respose.statusCode == 409){
+        print('email exits,please input new email');
+      }
+    }catch (error) {
+      throw Exception('Failed to $error');
+    }
+  }
+
+  Future<Response<dynamic>>registration(String email,String password,) async{
+    try {
+      final response = await _dio.post(
+        '/v1/user/register',
+        data: {
+          "email": email,
+          "password": password,
+          "username": "Selina",
+          "phone": "0966666666",
+          "avatar": "",
+        },
+        options: Options(headers: null),
+      );
+      if (response.statusCode == 200){
+        print("OK");
+      }
+      return response;
+    }catch (error) {
+      throw Exception('Failed to $error');
+    }
+  }
+
   Future<Response<dynamic>> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        '/oauth2/token',
+        // '/oauth2/token',
+      '/v1/user/auth',
         data: {
           'email': email,
           'password': password,
@@ -66,9 +112,9 @@ class ApiService {
         final responseData = response.data as Map<String, dynamic>;
         _secureStorageService.saveAccessToken(responseData['access_token']);
         _secureStorageService.saveRefreshToken(responseData['refresh_token']);
-        //print("accessToken:登入後$responseData['access_token']");
+        _secureStorageService.saveEmail(email);
         final accessToken = await _secureStorageService.getAccessToken();
-        //print("accessToken:登入後取出$accessToken");
+        print("accessToken:登入後取出$accessToken");
       }
 
       return response;
@@ -101,7 +147,8 @@ class ApiService {
 
       try {
         final response = await _dio.post(
-          '/oauth2/token',
+          // '/oauth2/token',
+        '/v1/user/auth',
           data: {
             'refresh_token': refreshToken,
             'client_id': _clientId,

@@ -3,6 +3,8 @@ import 'package:mitsubishi_app/auth/login_screen.dart';
 import 'package:mitsubishi_app/widget/static_style.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../service/api_service.dart';
+
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
@@ -17,16 +19,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       TextEditingController();
   bool _passwordVisible = false;
   bool _acceptTerms = false;
+  final ApiService _apiService = ApiService();
 
   void register() async {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    bool registrationSuccess = true; // Replace with actual logic
 
-    if (registrationSuccess) {
-      List<String> registrationDetails = [email, password]; //這裡建立一個list
-      _SignuptoLogin();
+    try {
+      final response = await _apiService.registration(email,password);
+
+      if (response.statusCode == 200) {
+        _SignuptoLogin();
+      } else {
+        // TODO: Show error message
+      }
+    } catch (e) {
+      print('register failed: $e');
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SecureStorageService {
   final _secureStorage = const FlutterSecureStorage();
@@ -26,4 +27,15 @@ class SecureStorageService {
   Future<void> deleteRefreshToken() async {
     await _secureStorage.delete(key: 'refresh_token');
   }
+
+  Future<String> getEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_email') ?? '';
+  }
+
+  Future<void> saveEmail(String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_email', email);
+  }
+
 }
