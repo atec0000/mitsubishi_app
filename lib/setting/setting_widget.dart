@@ -12,17 +12,19 @@ Widget settingCard({
   // required String subtitle,
   required Color textColor,
   // required String imagePath,
-  required Widget nextPage,
+  required Widget? nextPage,
   required BuildContext context,
 }) {
   return InkWell(
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => nextPage,
-        ),
-      );
+      if (nextPage != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => nextPage,
+          ),
+        );
+      }
     },
     child:Column(
       children: <Widget>[
@@ -46,12 +48,14 @@ Widget settingCard({
                               child: ListTile(
                                 trailing:InkWell(
                                   onTap: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => nextPage,
-                                      ),
-                                    );
+                                    if (nextPage != null) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => nextPage,
+                                        ),
+                                      );
+                                    }
                                   },
                                   child:Icon(
                                     Icons.navigate_next,
@@ -211,84 +215,173 @@ Widget settingWithSwitch({
     ],
   );
 }
-// class MyCheckbox extends StatefulWidget {
-//   final String label;
-//
-//   MyCheckbox({required this.label});
-//
-//   @override
-//   _MyCheckboxState createState() => _MyCheckboxState();
-// }
-//
-// class _MyCheckboxState extends State<MyCheckbox> {
-//   bool isChecked = false;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       onTap: () {
-//         setState(() {
-//           isChecked = !isChecked;
-//
-//           // 如果選中當前選項，取消其他選項的選中狀態
-//           if (isChecked) {
-//             for (MyCheckbox otherCheckbox in _getOtherCheckboxes()) {
-//               otherCheckbox.isChecked = false;
-//             }
-//           }
-//         });
-//       },
-//       child: Container(
-//         padding: EdgeInsets.all(16.0),
-//         child: Row(
-//           children: [
-//             Container(
-//               width: 25.0,
-//               height: 25.0,
-//               decoration: BoxDecoration(
-//                 border: Border.all(
-//                   color: Colors.blue,
-//                 ),
-//                 borderRadius: BorderRadius.circular(5.0),
-//               ),
-//               child: isChecked
-//                   ? Icon(
-//                 Icons.check,
-//                 size: 20.0,
-//                 color: Colors.blue,
-//               )
-//                   : null,
-//             ),
-//             SizedBox(width: 16.0),
-//             Text(widget.label),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//   // Helper function to get a list of other checkboxes in the same parent widget
-//   List<MyCheckbox> _getOtherCheckboxes() {
-//     List<MyCheckbox> otherCheckboxes = [];
-//
-//     if (mounted) {
-//       // Check if the current state is still mounted to avoid errors
-//       BuildContext? context = context;
-//       if (context != null) {
-//         context.visitAncestorElements((element) {
-//           if (element is StatefulElement &&
-//               element.widget is MyCheckbox &&
-//               element != this.context) {
-//             otherCheckboxes.add(element.widget as MyCheckbox);
-//           }
-//           return true;
-//         });
-//       }
-//     }
-//
-//     return otherCheckboxes;
-//   }
-// }
+
+Widget settingWithImfo({
+  required String title,
+  required String info,
+}) {
+  return Column(
+    children: <Widget>[
+      Padding(
+        padding: EdgeInsets.only(left: 2, right: 2),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Card(
+                      elevation: 0,
+                      color: Colors.transparent,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: ListTile(
+                              title: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text(
+                                      title,
+                                      style:TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                 Text(
+                                   info,
+                                   style: TextStyle(fontSize: 15,color: Colors.grey),
+                                 ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+class MyCheckbox extends StatefulWidget {
+  final String label;
+  final bool isSelected;
+  final Function(bool) onToggle;
+
+  MyCheckbox({required this.label, required this.onToggle, required this.isSelected,});
+
+  @override
+  _MyCheckboxState createState() => _MyCheckboxState();
+}
+
+class _MyCheckboxState extends State<MyCheckbox> {
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          // Only toggle the state if it's not already selected
+          if (!widget.isSelected) {
+            widget.onToggle(true);
+
+            // Unselect other options
+            for (MyCheckbox otherCheckbox in _getOtherCheckboxes()) {
+              otherCheckbox.onToggle(false);
+            }
+          }
+        });
+      },
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(left: 2, right: 2),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  child: Stack(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Card(
+                          elevation: 0,
+                          color: Colors.transparent,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child:  Text(widget.label,
+                                          style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),),
+                                      ),
+                                      Container(
+                                        child: widget.isSelected
+                                            ? Icon(
+                                          Icons.check,
+                                          size: 30.0,
+                                          color: Colors.blue,
+                                        )
+                                            : null,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper function to get a list of other checkboxes in the same parent widget
+  List<MyCheckbox> _getOtherCheckboxes() {
+    List<MyCheckbox> otherCheckboxes = [];
+
+    if (mounted) {
+      // Check if the current state is still mounted to avoid errors
+      BuildContext? currentContext = context;
+      if (currentContext != null) {
+        currentContext.visitAncestorElements((element) {
+          if (element is StatefulElement &&
+              element.widget is MyCheckbox &&
+              element != this.context) {
+            otherCheckboxes.add(element.widget as MyCheckbox);
+          }
+          return true;
+        });
+      }
+    }
+
+    return otherCheckboxes;
+  }
+
+}
 
 class SettingWithRadioButton extends StatefulWidget {
   final String title;

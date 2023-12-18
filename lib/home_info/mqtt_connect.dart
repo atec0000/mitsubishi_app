@@ -33,8 +33,6 @@ class _MqttConnectionScreenState extends State<MqttConnectionScreen> {
   }
 
   Future<void> _disconnectFromMqttServer() async {
-    // 断开 MQTT 服务器连接的逻辑
-    // 请替换成你的实际逻辑
     if (_mqttClient != null && _mqttClient!.connectionStatus!.state == MqttConnectionState.connected) {
       _mqttClient!.disconnect();
       setState(() {
@@ -70,7 +68,7 @@ class _MqttConnectionScreenState extends State<MqttConnectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MQTT Connection'),
+        title: Text(''),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

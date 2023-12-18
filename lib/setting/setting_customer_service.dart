@@ -26,6 +26,7 @@ class _SetserviceState extends State<Setservice> {
     return Scaffold(
       appBar: AppBar(
         title: Text('聯絡我們'),
+        centerTitle: true,
       ),
       body: settingcard(),
     );
