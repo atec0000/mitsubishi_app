@@ -5,10 +5,10 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 
 class ApiService {
-  final String _baseUrl = 'https://apitest.aifaremote.com';
-  //final String _baseUrl ='https://api.wificontrolbox.com';
-  final String _clientId = 'cfRwMJsPFWqTobZ5';
-  //final String _clientId = 'Ecp5TUQxtOjdQ24u';
+  //final String _baseUrl = 'https://apitest.aifaremote.com';
+  final String _baseUrl ='https://api.wificontrolbox.com';
+  //final String _clientId = 'cfRwMJsPFWqTobZ5';
+  final String _clientId = 'Ecp5TUQxtOjdQ24u';
 
   Dio _dio = Dio();
   final SecureStorageService _secureStorageService = SecureStorageService();
@@ -98,8 +98,8 @@ class ApiService {
   Future<Response<dynamic>> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        '/oauth2/token',
-      //'/v1/user/auth',
+        //'/oauth2/token',
+      '/v1/user/auth',
         data: {
           'email': email,
           'password': password,
@@ -147,8 +147,8 @@ class ApiService {
 
       try {
         final response = await _dio.post(
-          '/oauth2/token',
-        //'/v1/user/auth',
+          //'/oauth2/token',
+        '/v1/user/auth',
           data: {
             'refresh_token': refreshToken,
             'client_id': _clientId,

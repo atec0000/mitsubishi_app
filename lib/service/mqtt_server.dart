@@ -40,14 +40,30 @@ Future<MqttServerClient> connect() async {
     client.disconnect();
   }
   if (client.connectionStatus!.state == MqttConnectionState.connected) {
-    client.updates?.listen((event) {
+    client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> event) {
       var recv = event[0].payload as MqttPublishMessage;
       var topicName = recv.variableHeader?.topicName;
-      //var bytes = recv.payload.message;
-      var message_string = Utf8Decoder().convert(recv.payload.message);
-      print("接收到的主题: $topicName, 消息: $message_string");
+
+      // Check if the payload is JSON
+      try {
+        var jsonMessage = json.decode(Utf8Decoder().convert(recv.payload.message));
+        print("接收到的主题: $topicName, 消息 (JSON): $jsonMessage");
+        // Handle the JSON message here
+      } catch (_) {
+        // If parsing as JSON fails, check if it's a string
+        try {
+          var stringMessage = Utf8Decoder().convert(recv.payload.message);
+          print("接收到的主题: $topicName, 消息 (String): $stringMessage");
+          // Handle the string message here
+        } catch (_) {
+          // If parsing as a string also fails, treat it as hexadecimal
+          var hexMessage = recv.payload.message;
+          print("接收到的主题: $topicName, 消息 (Hex): $hexMessage");
+          // Handle the hexadecimal message here
+        }
+      }
     });
-  }  else {
+  } else {
     print(
         'MQTT_LOGS::ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
     client.disconnect();

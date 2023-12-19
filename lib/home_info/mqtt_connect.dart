@@ -1,68 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:mqtt_client/mqtt_client.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
+import 'dart:typed_data';
 
-import '../service/mqtt_server.dart';
+import 'package:flutter/material.dart';
+
+import '../bluetooth_pair/pageswitch_blufi.dart';
+import '../service/mqtt_service.dart';
 
 class MqttConnectionScreen extends StatefulWidget {
+  final String deviceMac;
+
+  MqttConnectionScreen({required this.deviceMac});
+
   @override
   _MqttConnectionScreenState createState() => _MqttConnectionScreenState();
 }
 
 class _MqttConnectionScreenState extends State<MqttConnectionScreen> {
-  MqttServerClient? _mqttClient;
-  String _connectionStatus = 'Disconnected';
+  final poweron = 'AA0007B299B6FF0000000000FFFFFFFF0F0207C200110A0000000000FFFFFFFFA2';
+  final poweroff = 'AA0007B399B6FF0000800000FFFFFFFF0F02084300110A0000000000FFFFFFFFA5';
 
   @override
   void initState() {
     super.initState();
-    _connectToMqttServer();
+    connectToMqttServer();
   }
 
-  Future<void> _connectToMqttServer() async {
-    try {
-      _mqttClient = await connect();
-      setState(() {
-        _connectionStatus = 'Connected';
-      });
-    } catch (e) {
-      setState(() {
-        _connectionStatus = 'Connection Failed';
-      });
-    }
-  }
 
-  Future<void> _disconnectFromMqttServer() async {
-    if (_mqttClient != null && _mqttClient!.connectionStatus!.state == MqttConnectionState.connected) {
-      _mqttClient!.disconnect();
-      setState(() {
-        _connectionStatus = 'Disconnected';
-      });
-    }
-  }
-  Future<void> _subscribeToTopic() async {
-    final topic = 'devices/112233445566';
-    if (_mqttClient != null && _mqttClient!.connectionStatus!.state == MqttConnectionState.connected) {
-      _mqttClient!.subscribe(topic, MqttQos.atMostOnce);
-      print('Subscribed to topic: $topic');
-    } else {
-      print('Not connected to MQTT broker');
-    }
-  }
 
-  Future<void> _publishMessage(String message) async {
-    final topic = 'devices/112233445566';
-    final message = 'Selina say,Hello.';
-    if (_mqttClient != null && _mqttClient!.connectionStatus!.state == MqttConnectionState.connected) {
-      final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
-      builder.addString(message);
-
-      _mqttClient!.publishMessage(topic, MqttQos.atMostOnce, builder.payload!);
-      print('Published to topic: $topic, message: $message');
-    } else {
-      print('Not connected to MQTT broker');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,27 +39,84 @@ class _MqttConnectionScreenState extends State<MqttConnectionScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Connection Status: $_connectionStatus', style: TextStyle(fontSize: 18)),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _connectToMqttServer,
+              onPressed: connectToMqttServer,
               child: Text('Connect'),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _disconnectFromMqttServer,
+              onPressed: disconnectFromMqttServer,
               child: Text('Disconnect'),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _subscribeToTopic,
+              onPressed: () async {
+                await subscribeToTopic(widget.deviceMac);
+              } ,
+              child: Text('Recived response'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await subscribecontrol(widget.deviceMac);
+              },
               child: Text('Subscribe'),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _publishMessage,
-              child: Text('Publish Message'),
-            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: ()  {
+                    publishHexMessage(poweron,widget.deviceMac);
+                  },
+                  child: Text('電源開'),
+                ),
+                ElevatedButton(
+                  onPressed: ()  {
+                    publishHexMessage(poweroff,widget.deviceMac);
+                  },
+                  child: Text('電源關'),
+                ),
+              ],
+    ),
+                FloatingActionButton.extended(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                              leading: Icon(Icons.bluetooth),
+                              title: Text('Bluetooth Pairing'),
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PageSwitcher(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  tooltip: 'Pair',
+                  icon: Icon(Icons.add),
+                  label: Text('Pair'),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    side: BorderSide(color: Colors.purpleAccent),
+                  ),
+                  backgroundColor: Colors.white,
+                )
+
           ],
         ),
       ),
