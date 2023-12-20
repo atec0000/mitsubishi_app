@@ -37,7 +37,10 @@ class _SetScreenState extends State<SetScreen> {
         title: Text('設定'),
         centerTitle: true,
       ),
-      body: settingcard(),
+
+      body:SingleChildScrollView(
+        child: settingcard(),
+      )
     );
   }
 

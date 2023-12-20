@@ -56,8 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(onPressed: _logout, icon: const Icon(Icons.logout))
         ],
       ),
-      //body: buildListView(),
-      body: MqttConnectionScreen(deviceMac: 'CCA614230008',),
+      body: buildListView(),
+      //body: MqttConnectionScreen(deviceMac: 'CCA614230008',),
     );
   }
 

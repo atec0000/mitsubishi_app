@@ -29,15 +29,12 @@ class _LoginPostScreenState extends State<LoginPostScreen>{
 
     try {
       ApiService apiService = ApiService();
-      final response = await apiService.login(email, password);
+      final response = await apiService.login(widget.email, password);
       if (kDebugMode) {
+        Get.off(() => TabsScreen());
         print('Login OK');
       }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => TabsScreen()),
-      );
+
 
 
     } catch (e) {

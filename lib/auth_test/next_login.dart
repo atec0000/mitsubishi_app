@@ -4,6 +4,7 @@ import 'package:mitsubishi_app/auth_test/register_user.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../service/api_service.dart';
+
 import 'constants.dart';
 import 'login_post.dart';
 
@@ -20,33 +21,33 @@ class _NextLoginScreenState extends State<NextLoginScreen>{
   String email = '' ;
   bool showSpinner = false;
 
-  void goToNext() async {
-    ApiService apiService = ApiService();
-    //HttpRequests requests = HttpRequests();
-    final response = await apiService.checkUser(email);
-    if (response == 400) {
-      //輸入email不正確
-      Get.snackbar('警告', '無效的email');
-    }
-    // else if (response == 409) {
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPostScreen(email)));
-    // }
-    else if (response == 404)
-    {
-      Future.delayed(Duration.zero, () {
-        Get.to(() => RegisterPage(email));
-        // Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //   return RegisterPage(email);
-        // }));
-      });
-
-    } else {
-      Get.to(() => LoginPostScreen(email));
-      //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPostScreen(email)));
-    }
-
-  }
+  // void goToNext() async {
+  //   ApiService apiService = ApiService();
+  //   //HttpRequests requests = HttpRequests();
+  //   final response = await apiService.checkUser(email);
+  //   if (response == 400) {
+  //     //輸入email不正確
+  //     Get.snackbar('警告', '無效的email');
+  //   }
+  //   // else if (response == 409) {
+  //   //   // ignore: use_build_context_synchronously
+  //   //   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPostScreen(email)));
+  //   // }
+  //   else if (response == 404)
+  //   {
+  //     Future.delayed(Duration.zero, () {
+  //       Get.to(() => RegisterPage(email));
+  //       // Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //       //   return RegisterPage(email);
+  //       // }));
+  //     });
+  //
+  //   } else {
+  //     Get.to(() => LoginPostScreen(email));
+  //     //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPostScreen(email)));
+  //   }
+  //
+  // }
 
   @override
   void initState() {
@@ -116,7 +117,8 @@ class _NextLoginScreenState extends State<NextLoginScreen>{
                   padding: const EdgeInsets.all(0),
                 ),
                 onPressed: (){
-                  goToNext();
+                  // goToNext();
+                  Get.to(() => LoginPostScreen(email));
                 },
                 child: const Text('下一步'),
 
@@ -126,20 +128,6 @@ class _NextLoginScreenState extends State<NextLoginScreen>{
               ),
 
 
-              // RoundButton(
-              //   text: 'Login with Google',
-              //   //color: const Color(0xfffe9200),
-              //   onPressed: () async {
-              //     HttpRequests requests = HttpRequests();
-              //     final response = await requests.signInWithGoogle();
-              //
-              //
-              //     print('-=-=-==-=--=-$response');
-              //
-              //
-              //
-              //   },
-              // ),
               // TextField(
               //   controller: TextEditingController()..text= password,
               //   textAlign: TextAlign.center,

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import '../components/round_button.dart';
+import 'auth_verifivation.dart';
 import 'constants.dart';
 import 'next_login.dart';
 
@@ -96,20 +98,21 @@ class _LoginScreenState extends State<LoginScreen>{
               const SizedBox(
                 height: 24.0,
               ),
-              // RoundButton(
-              //   text: 'Login with Google',
-              //   color: const Color(0xfffe9200),
-              //   onPressed: () async {
-              //     HttpRequests requests = HttpRequests();
-              //     final response = await requests.signInWithGoogle();
-              //
-              //
-              //     print('-=-=-==-=--=-$response');
-              //
-              //
-              //
-              //   },
-              // ),
+              RoundButton(
+                text: 'Login with Google',
+                color: const Color(0xfffe9200),
+                onPressed: () async {
+                  await signInWithGoogle();
+                },
+              ),
+
+              RoundButton(
+                text: 'Login with Apple',
+                color: const Color(0xff888177),
+                onPressed: () async {
+                  await signInWithApple();
+                },
+              ),
 
             ],
           ),
