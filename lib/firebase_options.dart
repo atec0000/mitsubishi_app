@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -29,12 +30,12 @@ class DefaultFirebaseOptions {
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+              'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+              'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -44,38 +45,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCgJWT8QZ3ajF0_AJ3g468QLFieYKrz2Pg',
-    appId: '1:921852475620:web:ff4c8eb3945949d08cd4f1',
-    messagingSenderId: '921852475620',
-    projectId: 'mitsubishi-8c928',
-    authDomain: 'mitsubishi-8c928.firebaseapp.com',
-    storageBucket: 'mitsubishi-8c928.appspot.com',
-    measurementId: 'G-JB1NWK1SRX',
+    apiKey: 'AIzaSyAODg6SVah_jIKksffXiZTbh8iDLQvPs_g',
+    appId: '1:713162264634:web:caf0dc8baa72603d386503',
+    messagingSenderId: '713162264634',
+    projectId: 'upyoung-bb219',
+    authDomain: 'upyoung-bb219.firebaseapp.com',
+    storageBucket: 'upyoung-bb219.appspot.com',
+    measurementId: 'G-1MMT1JPLVF',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD8MFUM7L6iLY9MnALEdm_E7lUMAErxVEQ',
-    appId: '1:921852475620:android:235f5b3b713d6b238cd4f1',
-    messagingSenderId: '921852475620',
-    projectId: 'mitsubishi-8c928',
-    storageBucket: 'mitsubishi-8c928.appspot.com',
+    apiKey: 'AIzaSyDvhKIwgj3cRwt4b4FDZfFR-Wb1oPXQpWg',
+    appId: '1:713162264634:android:5d829446ccd0297a386503',
+    messagingSenderId: '713162264634',
+    projectId: 'upyoung-bb219',
+    storageBucket: 'upyoung-bb219.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDdMbMAozqRuUIxD1mTIS09WUZJvbXxjeo',
-    appId: '1:921852475620:ios:60f0bab9a41cade48cd4f1',
-    messagingSenderId: '921852475620',
-    projectId: 'mitsubishi-8c928',
-    storageBucket: 'mitsubishi-8c928.appspot.com',
-    iosBundleId: 'com.example.mitsubishiApp',
+    apiKey: 'AIzaSyBf0kLqz_HJO5iSF_ZzNgax-Hbe8npnDUY',
+    appId: '1:713162264634:ios:f1748e8cdfe399dd386503',
+    messagingSenderId: '713162264634',
+    projectId: 'upyoung-bb219',
+    storageBucket: 'upyoung-bb219.appspot.com',
+    iosClientId: '713162264634-2dt25aphfq0hd8j48dtvocsrrrt43s8g.apps.googleusercontent.com',
+    iosBundleId: 'com.example.upyongTest',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDdMbMAozqRuUIxD1mTIS09WUZJvbXxjeo',
-    appId: '1:921852475620:ios:ff2fda023df75f458cd4f1',
-    messagingSenderId: '921852475620',
-    projectId: 'mitsubishi-8c928',
-    storageBucket: 'mitsubishi-8c928.appspot.com',
-    iosBundleId: 'com.example.mitsubishiApp.RunnerTests',
+    apiKey: 'AIzaSyBf0kLqz_HJO5iSF_ZzNgax-Hbe8npnDUY',
+    appId: '1:713162264634:ios:84d79442b3d3f413386503',
+    messagingSenderId: '713162264634',
+    projectId: 'upyoung-bb219',
+    storageBucket: 'upyoung-bb219.appspot.com',
+    iosClientId: '713162264634-84lnereit3m9eov597pd4umikfqv8fq4.apps.googleusercontent.com',
+    iosBundleId: 'com.example.upyongTest.RunnerTests',
   );
 }

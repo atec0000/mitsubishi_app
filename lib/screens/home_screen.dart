@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/model/device.dart';
 import 'package:mitsubishi_app/service/secure_storage_service.dart';
-import 'package:mitsubishi_app/auth/login_screen.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
 
+import '../auth_test/start_login.dart';
 import '../home_info/device_card.dart';
 import '../home_info/mqtt_connect.dart';
 

@@ -50,38 +50,34 @@ class ApiService {
       },
     ));
   }
+  Future<int?> checkUser(String email) async {
+    try {
+      final response = await _dio.post(
+        '/v1/user/check',
+        data: {
+          'email': email
+        },
+      );
 
-  // Future<void>registration_check(String email) async{
-  //   try {
-  //     final respose = await _dio.post(
-  //         '/v1/user/check',
-  //         data: {
-  //           'email': email,
-  //         },
-  //     );
-  //     if (respose.statusCode == 400){
-  //       print("email error，please input again");
-  //     }
-  //     else if(respose.statusCode == 404){
-  //       print('OK');
-  //     }
-  //     else if(respose.statusCode == 409){
-  //       print('email exits,please input new email');
-  //     }
-  //   }catch (error) {
-  //     throw Exception('Failed to $error');
-  //   }
-  // }
+      return response.statusCode;
+    } on DioException catch (error) {
+      if (error.response != null ) {
+        return error.response?.statusCode;
+      }else {
+        throw Exception('Failed to check');
+      }
+    }
+  }
 
-  Future<Response<dynamic>>registration(String email,String password,) async{
+  Future<Response<dynamic>>register(String email,String password,) async{
     try {
       final response = await _dio.post(
         '/v1/user/register',
         data: {
           "email": email,
           "password": password,
-          "username": "Selina",
-          "phone": "0966666666",
+          "username": "",
+          "phone": "",
           "avatar": "",
         },
         options: Options(headers: null),
@@ -124,9 +120,6 @@ class ApiService {
   }
 
   bool isAccessTokenExpired(String accessToken) {
-    if (accessToken == null) {
-      return true; // If token is null, consider it expired
-    }
 
     final decodedToken =
         JwtDecoder.decode(accessToken); // Assuming you're using JW
