@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../main.dart';
 import '../setting/setting_screen.dart';
+import 'automation_page.dart';
 import 'home_screen.dart';
 
 class TabsScreen extends StatefulWidget{
@@ -34,7 +35,7 @@ class _TabsScreenState extends State<TabsScreen> {
           activePage = HomeScreen(); // 選擇主頁
           break;
         case 1:
-          activePage = Text('目前暫無內容');
+          activePage = const AutomationPage();
           break;
         case 2:
           activePage = SetScreen();

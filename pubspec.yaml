@@ -33,7 +33,7 @@ dependencies:
 
   flutter_blue_plus: ^1.29.5
   flutter_blufi:
-    path: "C:/Users/User/Desktop/aifa_app_info/flutter_blufi"
+    path: ../flutter_blufi/
 
 
   # The following adds the Cupertino Icons font to your application.
