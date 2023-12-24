@@ -5,14 +5,14 @@ import 'bluetooth_info2.dart';
 import 'bluetooth_screen.dart';
 
 class PageSwitcher extends StatefulWidget {
+  const PageSwitcher({super.key});
 
   @override
   _PageSwitcherState createState() => _PageSwitcherState();
 }
 
 class _PageSwitcherState extends State<PageSwitcher> {
-  PageController _pageController = PageController(initialPage: 0);
-
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +23,22 @@ class _PageSwitcherState extends State<PageSwitcher> {
         children: <Widget>[
           Container(
             color: Colors.blue,
-            child: Center(
-              child:BluetoothInfoPage() ,
+            child: const Center(
+              child: BluetoothInfoPage(),
             ),
           ),
           Container(
             color: Colors.blue,
-            child: Center(
-              child:BluetoothInfoPage2() ,
+            child: const Center(
+              child: BluetoothInfoPage2(),
             ),
           ),
           Container(
             color: Colors.blue,
-            child: Center(
-              child:BluetoothScreen() ,
+            child: const Center(
+              child: BluetoothScreen(),
             ),
           ),
-
-
         ],
       ),
     );

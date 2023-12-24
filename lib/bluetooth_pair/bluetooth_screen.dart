@@ -3,27 +3,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_blufi/flutter_blufi.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mitsubishi_app/bluetooth_pair/bluetooth_wifi_search.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../widget/static_style.dart'; // 导入modal_progress_hud_nsn
 
-
-
-
 class BluetoothScreen extends StatefulWidget {
-  BluetoothScreen ({Key? key}) : super(key: key);
-
-
+  const BluetoothScreen({Key? key}) : super(key: key);
 
   @override
   _BluetoothScreenState createState() => _BluetoothScreenState();
 }
 
-
-
-class  _BluetoothScreenState extends State<BluetoothScreen> {
+class _BluetoothScreenState extends State<BluetoothScreen> {
   List<ScanResult> deviceList = [];
   bool scanning = false;
   int connectionOrder = 1;
@@ -33,7 +25,6 @@ class  _BluetoothScreenState extends State<BluetoothScreen> {
     super.initState();
     scanForDevices();
   }
-
 
   Future<void> scanForDevices() async {
     setState(() {
@@ -52,9 +43,8 @@ class  _BluetoothScreenState extends State<BluetoothScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('新增設備'),
+        title: const Text('新增設備'),
       ),
-
       body: Column(
         children: [
           Expanded(
@@ -71,7 +61,7 @@ class  _BluetoothScreenState extends State<BluetoothScreen> {
     );
   }
 
-  Widget device_content(){
+  Widget device_content() {
     return ListView.builder(
       itemCount: deviceList.length,
       itemBuilder: (context, index) {
@@ -84,7 +74,8 @@ class  _BluetoothScreenState extends State<BluetoothScreen> {
             if (!EspBlufi.instance.isConnectedToDevice(scanResult.device)) {
               try {
                 await EspBlufi.instance.connectDevice(scanResult.device);
-                bool isConnected = await EspBlufi.instance.isConnectedToDevice(scanResult.device);
+                bool isConnected =
+                    EspBlufi.instance.isConnectedToDevice(scanResult.device);
                 if (isConnected) {
                   if (!Platform.isIOS) {
                     await EspBlufi.instance.setMtu(scanResult.device, 512);
@@ -92,7 +83,7 @@ class  _BluetoothScreenState extends State<BluetoothScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bluetoothwifisearch(),
+                      builder: (context) => const Bluetoothwifisearch(),
                     ),
                   );
                 } else {

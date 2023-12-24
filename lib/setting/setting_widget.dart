@@ -1,11 +1,7 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widget/static_style.dart';
-
 
 Widget settingCard({
   required String title,
@@ -26,17 +22,17 @@ Widget settingCard({
         );
       }
     },
-    child:Column(
+    child: Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 2, right: 2),
+          padding: const EdgeInsets.only(left: 2, right: 2),
           child: Stack(
             children: <Widget>[
               Container(
                 child: Stack(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       child: Card(
                         elevation: 0,
                         color: Colors.transparent,
@@ -44,10 +40,10 @@ Widget settingCard({
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: ListTile(
-                                trailing:InkWell(
-                                  onTap: (){
+                                trailing: InkWell(
+                                  onTap: () {
                                     if (nextPage != null) {
                                       Navigator.push(
                                         context,
@@ -57,7 +53,7 @@ Widget settingCard({
                                       );
                                     }
                                   },
-                                  child:Icon(
+                                  child: Icon(
                                     Icons.navigate_next,
                                     color: textColor,
                                     size: 30,
@@ -123,14 +119,14 @@ Widget settingurl({
     child: Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 2, right: 2),
+          padding: const EdgeInsets.only(left: 2, right: 2),
           child: Stack(
             children: <Widget>[
               Container(
                 child: Stack(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       child: Card(
                         elevation: 0,
                         color: Colors.transparent,
@@ -138,7 +134,7 @@ Widget settingurl({
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: ListTile(
                                 title: InkWell(
                                   onTap: onTapFunction,
@@ -175,14 +171,14 @@ Widget settingWithSwitch({
   return Column(
     children: <Widget>[
       Padding(
-        padding: EdgeInsets.only(left: 2, right: 2),
+        padding: const EdgeInsets.only(left: 2, right: 2),
         child: Stack(
           children: <Widget>[
             Container(
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: Card(
                       elevation: 0,
                       color: Colors.transparent,
@@ -190,7 +186,7 @@ Widget settingWithSwitch({
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.only(left: 10),
                             child: ListTile(
                               title: Row(
                                 children: <Widget>[
@@ -223,14 +219,14 @@ Widget settingWithImfo({
   return Column(
     children: <Widget>[
       Padding(
-        padding: EdgeInsets.only(left: 2, right: 2),
+        padding: const EdgeInsets.only(left: 2, right: 2),
         child: Stack(
           children: <Widget>[
             Container(
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: Card(
                       elevation: 0,
                       color: Colors.transparent,
@@ -238,23 +234,24 @@ Widget settingWithImfo({
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.only(left: 10),
                             child: ListTile(
                               title: Row(
                                 children: <Widget>[
                                   Expanded(
                                     child: Text(
                                       title,
-                                      style:TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                 Text(
-                                   info,
-                                   style: TextStyle(fontSize: 15,color: Colors.grey),
-                                 ),
+                                  Text(
+                                    info,
+                                    style: const TextStyle(
+                                        fontSize: 15, color: Colors.grey),
+                                  ),
                                 ],
                               ),
                             ),
@@ -272,19 +269,24 @@ Widget settingWithImfo({
     ],
   );
 }
+
 class MyCheckbox extends StatefulWidget {
   final String label;
   final bool isSelected;
   final Function(bool) onToggle;
 
-  MyCheckbox({required this.label, required this.onToggle, required this.isSelected,});
+  const MyCheckbox({
+    super.key,
+    required this.label,
+    required this.onToggle,
+    required this.isSelected,
+  });
 
   @override
   _MyCheckboxState createState() => _MyCheckboxState();
 }
 
 class _MyCheckboxState extends State<MyCheckbox> {
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -304,14 +306,14 @@ class _MyCheckboxState extends State<MyCheckbox> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 2, right: 2),
+            padding: const EdgeInsets.only(left: 2, right: 2),
             child: Stack(
               children: <Widget>[
                 Container(
                   child: Stack(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: Card(
                           elevation: 0,
                           color: Colors.transparent,
@@ -319,25 +321,27 @@ class _MyCheckboxState extends State<MyCheckbox> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.only(left: 10),
                                 child: ListTile(
                                   title: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Expanded(
-                                        child:  Text(widget.label,
-                                          style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),),
+                                        child: Text(
+                                          widget.label,
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
                                       Container(
                                         child: widget.isSelected
-                                            ? Icon(
-                                          Icons.check,
-                                          size: 30.0,
-                                          color: Colors.blue,
-                                        )
+                                            ? const Icon(
+                                                Icons.check,
+                                                size: 30.0,
+                                                color: Colors.blue,
+                                              )
                                             : null,
                                       ),
                                     ],
@@ -366,21 +370,18 @@ class _MyCheckboxState extends State<MyCheckbox> {
     if (mounted) {
       // Check if the current state is still mounted to avoid errors
       BuildContext? currentContext = context;
-      if (currentContext != null) {
-        currentContext.visitAncestorElements((element) {
-          if (element is StatefulElement &&
-              element.widget is MyCheckbox &&
-              element != this.context) {
-            otherCheckboxes.add(element.widget as MyCheckbox);
-          }
-          return true;
-        });
-      }
+      currentContext.visitAncestorElements((element) {
+        if (element is StatefulElement &&
+            element.widget is MyCheckbox &&
+            element != context) {
+          otherCheckboxes.add(element.widget as MyCheckbox);
+        }
+        return true;
+      });
     }
 
     return otherCheckboxes;
   }
-
 }
 
 class SettingWithRadioButton extends StatefulWidget {
@@ -388,7 +389,8 @@ class SettingWithRadioButton extends StatefulWidget {
   final String title2;
   final Function(int?) onValueChanged;
 
-  SettingWithRadioButton({
+  const SettingWithRadioButton({
+    super.key,
     required this.title,
     required this.title2,
     required this.onValueChanged,
@@ -406,14 +408,14 @@ class _SettingWithRadioButtonState extends State<SettingWithRadioButton> {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 2, right: 2),
+          padding: const EdgeInsets.only(left: 2, right: 2),
           child: Stack(
             children: <Widget>[
               Container(
                 child: Stack(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       child: Card(
                         elevation: 0,
                         color: Colors.transparent,
@@ -429,9 +431,9 @@ class _SettingWithRadioButtonState extends State<SettingWithRadioButton> {
                                     value: 1,
                                     groupValue: selectedOption,
                                     onChanged: (value) {
-                                      widget.onValueChanged(value as int?);
+                                      widget.onValueChanged(value);
                                       setState(() {
-                                        selectedOption = value as int?;
+                                        selectedOption = value;
                                       });
                                     },
                                   ),
@@ -442,9 +444,9 @@ class _SettingWithRadioButtonState extends State<SettingWithRadioButton> {
                                     value: 2,
                                     groupValue: selectedOption,
                                     onChanged: (value) {
-                                      widget.onValueChanged(value as int?);
+                                      widget.onValueChanged(value);
                                       setState(() {
-                                        selectedOption = value as int?;
+                                        selectedOption = value;
                                       });
                                     },
                                   ),
@@ -465,6 +467,7 @@ class _SettingWithRadioButtonState extends State<SettingWithRadioButton> {
     );
   }
 }
+
 Future<void> makePhoneCall(String phoneNumber) async {
   final Uri launchUri = Uri(
     scheme: 'tel',

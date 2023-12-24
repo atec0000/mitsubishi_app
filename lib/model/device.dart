@@ -4,7 +4,8 @@ class Device {
   final int deviceid;
   late final List<String> subDevicesNames;
   final List<int> subDevicetype;
-  final Map<String, int> subDeviceIds; // Map to store subDeviceName -> subDeviceid
+  final Map<String, int>
+      subDeviceIds; // Map to store subDeviceName -> subDeviceid
   final List<int> subDevicesubtype;
   final double? temperature;
   final double? humidity;
@@ -23,7 +24,7 @@ class Device {
 
   factory Device.fromJson(Map<String, dynamic> json) {
     final subDevices =
-    json['subDevices'] as List<dynamic>?; // Extract subDevices as a list
+        json['subDevices'] as List<dynamic>?; // Extract subDevices as a list
     final subDevicesNames = <String>[]; // Initialize an empty list of strings
     final subDeviceIds = <String, int>{}; // Initialize an empty map
 
@@ -38,7 +39,8 @@ class Device {
             subDevice.containsKey('type')) {
           String subDeviceName = subDevice['name'] as String;
           subDevicesNames.add(subDeviceName); // Add the name as a string
-          subDeviceIds[subDeviceName] = subDevice['id'] as int; // Map subDeviceName to subDeviceid
+          subDeviceIds[subDeviceName] =
+              subDevice['id'] as int; // Map subDeviceName to subDeviceid
           subDevicetype.add(subDevice['type']);
           subDeviceid = subDevice['id'] as int;
         }

@@ -1,15 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mitsubishi_app/common/components/index.dart';
+import 'package:mitsubishi_app/common/widgets/index.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import '../components/round_button.dart';
+
 import 'auth_verifivation.dart';
 import 'constants.dart';
 import 'next_login.dart';
 
-
 class LoginScreen extends StatefulWidget {
-
   const LoginScreen({super.key});
 
   @override
@@ -17,18 +16,15 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>{
-  String email = 'mm4@aifa.com' ;
+class _LoginScreenState extends State<LoginScreen> {
+  String email = 'mm4@aifa.com';
   String password = 'aa';
   bool showSpinner = false;
   String accessToken = '';
   String refreshToken = '';
 
-
   void readPreferences() async {
-
-      //Navigator.pushNamed(context, DevicesList.id, arguments: accessToken);
-
+    //Navigator.pushNamed(context, DevicesList.id, arguments: accessToken);
   }
 
   @override
@@ -56,45 +52,46 @@ class _LoginScreenState extends State<LoginScreen>{
               const SizedBox(
                 height: 20,
               ),
-              const Text('註冊上洋智慧空調帳號，開啟智慧生活新一步',
+              const Text(
+                '註冊上洋智慧空調帳號，開啟智慧生活新一步',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                   color: color3,
-
                 ),
               ),
-              const SizedBox(height: 24,),
+              const SizedBox(
+                height: 24,
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   side: const BorderSide(
-                        color: Colors.black,
-                      ),
+                    color: Colors.black,
+                  ),
                   minimumSize: const Size(200, 42),
                   backgroundColor: backgroundColor,
                   foregroundColor: Colors.black,
                   padding: const EdgeInsets.all(0),
                 ),
                 child: const Text(EMAIL),
-
-                onPressed: (){
+                onPressed: () {
                   Get.to(() => const NextLoginScreen());
-
-              }, ),
-
+                },
+              ),
               const SizedBox(
                 height: 24,
               ),
               TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
-                onPressed: (){
-
-                },
-                child: const Text('手機號碼'), ),
+                onPressed: () {},
+                child: const Text('手機號碼'),
+              ),
               const SizedBox(
                 height: 24.0,
               ),
@@ -105,7 +102,6 @@ class _LoginScreenState extends State<LoginScreen>{
                   await signInWithGoogle();
                 },
               ),
-
               RoundButton(
                 text: 'Login with Apple',
                 color: const Color(0xff888177),
@@ -113,13 +109,10 @@ class _LoginScreenState extends State<LoginScreen>{
                   await signInWithApple();
                 },
               ),
-
             ],
           ),
         ),
       ),
     );
-
   }
-
 }

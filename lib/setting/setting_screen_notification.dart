@@ -3,10 +3,8 @@ import 'package:mitsubishi_app/setting/setting_widget.dart';
 
 import '../widget/static_style.dart';
 
-
-class SetNotification extends StatefulWidget{
-
-  SetNotification({Key? key}) : super(key: key);
+class SetNotification extends StatefulWidget {
+  const SetNotification({Key? key}) : super(key: key);
 
   @override
   _SetNotificationState createState() => _SetNotificationState();
@@ -24,25 +22,22 @@ class _SetNotificationState extends State<SetNotification> {
     super.initState();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('推播設定'),
+        title: const Text('推播設定'),
         centerTitle: true,
       ),
       body: settingcard(),
     );
   }
 
-  Widget settingcard(){
+  Widget settingcard() {
     return Column(
       children: [
         settingWithSwitch(
-          title: Text('推播設定'),
+          title: const Text('推播設定'),
           switchWidget: SwitchWidget(
             value: set_1,
             onChanged: (bool newValue) {
@@ -52,7 +47,8 @@ class _SetNotificationState extends State<SetNotification> {
             },
           ),
         ),
-        settingWithSwitch(title: Text('狀態通知'),
+        settingWithSwitch(
+            title: const Text('狀態通知'),
             switchWidget: SwitchWidget(
               value: set_2,
               onChanged: (bool newValue) {
@@ -60,9 +56,9 @@ class _SetNotificationState extends State<SetNotification> {
                   set_2 = newValue;
                 });
               },
-            )
-        ),
-        settingWithSwitch(title: Text('系統通知'),
+            )),
+        settingWithSwitch(
+            title: const Text('系統通知'),
             switchWidget: SwitchWidget(
               value: set_3,
               onChanged: (bool newValue) {
@@ -70,9 +66,9 @@ class _SetNotificationState extends State<SetNotification> {
                   set_3 = newValue;
                 });
               },
-            )
-        ),
-        settingWithSwitch(title: Text('廣播通知'),
+            )),
+        settingWithSwitch(
+            title: const Text('廣播通知'),
             switchWidget: SwitchWidget(
               value: set_4,
               onChanged: (bool newValue) {
@@ -80,20 +76,18 @@ class _SetNotificationState extends State<SetNotification> {
                   set_4 = newValue;
                 });
               },
-            )
-        ),
-        settingWithSwitch(title: Text('申請通知'), switchWidget: SwitchWidget(
-          value: set_5,
-          onChanged: (bool newValue) {
-            setState(() {
-              set_5 = newValue;
-            });
-          },
-        )
-        ),
+            )),
+        settingWithSwitch(
+            title: const Text('申請通知'),
+            switchWidget: SwitchWidget(
+              value: set_5,
+              onChanged: (bool newValue) {
+                setState(() {
+                  set_5 = newValue;
+                });
+              },
+            )),
       ],
     );
-
   }
-
 }

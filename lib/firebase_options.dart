@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -30,12 +29,12 @@ class DefaultFirebaseOptions {
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -68,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '713162264634',
     projectId: 'upyoung-bb219',
     storageBucket: 'upyoung-bb219.appspot.com',
-    iosClientId: '713162264634-2dt25aphfq0hd8j48dtvocsrrrt43s8g.apps.googleusercontent.com',
+    iosClientId:
+        '713162264634-2dt25aphfq0hd8j48dtvocsrrrt43s8g.apps.googleusercontent.com',
     iosBundleId: 'com.example.upyongTest',
   );
 
@@ -78,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '713162264634',
     projectId: 'upyoung-bb219',
     storageBucket: 'upyoung-bb219.appspot.com',
-    iosClientId: '713162264634-84lnereit3m9eov597pd4umikfqv8fq4.apps.googleusercontent.com',
+    iosClientId:
+        '713162264634-84lnereit3m9eov597pd4umikfqv8fq4.apps.googleusercontent.com',
     iosBundleId: 'com.example.upyongTest.RunnerTests',
   );
 }

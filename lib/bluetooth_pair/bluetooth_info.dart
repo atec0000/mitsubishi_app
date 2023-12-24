@@ -1,26 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../widget/static_style.dart';
 import 'bluetooth_info2.dart'; // 导入modal_progress_hud_nsn
 
-
-
-
 class BluetoothInfoPage extends StatefulWidget {
-  BluetoothInfoPage ({Key? key}) : super(key: key);
-
-
+  const BluetoothInfoPage({Key? key}) : super(key: key);
 
   @override
   _BluetoothInfoPageState createState() => _BluetoothInfoPageState();
 }
 
-
-
-class  _BluetoothInfoPageState extends State<BluetoothInfoPage> {
-
+class _BluetoothInfoPageState extends State<BluetoothInfoPage> {
   @override
   void initState() {
     super.initState();
@@ -35,36 +26,37 @@ class  _BluetoothInfoPageState extends State<BluetoothInfoPage> {
     return permOne && permTwo && permThree ? true : false;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('新增設備'),
-      ),
-
-      body:content()
-    );
+        appBar: AppBar(
+          title: const Text('新增設備'),
+        ),
+        body: content());
   }
 
-  Widget content(){
+  Widget content() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('請按下設備配對鍵進入配對模式', style: TextStyle(fontSize: 24),textAlign: TextAlign.start,),
-          SizedBox(height: 50),
-          Image(
+          const Text(
+            '請按下設備配對鍵進入配對模式',
+            style: TextStyle(fontSize: 24),
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 50),
+          const Image(
             image: NetworkImage('https://via.placeholder.com/350'),
             width: 350,
             height: 350,
           ),
-          SizedBox(height: 100),
+          const SizedBox(height: 100),
           Theam().next_step_Buttons('下一步', context, () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => BluetoothInfoPage2(),
+                builder: (context) => const BluetoothInfoPage2(),
               ),
             );
           }),

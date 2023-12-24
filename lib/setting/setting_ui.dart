@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/setting/setting_widget.dart';
 
-class SetUI extends StatefulWidget{
-
-  SetUI({Key? key}) : super(key: key);
+class SetUI extends StatefulWidget {
+  const SetUI({Key? key}) : super(key: key);
 
   @override
   _SetUIState createState() => _SetUIState();
@@ -13,40 +12,34 @@ class _SetUIState extends State<SetUI> {
   int? selectedOption;
   int? selectedOption_2;
 
-
   @override
   void initState() {
     super.initState();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('介面設定'),
+        title: const Text('介面設定'),
         centerTitle: true,
       ),
       body: settingcard(),
     );
   }
 
-  Widget settingcard(){
+  Widget settingcard() {
     return Column(
       children: [
-        Text('介面顏色'),
+        const Text('介面顏色'),
         MyCheckbox(
-          label: '系統預設',
-          isSelected: selectedOption == 1,
-          onToggle: (isChecked) {
-            setState(() {
-              selectedOption = isChecked ? 1 : null;
-            });
-
-          }
-        ),
+            label: '系統預設',
+            isSelected: selectedOption == 1,
+            onToggle: (isChecked) {
+              setState(() {
+                selectedOption = isChecked ? 1 : null;
+              });
+            }),
         MyCheckbox(
           label: '黑色模式',
           isSelected: selectedOption == 2,
@@ -63,11 +56,9 @@ class _SetUIState extends State<SetUI> {
             setState(() {
               selectedOption = isChecked ? 3 : null;
             });
-
-
           },
         ),
-        Text('介面語言'),
+        const Text('介面語言'),
         MyCheckbox(
           label: '系統預設',
           isSelected: selectedOption_2 == 1,
@@ -104,13 +95,7 @@ class _SetUIState extends State<SetUI> {
             });
           },
         ),
-
-
-
-
       ],
     );
-
   }
-
 }

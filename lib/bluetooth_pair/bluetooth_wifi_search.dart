@@ -5,7 +5,7 @@ import 'package:mitsubishi_app/widget/static_style.dart';
 import 'bluetooth_wifi_connect.dart';
 
 class Bluetoothwifisearch extends StatefulWidget {
-  Bluetoothwifisearch({Key? key}) : super(key: key);
+  const Bluetoothwifisearch({Key? key}) : super(key: key);
 
   @override
   _BluetoothwifisearchState createState() => _BluetoothwifisearchState();
@@ -31,7 +31,7 @@ class _BluetoothwifisearchState extends State<Bluetoothwifisearch> {
 
     bool stopSearching = false;
 
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       stopSearching = true;
       setState(() {
         isLoading = false;
@@ -60,14 +60,14 @@ class _BluetoothwifisearchState extends State<Bluetoothwifisearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('新增設備'),
+        title: const Text('新增設備'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            if (isLoading) CircularProgressIndicator(),
+            const SizedBox(height: 20),
+            if (isLoading) const CircularProgressIndicator(),
             Expanded(
               child: ListView.builder(
                 itemCount: wifiList.length,
@@ -79,7 +79,8 @@ class _BluetoothwifisearchState extends State<Bluetoothwifisearch> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Bluetoothwificonnect(wifiResult: wifiResult),
+                          builder: (context) =>
+                              Bluetoothwificonnect(wifiResult: wifiResult),
                         ),
                       );
                     },

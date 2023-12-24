@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mitsubishi_app/common/index.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
 
 class ScheduleMainPage extends StatefulWidget {
   const ScheduleMainPage({super.key});
 
-
   @override
   _ScheduleMainPageState createState() => _ScheduleMainPageState();
-
 }
 
-class _ScheduleMainPageState extends State<ScheduleMainPage>{
+class _ScheduleMainPageState extends State<ScheduleMainPage> {
   bool isLoading = false;
   List<bool> checkList = [false, false, false, false];
 
@@ -20,32 +18,32 @@ class _ScheduleMainPageState extends State<ScheduleMainPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white70,
-
       body: ModalProgressHUD(
         inAsyncCall: isLoading,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
-            children:[
+            children: [
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child:Text('外出模式',
+                    child: Text(
+                      '外出模式',
                       //textAlign: TextAlign.left,
                       style: TextStyle(
                         //fontWeight: FontWeight.bold,
                         fontSize: 16,
                         //color: color3,
                       ),
-                    ),)
+                    ),
+                  )
                 ],
               ),
-
               SizedBox(
                 height: 190.0,
                 child: SingleChildScrollView(
-                  scrollDirection:Axis.horizontal,
+                  scrollDirection: Axis.horizontal,
                   child: IntrinsicWidth(
                     child: Row(
                       children: modeCard(),
@@ -57,22 +55,23 @@ class _ScheduleMainPageState extends State<ScheduleMainPage>{
                   ),
                 ),
               ),
-
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child:Text('排程控制',
+                    child: Text(
+                      '排程控制',
                       //textAlign: TextAlign.left,
                       style: TextStyle(
                         //fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
-                    ),)
+                    ),
+                  )
                 ],
               ),
-              Expanded(child:
-                SingleChildScrollView(
+              Expanded(
+                child: SingleChildScrollView(
                   child: IntrinsicHeight(
                     child: Column(
                       children: buildCard(),
@@ -81,24 +80,21 @@ class _ScheduleMainPageState extends State<ScheduleMainPage>{
                 ),
                 // Column(children: buildCard(),)
               ),
-
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  side: const BorderSide(
-                    color: Colors.black,
-                  ),
-                  minimumSize: const Size(353, 56),
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.all(0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(1),
-                  )
-                ),
-                onPressed: (){
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    minimumSize: const Size(353, 56),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.all(0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(1),
+                    )),
+                onPressed: () {
                   addNew();
                 },
-
                 child: const Text('+'),
               ),
             ],
@@ -110,21 +106,20 @@ class _ScheduleMainPageState extends State<ScheduleMainPage>{
 
   List<Widget> modeCard() {
     List<Widget> cardList = [];
-    for(int i = 0 ; i<3; i++){
-
+    for (int i = 0; i < 3; i++) {
       Widget wc = SizedBox(
         width: 250,
         child: itemCard(i),
       );
       cardList.add(wc);
     }
-    
+
     return cardList;
   }
 
   List<Card> buildCard() {
     List<Card> cardList = [];
-    for(int i = 0 ; i<4; i++){
+    for (int i = 0; i < 4; i++) {
       cardList.add(itemCard(i));
     }
     return cardList;
@@ -136,55 +131,51 @@ class _ScheduleMainPageState extends State<ScheduleMainPage>{
       color: Colors.green[100],
       shadowColor: Colors.blueGrey,
       elevation: 10,
-      child:  Row(
+      child: Row(
         //mainAxisAlignment: MainAxisAlignment.start,
-        children:[
+        children: [
           Expanded(
-            child:
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const ListTile(
-                leading: Icon (
-                    Icons.album,
-                    color: Colors.cyan,
-                    size: 45
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const ListTile(
+                  leading: Icon(Icons.album, color: Colors.cyan, size: 45),
+                  title: Text(
+                    "排程名稱",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  subtitle: Text('開啟冷氣'),
                 ),
-                title: Text(
-                  "排程名稱",
-                  style: TextStyle(fontSize: 20),
+                ButtonBarTheme(
+                  // make buttons use the appropriate styles for cards
+                  data: const ButtonBarThemeData(),
+                  child: ButtonBar(
+                    children: [
+                      TextButton(
+                        child: const Text('Add '),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
                 ),
-                subtitle: Text('開啟冷氣'),
-              ),
-
-              ButtonBarTheme ( // make buttons use the appropriate styles for cards
-                data: const ButtonBarThemeData(),
-                child: ButtonBar(
-                  children: [
-                    TextButton(
-                      child: const Text('Add '),
-                      onPressed: (){},
-                    ),
-
-                  ],
-                ),
-              ),
-            ],
-          ),
+              ],
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CupertinoSwitch(value: checkList[a], onChanged: (isCheck) {
-                setState(() {
-                  checkList[a] = isCheck;
-                });
-              }),
+              CupertinoSwitch(
+                  value: checkList[a],
+                  onChanged: (isCheck) {
+                    setState(() {
+                      checkList[a] = isCheck;
+                    });
+                  }),
               const SizedBox(
                 height: 40,
               ),
               TextButton(
-                child: const Text('More'),
+                child: const TextWidget.body1('edit'),
                 onPressed: () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
                   //   return const ();
@@ -198,7 +189,7 @@ class _ScheduleMainPageState extends State<ScheduleMainPage>{
     );
   }
 
-  void addNew(){
+  void addNew() {
     //Get.to(() => const LoginPostScreen(""));
   }
 }

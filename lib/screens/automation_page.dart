@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
-
-import '../schedule/schedule_list_page.dart';
+import 'package:mitsubishi_app/automation/index.dart';
+import 'package:mitsubishi_app/automation/schedule/schedule_list_page/index.dart';
+//import 'package:mitsubishi_app/common/widgets/text.dart';
 
 class AutomationPage extends StatelessWidget {
   const AutomationPage({super.key});
@@ -34,7 +34,6 @@ class TabControllerAuto extends StatelessWidget {
         final TabController tabController = DefaultTabController.of(context);
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
-
             // To get index of current tab use tabController.index
           }
         });
@@ -43,22 +42,26 @@ class TabControllerAuto extends StatelessWidget {
             title: const Text('自動控制'),
             bottom: const TabBar(
               tabs: tabs,
+              labelColor: Colors.black,
             ),
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
           ),
           body: bodyView(context),
-          
         );
       }),
     );
   }
-  
-  Widget bodyView(BuildContext context) {
 
+  Widget bodyView(BuildContext context) {
     return TabBarView(
-      children: [const ScheduleMainPage(),Text(
-        'Tab',
-        style: Theme.of(context).textTheme.headlineSmall,
-      )],
+      children: [
+        const ScheduleListPage(),
+        Text(
+          'Tab',
+          style: Theme.of(context).textTheme.headlineSmall,
+        )
+      ],
     );
 
     // return TabBarView(

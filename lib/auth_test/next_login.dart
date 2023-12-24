@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mitsubishi_app/auth_test/register_user.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
-import '../service/api_service.dart';
 
 import 'constants.dart';
 import 'login_post.dart';
@@ -11,14 +8,12 @@ import 'login_post.dart';
 class NextLoginScreen extends StatefulWidget {
   const NextLoginScreen({super.key});
 
-
   @override
-
   _NextLoginScreenState createState() => _NextLoginScreenState();
 }
 
-class _NextLoginScreenState extends State<NextLoginScreen>{
-  String email = '' ;
+class _NextLoginScreenState extends State<NextLoginScreen> {
+  String email = '';
   bool showSpinner = false;
 
   // void goToNext() async {
@@ -52,8 +47,6 @@ class _NextLoginScreenState extends State<NextLoginScreen>{
   @override
   void initState() {
     super.initState();
-
-
   }
 
   @override
@@ -79,21 +72,23 @@ class _NextLoginScreenState extends State<NextLoginScreen>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                  child:Text(EMAIL,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: color3,
+                    child: Text(
+                      EMAIL,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: color3,
+                      ),
                     ),
-                  ),)
+                  )
                 ],
               ),
               const SizedBox(
                 height: 12,
               ),
               TextField(
-                controller: TextEditingController()..text= email,
+                controller: TextEditingController()..text = email,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
@@ -116,17 +111,15 @@ class _NextLoginScreenState extends State<NextLoginScreen>{
                   foregroundColor: Colors.black,
                   padding: const EdgeInsets.all(0),
                 ),
-                onPressed: (){
+                onPressed: () {
                   // goToNext();
                   Get.to(() => LoginPostScreen(email));
                 },
                 child: const Text('下一步'),
-
               ),
               const SizedBox(
                 height: 50,
               ),
-
 
               // TextField(
               //   controller: TextEditingController()..text= password,
@@ -139,13 +132,10 @@ class _NextLoginScreenState extends State<NextLoginScreen>{
               //   decoration: kTextFieldDecoration.copyWith(
               //       hintText: 'Enter your password'),
               // ),
-
             ],
           ),
         ),
       ),
     );
-
   }
-
 }

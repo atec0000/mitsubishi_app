@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -10,13 +9,12 @@ import '../model/ac_status_ca51.dart';
 import '../service/command_parser_ca51.dart';
 import '../service/tcp_service.dart';
 
-
-
 AcStatusCa51 _acStatus = AcStatusCa51.off();
 final TcpService _tcpService = TcpService();
 //這裡是一些靜態部件的集合
 typedef ButtonCallback = void Function();
 typedef VoidCallback = void Function();
+
 class Theam {
   LinearGradient buildGradient(Color color1, Color color2,
       AlignmentGeometry startAlignment, AlignmentGeometry endAlignment) {
@@ -27,10 +25,10 @@ class Theam {
     );
   }
 
-  static Widget fan_button_as(BuildContext context, String buttonText, VoidCallback onPressed) {
+  static Widget fan_button_as(
+      BuildContext context, String buttonText, VoidCallback onPressed) {
     return StatefulBuilder(
       builder: (context, setState) {
-
         return Material(
           borderRadius: BorderRadius.circular(20.0),
           elevation: 5,
@@ -42,21 +40,21 @@ class Theam {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BluetoothScreen(),
+                  builder: (context) => const BluetoothScreen(),
                 ),
               );
             },
             child: Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle, // 設置按鈕形狀為圓形
                 color: Colors.grey,
               ),
               child: Center(
                 child: Text(
                   buttonText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
@@ -69,13 +67,13 @@ class Theam {
     );
   }
 
-  static Widget signup_Buttons(String text, BuildContext context,
-      VoidCallback onPressed) {
+  static Widget signup_Buttons(
+      String text, BuildContext context, VoidCallback onPressed) {
     return ElevatedButton(
       onPressed: onPressed, // 将外部传递的函数设置为按钮的 onPressed
       style: ElevatedButton.styleFrom(
-        primary: Color.fromARGB(255, 194, 46, 99),
-        onPrimary: Colors.white,
+        foregroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 194, 46, 99),
         textStyle: const TextStyle(
           fontSize: 15,
         ),
@@ -84,13 +82,13 @@ class Theam {
     );
   }
 
-  static Widget login_Buttons(String text, BuildContext context,
-      VoidCallback onPressed) {
+  static Widget login_Buttons(
+      String text, BuildContext context, VoidCallback onPressed) {
     return ElevatedButton(
       onPressed: onPressed, // 将外部传递的函数設置为按钮的 onPressed
       style: ElevatedButton.styleFrom(
-        primary: Color.fromARGB(255, 194, 46, 99),
-        onPrimary: Colors.white,
+        foregroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 194, 46, 99),
         textStyle: const TextStyle(
           fontSize: 15,
         ),
@@ -99,14 +97,14 @@ class Theam {
     );
   }
 
-  Widget next_step_Buttons(String text, BuildContext context,
-      VoidCallback onPressed) {
+  Widget next_step_Buttons(
+      String text, BuildContext context, VoidCallback onPressed) {
     return InkWell(
       onTap: onPressed, // 将外部传递的函数设置为按钮的 onTap
       child: Container(
         width: 250, // 设置按钮的宽度
         height: 50, // 设置按钮的高度
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -120,7 +118,7 @@ class Theam {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               color: Colors.white,
             ),
@@ -130,8 +128,8 @@ class Theam {
     );
   }
 
-  static Widget fan_button(BuildContext context, String buttonText,
-      ButtonCallback onPressed) {
+  static Widget fan_button(
+      BuildContext context, String buttonText, ButtonCallback onPressed) {
     return StatefulBuilder(
       builder: (context, setState) {
         Color splashColor = Colors.black12;
@@ -187,19 +185,19 @@ class Theam {
     );
   }
 
-
-  Widget buildCustomRectangle_2(BuildContext context,
-      List<Widget> children,
-      double height,
-      double horizontalMargin,) {
+  Widget buildCustomRectangle_2(
+    BuildContext context,
+    List<Widget> children,
+    double height,
+    double horizontalMargin,
+  ) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: horizontalMargin, vertical:3),
+      margin: EdgeInsets.symmetric(horizontal: horizontalMargin, vertical: 3),
       width: double.infinity,
       height: height,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color.fromARGB(168, 51, 51, 59),
-        ),
-
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(18.0), // Adjust as needed
         child: Row(
@@ -210,39 +208,40 @@ class Theam {
     );
   }
 
-  Widget buildCustomRectangle( //這是風量風向選擇
-      BuildContext context,
-      String title,
-      dynamic status,
-      IconData iconData,
-      VoidCallback rightArrowCallback,
-      ) {
+  Widget buildCustomRectangle(
+    //這是風量風向選擇
+    BuildContext context,
+    String title,
+    dynamic status,
+    IconData iconData,
+    VoidCallback rightArrowCallback,
+  ) {
     return Theam().buildCustomRectangle_2(
       context,
       [
         Text(
           title,
-          style: TextStyle(color: Colors.white, fontSize: 15),
+          style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
-        SizedBox(width: 10),
-        Icon(
+        const SizedBox(width: 10),
+        const Icon(
           Icons.keyboard_arrow_left_outlined,
           color: Colors.white,
           size: 15,
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Text(
           status.toString(),
-          style: TextStyle(color: Colors.white, fontSize: 15),
+          style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         GestureDetector(
           onTap: rightArrowCallback,
-        child:Icon(
-          Icons.chevron_right_outlined,
-          color: Colors.white,
-          size: 15,
-        ),
+          child: const Icon(
+            Icons.chevron_right_outlined,
+            color: Colors.white,
+            size: 15,
+          ),
         ),
       ],
       60,
@@ -250,18 +249,19 @@ class Theam {
     );
   }
 
-  Widget buildCustomRectangleSwitch(  //定時switch開關
-      BuildContext context,
-      String title,
-      ) {
+  Widget buildCustomRectangleSwitch(
+    //定時switch開關
+    BuildContext context,
+    String title,
+  ) {
     return Theam().buildCustomRectangle_2(
       context,
       [
         Text(
           title,
-          style: TextStyle(color: Colors.white, fontSize: 15),
+          style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
-        SizedBox(width: 50),
+        const SizedBox(width: 50),
         SwitchWidget(
           value: _acStatus.timer > 0,
           onChanged: (newValue) {
@@ -278,12 +278,12 @@ class Theam {
     );
   }
 
-
-
-  Widget buildCustomGradientRectangle(BuildContext context,  //模式選擇
-      List<Widget> children,
-      double height,
-      double horizontalMargin,) {
+  Widget buildCustomGradientRectangle(
+    BuildContext context, //模式選擇
+    List<Widget> children,
+    double height,
+    double horizontalMargin,
+  ) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: horizontalMargin, vertical: 5),
       child: Container(
@@ -291,7 +291,7 @@ class Theam {
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40.0),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
@@ -314,7 +314,6 @@ class Theam {
   }
 }
 
-
 class CustomSlider_2 extends StatelessWidget {
   final double value;
   final double min;
@@ -323,7 +322,7 @@ class CustomSlider_2 extends StatelessWidget {
   final ValueChanged<double>? onChanged;
   final ValueChanged<double>? onChangedEnd;
 
-  CustomSlider_2({
+  const CustomSlider_2({
     Key? key,
     required this.value,
     required this.min,
@@ -335,49 +334,47 @@ class CustomSlider_2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return SliderTheme(
-        data: SliderTheme.of(context).copyWith(
-          trackHeight: 4.0,
-          activeTrackColor: Colors.green,
-          thumbColor: Colors.white,
-        ),
-        child: Transform.scale(
-          scale: 1.5, // Adjust the scale factor as needed
-          child: SleekCircularSlider(
-            min: min,
-            max: max,
-            initialValue: value,
-            onChange: onChanged,
-            onChangeEnd: onChangedEnd,
-            appearance: CircularSliderAppearance(
-              customWidths: CustomSliderWidths(
-                trackWidth: 10.0,
-                progressBarWidth: 15.0,
-              ),
-              customColors: CustomSliderColors(
-                trackColor: Color.fromARGB(250, 59, 56, 56),
-                progressBarColors: [
-                  Color.fromARGB(197, 0, 108, 253),
-                  Color.fromARGB(197, 0, 39, 73),
-                ],
-              ),
-              infoProperties: InfoProperties(
-                modifier: (value) => '${value.toInt()}°C',
-                mainLabelStyle: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                ),
-              ),
-              startAngle: 0,
-              angleRange: 360,
+    return SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        trackHeight: 4.0,
+        activeTrackColor: Colors.green,
+        thumbColor: Colors.white,
+      ),
+      child: Transform.scale(
+        scale: 1.5, // Adjust the scale factor as needed
+        child: SleekCircularSlider(
+          min: min,
+          max: max,
+          initialValue: value,
+          onChange: onChanged,
+          onChangeEnd: onChangedEnd,
+          appearance: CircularSliderAppearance(
+            customWidths: CustomSliderWidths(
+              trackWidth: 10.0,
+              progressBarWidth: 15.0,
             ),
+            customColors: CustomSliderColors(
+              trackColor: const Color.fromARGB(250, 59, 56, 56),
+              progressBarColors: [
+                const Color.fromARGB(197, 0, 108, 253),
+                const Color.fromARGB(197, 0, 39, 73),
+              ],
+            ),
+            infoProperties: InfoProperties(
+              modifier: (value) => '${value.toInt()}°C',
+              mainLabelStyle: const TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+              ),
+            ),
+            startAngle: 0,
+            angleRange: 360,
           ),
         ),
-      );
-    }
+      ),
+    );
   }
-
-
+}
 
 class CustomSlider extends StatelessWidget {
   final double value;
@@ -388,7 +385,7 @@ class CustomSlider extends StatelessWidget {
   final bool powerOn;
   final bool isLoading;
 
-  CustomSlider({
+  const CustomSlider({
     Key? key,
     required this.value,
     required this.min,
@@ -402,7 +399,7 @@ class CustomSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading || (powerOn && value < 16)) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     } else {
@@ -426,15 +423,15 @@ class CustomSlider extends StatelessWidget {
                 progressBarWidth: 15.0,
               ),
               customColors: CustomSliderColors(
-                trackColor: Color.fromARGB(250, 59, 56, 56),
+                trackColor: const Color.fromARGB(250, 59, 56, 56),
                 progressBarColors: [
-                  Color.fromARGB(197, 0, 108, 253),
-                  Color.fromARGB(197, 0, 39, 73),
+                  const Color.fromARGB(197, 0, 108, 253),
+                  const Color.fromARGB(197, 0, 39, 73),
                 ],
               ),
               infoProperties: InfoProperties(
                 modifier: (value) => powerOn ? '${value.toInt()}°C' : '0',
-                mainLabelStyle: TextStyle(
+                mainLabelStyle: const TextStyle(
                   fontSize: 30,
                   color: Colors.white,
                 ),
@@ -458,7 +455,6 @@ Widget buildDivider(
       color: color,
     ),
   );
-
 }
 
 Widget buildShortVerticalDivider(double thickness, double height, Color color) {
@@ -469,8 +465,8 @@ Widget buildShortVerticalDivider(double thickness, double height, Color color) {
   );
 }
 
-Widget buildDividerWithText(
-    double height, Color color, double leftPadding, double rightPadding, String text) {
+Widget buildDividerWithText(double height, Color color, double leftPadding,
+    double rightPadding, String text) {
   return Padding(
     padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
     child: Row(
@@ -506,7 +502,7 @@ ButtonStyle customButtonStyle({required Color backgroundColor}) {
 }
 
 class SwitchRound extends StatelessWidget {
-
+  const SwitchRound({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -521,7 +517,7 @@ class SwitchRound extends StatelessWidget {
             child: Container(
               width: 150,
               height: 150,
-              color: Color.fromARGB(205, 8, 48, 98),
+              color: const Color.fromARGB(205, 8, 48, 98),
             ),
           ),
         ),
@@ -530,32 +526,33 @@ class SwitchRound extends StatelessWidget {
   }
 }
 
-Widget buildIconButton(IconData icon, VoidCallback onTap, {required Color iconColor}) {
+Widget buildIconButton(IconData icon, VoidCallback onTap,
+    {required Color iconColor}) {
   return GestureDetector(
     onTap: onTap,
     child: Column(
       children: [
         Icon(icon, size: 30, color: Colors.white),
-        SizedBox(height: 5),  // 添加垂直間距
+        const SizedBox(height: 5), // 添加垂直間距
       ],
     ),
   );
 }
+
 class SwitchWidget extends StatefulWidget {
   final bool value;
   final ValueChanged<bool>? onChanged;
 
-
-  const SwitchWidget({Key? key, required this.value, this.onChanged}) : super(key: key);
+  const SwitchWidget({Key? key, required this.value, this.onChanged})
+      : super(key: key);
 
   @override
   _SwitchWidgetState createState() => _SwitchWidgetState();
 }
 
 class _SwitchWidgetState extends State<SwitchWidget> {
-@override
-Widget build(BuildContext context) {
-
+  @override
+  Widget build(BuildContext context) {
     return buildSwitch();
   }
 
@@ -576,10 +573,6 @@ Widget build(BuildContext context) {
           widget.onChanged?.call(val);
         });
       },
-);
+    );
+  }
 }
-}
-
-
-
-

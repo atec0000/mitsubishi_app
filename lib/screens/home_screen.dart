@@ -4,12 +4,9 @@ import 'package:mitsubishi_app/service/secure_storage_service.dart';
 
 import '../auth_test/start_login.dart';
 import '../home_info/device_card.dart';
-import '../home_info/mqtt_connect.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -29,20 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
     print('Getting devices');
   }
 
-
-
   void _logout() async {
     await secureStorageService.deleteAccessToken();
     await secureStorageService.deleteRefreshToken();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginScreen(),
+        builder: (context) => const LoginScreen(),
       ),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         // backgroundColor: Colors.black,
         // title: Image.asset("assets/logo.png"),
-        title: Text('空調'),
+        title: const Text('空調'),
         actions: [
-          IconButton(onPressed: () => fetchDevices(), icon: const Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () => fetchDevices(), icon: const Icon(Icons.refresh)),
           IconButton(onPressed: _logout, icon: const Icon(Icons.logout))
         ],
       ),
@@ -60,7 +54,4 @@ class _HomeScreenState extends State<HomeScreen> {
       //body: MqttConnectionScreen(deviceMac: 'CCA614230008',),
     );
   }
-
-
-
 }

@@ -11,14 +11,11 @@ class Bluetoothselectdevice extends StatefulWidget {
 
   final ApiService apiService = ApiService();
 
-
   @override
   _BluetoothselectdeviceState createState() => _BluetoothselectdeviceState();
-
 }
 
-class  _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
-
+class _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
   final ApiService _apiService = ApiService();
   List<Device> devices = [];
   bool isLoading = false;
@@ -57,7 +54,7 @@ class  _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TabsScreen(),
+          builder: (context) => const TabsScreen(),
         ),
       );
     } catch (error) {
@@ -65,39 +62,62 @@ class  _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
       // 可以在这里更新UI或执行其他操作以显示错误消息
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('新增設備'),
+          title: const Text('新增設備'),
         ),
-
-        body:content()
-    );
-
-
+        body: content());
   }
 
-  Widget content(){
+  Widget content() {
     var espBlufi = EspBlufi.instance.getMac();
     return Center(
       child: Column(
         children: [
-          Text('請確認', style: TextStyle(fontSize: 24),),
-          Text(' • 行動裝置是否連上Wi-Fi環境', style: TextStyle(fontSize: 24),),
-          Text(' • 裝置燈是否正常', style: TextStyle(fontSize: 24),),
-          SizedBox(height: 20,),
-          Text('確認完請點擊', style: TextStyle(fontSize: 24),),
-          Theam().next_step_Buttons('註冊設備', context, () {_connectdevice(espBlufi); }),
-          SizedBox(height: 60,),
-          Text('若30秒後，裝置燈依舊沒有正常亮起', style: TextStyle(fontSize: 24),),
-          Text('請重新進行配對步驟', style: TextStyle(fontSize: 24),),
-          SizedBox(height: 20,),
+          const Text(
+            '請確認',
+            style: TextStyle(fontSize: 24),
+          ),
+          const Text(
+            ' • 行動裝置是否連上Wi-Fi環境',
+            style: TextStyle(fontSize: 24),
+          ),
+          const Text(
+            ' • 裝置燈是否正常',
+            style: TextStyle(fontSize: 24),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text(
+            '確認完請點擊',
+            style: TextStyle(fontSize: 24),
+          ),
+          Theam().next_step_Buttons('註冊設備', context, () {
+            _connectdevice(espBlufi);
+          }),
+          const SizedBox(
+            height: 60,
+          ),
+          const Text(
+            '若30秒後，裝置燈依舊沒有正常亮起',
+            style: TextStyle(fontSize: 24),
+          ),
+          const Text(
+            '請重新進行配對步驟',
+            style: TextStyle(fontSize: 24),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           Theam().next_step_Buttons('重新配對', context, () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TabsScreen(),
+                builder: (context) => const TabsScreen(),
               ),
             );
           }),

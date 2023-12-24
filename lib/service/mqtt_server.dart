@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:mitsubishi_app/service/secure_storage_service.dart';
@@ -8,8 +7,10 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 final SecureStorageService _secureStorageService = SecureStorageService();
 
 Future<MqttServerClient> connect() async {
-  MqttServerClient client =
-  MqttServerClient.withPort('broker.wificontrolbox.com', 'Selina_${DateTime.now().millisecondsSinceEpoch}', 1883);
+  MqttServerClient client = MqttServerClient.withPort(
+      'broker.wificontrolbox.com',
+      'Selina_${DateTime.now().millisecondsSinceEpoch}',
+      1883);
   client.logging(on: true);
   client.onConnected = onConnected;
   client.onDisconnected = onDisconnected;
@@ -23,7 +24,6 @@ Future<MqttServerClient> connect() async {
   print(userEmail);
   String accesstoken = await _secureStorageService.getAccessToken();
   print(accesstoken);
-
 
   final connMessage = MqttConnectMessage()
       .authenticateAs(userEmail, accesstoken)
@@ -46,13 +46,14 @@ Future<MqttServerClient> connect() async {
 
       // Check if the payload is JSON
       try {
-        var jsonMessage = json.decode(Utf8Decoder().convert(recv.payload.message));
+        var jsonMessage =
+            json.decode(const Utf8Decoder().convert(recv.payload.message));
         print("接收到的主题: $topicName, 消息 (JSON): $jsonMessage");
         // Handle the JSON message here
       } catch (_) {
         // If parsing as JSON fails, check if it's a string
         try {
-          var stringMessage = Utf8Decoder().convert(recv.payload.message);
+          var stringMessage = const Utf8Decoder().convert(recv.payload.message);
           print("接收到的主题: $topicName, 消息 (String): $stringMessage");
           // Handle the string message here
         } catch (_) {
@@ -70,12 +71,7 @@ Future<MqttServerClient> connect() async {
   }
 
   return client;
-
 }
-
-
-
-
 
 void onConnected() {
   print('Connected');

@@ -6,10 +6,11 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-Future<void> signInWithGoogle() async{
+Future<void> signInWithGoogle() async {
   try {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -23,24 +24,24 @@ Future<void> signInWithGoogle() async{
   }
 }
 
-String generateNonce([int length = 32]) {  //加密安全字串
-  final charset =
+String generateNonce([int length = 32]) {
+  //加密安全字串
+  const charset =
       '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
   final random = Random.secure();
   return List.generate(length, (_) => charset[random.nextInt(charset.length)])
       .join();
 }
 
-
-String sha256ofString(String input) { //以16進位回傳sha256雜湊值(彼特幣也使用)
+String sha256ofString(String input) {
+  //以16進位回傳sha256雜湊值(彼特幣也使用)
   final bytes = utf8.encode(input);
   final digest = sha256.convert(bytes);
   return digest.toString();
 }
 
 Future<void> signInWithApple() async {
-
-  try{
+  try {
     final rawNonce = generateNonce();
     final nonce = sha256ofString(rawNonce);
 
@@ -62,9 +63,7 @@ Future<void> signInWithApple() async {
     // Sign in the user with Firebase. If the nonce we generated earlier does
     // not match the nonce in `appleCredential.identityToken`, sign in will fail.
     await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-  }
-  catch(e){
+  } catch (e) {
     print("Apple Sing in Error: $e");
   }
-
 }

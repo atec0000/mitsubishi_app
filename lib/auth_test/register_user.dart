@@ -3,26 +3,21 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:mitsubishi_app/auth_test/constants.dart';
 import 'package:mitsubishi_app/auth_test/verify_email.dart';
 
-
 class RegisterPage extends StatefulWidget {
   final String email;
   const RegisterPage(this.email, {super.key});
 
   @override
-
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>{
-  String password = '' ;
+class _RegisterPageState extends State<RegisterPage> {
+  String password = '';
   bool showSpinner = false;
-
 
   @override
   void initState() {
     super.initState();
-
-
   }
 
   @override
@@ -47,22 +42,23 @@ class _RegisterPageState extends State<RegisterPage>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child:Text('設定密碼，來完成註冊步驟',
+                    child: Text(
+                      '設定密碼，來完成註冊步驟',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: color3,
                       ),
-                    ),)
+                    ),
+                  )
                 ],
               ),
-
               const SizedBox(
                 height: 12,
               ),
               TextField(
-                controller: TextEditingController()..text= password,
+                controller: TextEditingController()..text = password,
                 textAlign: TextAlign.center,
                 obscureText: true,
                 keyboardType: TextInputType.emailAddress,
@@ -92,22 +88,19 @@ class _RegisterPageState extends State<RegisterPage>{
                   //
                   // }
                   if (password != '') {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)
-                      => VerifyPage(widget.email)
-                    ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyPage(widget.email)));
                   }
                   //print('-=-=-==-=--=-$response');
                 },
-
                 child: const Text('註冊'),
               ),
-
             ],
           ),
         ),
       ),
     );
-
   }
-
 }

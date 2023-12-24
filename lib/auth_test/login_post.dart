@@ -8,45 +8,36 @@ import 'package:mitsubishi_app/auth_test/constants.dart';
 
 import '../screens/tabs.dart';
 
-
-
 class LoginPostScreen extends StatefulWidget {
   final String email;
   const LoginPostScreen(this.email, {super.key});
   @override
-
   _LoginPostScreenState createState() => _LoginPostScreenState();
 }
 
-class _LoginPostScreenState extends State<LoginPostScreen>{
-  String email = '' ;
+class _LoginPostScreenState extends State<LoginPostScreen> {
+  String email = '';
   String password = '';
   bool showSpinner = false;
 
   //SecureStorageService secureStorage = SecureStorageService();
 
   void goToNext() async {
-
     try {
       ApiService apiService = ApiService();
       final response = await apiService.login(widget.email, password);
       if (kDebugMode) {
-        Get.off(() => TabsScreen());
+        Get.off(() => const TabsScreen());
         print('Login OK');
       }
-
-
-
     } catch (e) {
       print(e);
     }
-
   }
 
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -71,22 +62,23 @@ class _LoginPostScreenState extends State<LoginPostScreen>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child:Text(EMAIL,
+                    child: Text(
+                      EMAIL,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: color3,
                       ),
-                    ),)
+                    ),
+                  )
                 ],
               ),
-
               const SizedBox(
                 height: 12,
               ),
               TextField(
-                controller: TextEditingController()..text= widget.email,
+                controller: TextEditingController()..text = widget.email,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
@@ -103,22 +95,23 @@ class _LoginPostScreenState extends State<LoginPostScreen>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child:Text('輸入密碼，來登入您的帳號',
+                    child: Text(
+                      '輸入密碼，來登入您的帳號',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: color3,
                       ),
-                    ),)
+                    ),
+                  )
                 ],
               ),
               const SizedBox(
                 height: 12,
               ),
-
               TextField(
-                controller: TextEditingController()..text= password,
+                controller: TextEditingController()..text = password,
                 textAlign: TextAlign.center,
                 obscureText: true,
                 keyboardType: TextInputType.emailAddress,
@@ -141,10 +134,9 @@ class _LoginPostScreenState extends State<LoginPostScreen>{
                   foregroundColor: Colors.black,
                   padding: const EdgeInsets.all(0),
                 ),
-                onPressed: (){
+                onPressed: () {
                   goToNext();
                 },
-
                 child: const Text('登入'),
               ),
             ],
@@ -152,7 +144,5 @@ class _LoginPostScreenState extends State<LoginPostScreen>{
         ),
       ),
     );
-
   }
-
 }

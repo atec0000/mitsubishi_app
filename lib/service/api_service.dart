@@ -3,7 +3,6 @@ import 'package:mitsubishi_app/service/secure_storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-
 class ApiService {
   final String _baseUrl = 'https://apitest.aifaremote.com';
   //final String _baseUrl ='https://api.wificontrolbox.com';
@@ -54,22 +53,23 @@ class ApiService {
     try {
       final response = await _dio.post(
         '/v1/user/check',
-        data: {
-          'email': email
-        },
+        data: {'email': email},
       );
 
       return response.statusCode;
     } on DioException catch (error) {
-      if (error.response != null ) {
+      if (error.response != null) {
         return error.response?.statusCode;
-      }else {
+      } else {
         throw Exception('Failed to check');
       }
     }
   }
 
-  Future<Response<dynamic>>register(String email,String password,) async{
+  Future<Response<dynamic>> register(
+    String email,
+    String password,
+  ) async {
     try {
       final response = await _dio.post(
         '/v1/user/register',
@@ -82,11 +82,11 @@ class ApiService {
         },
         options: Options(headers: null),
       );
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         print("OK");
       }
       return response;
-    }catch (error) {
+    } catch (error) {
       throw Exception('Failed to $error');
     }
   }
@@ -95,7 +95,7 @@ class ApiService {
     try {
       final response = await _dio.post(
         '/oauth2/token',
-      //'/v1/user/auth',
+        //'/v1/user/auth',
         data: {
           'email': email,
           'password': password,
@@ -120,7 +120,6 @@ class ApiService {
   }
 
   bool isAccessTokenExpired(String accessToken) {
-
     final decodedToken =
         JwtDecoder.decode(accessToken); // Assuming you're using JW
 
@@ -141,7 +140,7 @@ class ApiService {
       try {
         final response = await _dio.post(
           '/oauth2/token',
-        //'/v1/user/auth',
+          //'/v1/user/auth',
           data: {
             'refresh_token': refreshToken,
             'client_id': _clientId,
@@ -170,24 +169,22 @@ class ApiService {
   }
 
   Future<void> addDevice(String inMac) async {
-    final SecureStorageService _secureStorageService = SecureStorageService();
-    final accessToken = await _secureStorageService.getAccessToken();
-    if (accessToken != null) {
-      final response = await _dio.post(
-        '/devices',
-        data: {
-          'mac': inMac,
-        },
-        // options: Options(
-        //   headers: {'Authorization':'Bearer $accessToken'}, // 手动添加头部
-        // ),
-      );
-      if (response.statusCode == 201) {
-        return response.data;
-      } else {
-        print('HTTP Status: ${response.statusCode}');
-        throw Exception('Failed to add device');
-      }
+    final SecureStorageService secureStorageService = SecureStorageService();
+    final accessToken = await secureStorageService.getAccessToken();
+    final response = await _dio.post(
+      '/devices',
+      data: {
+        'mac': inMac,
+      },
+      // options: Options(
+      //   headers: {'Authorization':'Bearer $accessToken'}, // 手动添加头部
+      // ),
+    );
+    if (response.statusCode == 201) {
+      return response.data;
+    } else {
+      print('HTTP Status: ${response.statusCode}');
+      throw Exception('Failed to add device');
     }
   }
 
@@ -309,5 +306,4 @@ class ApiService {
   //     }
   //   }
   // }
-
 }

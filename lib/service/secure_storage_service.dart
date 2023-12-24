@@ -37,5 +37,4 @@ class SecureStorageService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('user_email', email);
   }
-
 }

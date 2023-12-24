@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  flutter_localizations:
+    sdk: flutter
 
   flutter_blue_plus: ^1.29.5
   flutter_blufi:
@@ -54,6 +57,7 @@ dependencies:
   flutter_svg: ^2.0.9
   universal_html: ^2.0.5
   modal_progress_hud_nsn: ^0.4.0
+  
   permission_handler: ^11.0.1
   url_launcher: ^6.1.14
   open_settings: ^2.0.2
@@ -63,6 +67,7 @@ dependencies:
   shared_preferences: ^2.2.2
   device_info_plus: ^9.1.1
   get: ^4.6.5
+  pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:

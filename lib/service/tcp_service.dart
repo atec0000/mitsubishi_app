@@ -99,7 +99,7 @@ class TcpService {
 
     // Ensure the hexString has an even number of characters
     if (hexString.length % 2 != 0) {
-      hexString = '0' + hexString;
+      hexString = '0$hexString';
     }
 
     for (int i = 0; i < hexString.length; i += 2) {

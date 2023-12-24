@@ -85,7 +85,8 @@ class AcStatusCa51 {
     );
   }
 
-  factory AcStatusCa51.fromSingleByteResponse(AcStatusCa51 oldStatus, Uint8List bytes) {
+  factory AcStatusCa51.fromSingleByteResponse(
+      AcStatusCa51 oldStatus, Uint8List bytes) {
     assert(bytes.length == 4);
 
     if (bytes.elementAt(2) == 0xa2) {
@@ -126,7 +127,7 @@ class AcStatusCa51 {
       Uint8List.fromList(
         List.generate(
           bytes.length ~/ 2,
-              (index) {
+          (index) {
             final byteString = bytes.substring(index * 2, index * 2 + 2);
             return int.parse(byteString, radix: 16);
           },
@@ -266,7 +267,6 @@ int _getDirectionByte(AirConditionerDirection direction) {
   }
 }
 
-
 enum AirConditionerMode {
   auto,
   cool,
@@ -274,6 +274,7 @@ enum AirConditionerMode {
   fan,
   heat,
 }
+
 enum AirConditionerSpeed {
   auto,
   quiet1,
@@ -287,6 +288,7 @@ enum AirConditionerSpeed {
   strong1,
   strong2,
 }
+
 enum AirConditionerDirection {
   off,
   auto,
@@ -361,7 +363,6 @@ AirConditionerSpeed _speedFromByte(int byte) {
   }
 }
 
-
 Map<int, AirConditionerDirection> directionByteMap = {
   0x81: AirConditionerDirection.auto,
   0x86: AirConditionerDirection.T1,
@@ -375,16 +376,15 @@ Map<int, AirConditionerDirection> directionByteMap = {
   0xfe: AirConditionerDirection.T1_5,
   0xc6: AirConditionerDirection.T15,
   0xe2: AirConditionerDirection.T45,
-  0xb2:AirConditionerDirection.T34,
-  0xce:AirConditionerDirection.T125,
-  0x8e:AirConditionerDirection.T12,
-  0xa6:AirConditionerDirection.T14,
-  0xca:AirConditionerDirection.T25,
-  0xbe:AirConditionerDirection.T1234,
-  0xfa:AirConditionerDirection.T2345,
-  0xd6:AirConditionerDirection.T135,
-  0x00:AirConditionerDirection.off,
-
+  0xb2: AirConditionerDirection.T34,
+  0xce: AirConditionerDirection.T125,
+  0x8e: AirConditionerDirection.T12,
+  0xa6: AirConditionerDirection.T14,
+  0xca: AirConditionerDirection.T25,
+  0xbe: AirConditionerDirection.T1234,
+  0xfa: AirConditionerDirection.T2345,
+  0xd6: AirConditionerDirection.T135,
+  0x00: AirConditionerDirection.off,
 };
 
 AirConditionerDirection _directionFromByte(int byte) {
@@ -403,7 +403,6 @@ AirConditionerDirection _directionFromByte2(int byte) {
   }
 }
 
-
 double getRealTemperatureV3(int temp) {
   double tempD = temp.toDouble();
   double realTemp = -45 + 175 * (tempD / 65536);
@@ -412,16 +411,14 @@ double getRealTemperatureV3(int temp) {
 
   double truncated = (realTemp * 10).roundToDouble() / 10;
 
-
   return truncated;
 }
 
 double getRealHumidityV3(int humid) {
   double humidD = humid.toDouble();
-  double realHumid = 125 * (humidD / 65535) -6 ;
+  double realHumid = 125 * (humidD / 65535) - 6;
 
   double truncated = (realHumid * 10).roundToDouble() / 10;
-
 
   return truncated;
 }

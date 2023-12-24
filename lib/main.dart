@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:mitsubishi_app/common/index.dart';
+import 'package:mitsubishi_app/global.dart';
 import 'package:mitsubishi_app/screens/tabs.dart';
 import 'package:mitsubishi_app/service/secure_storage_service.dart';
 import 'auth_test/start_login.dart';
 
-
-
-void main() {
+Future<void> main() async {
+  await Global.init();
   runApp(const MyApp());
 }
 
@@ -21,7 +22,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      // 多语言
+      translations: Translation(), // 词典
+      localizationsDelegates: Translation.localizationsDelegates, // 代理
+      supportedLocales: Translation.supportedLocales, // 支持的语言种类
+      locale: ConfigService.to.locale, // 当前语言种类
+      fallbackLocale: Translation.fallbackLocale, // 默认语言种类
+      home: const MyHomePage(),
+
     );
   }
 }
@@ -38,23 +46,20 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final SecureStorageService _secureStorageService = SecureStorageService();
   @override
-  void initState()  {
+  void initState() {
     super.initState();
 
     _checkTokenAndNavigate();
   }
 
   Future<void> _checkTokenAndNavigate() async {
-
     final accessToken = await _secureStorageService.getAccessToken();
 
     if (accessToken != '') {
@@ -63,14 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
         // Automatically navigate to the HomeScreen.
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => TabsScreen()),
+          MaterialPageRoute(builder: (context) => const TabsScreen()),
         );
       });
     } else {
       Future.delayed(Duration.zero, () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       });
     }
@@ -78,16 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return const Scaffold(
-
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
-
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.

@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../bluetooth_pair/bluetooth_screen.dart';
 import '../bluetooth_pair/pageswitch_blufi.dart';
 import '../model/ac_status_ca51.dart';
 import '../model/device.dart';
@@ -46,18 +44,18 @@ Widget buildCard(BuildContext context, Device device, AcStatusCa51 acStatus) {
       // 執行刪除裝置的操作
       _showDeleteDialog(context, device);
     },
-    child: Container(
+    child: SizedBox(
       height: cardSize,
       width: cardSize,
       child: Card(
         elevation: 15,
-        shape:RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25.0),
         ),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius:BorderRadius.circular(25.0),
-            gradient: LinearGradient(
+            borderRadius: BorderRadius.circular(25.0),
+            gradient: const LinearGradient(
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
               colors: [
@@ -74,7 +72,7 @@ Widget buildCard(BuildContext context, Device device, AcStatusCa51 acStatus) {
 }
 
 Widget buildCardContent(AcStatusCa51 acStatus, Device device) {
-  return Container(
+  return SizedBox(
     height: 200,
     child: Column(
       children: [
@@ -83,20 +81,18 @@ Widget buildCardContent(AcStatusCa51 acStatus, Device device) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 8.0, top: 8.0),
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
               child: getAcModeText(acStatus.mode),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 16.0, top: 8.0),
+              padding: const EdgeInsets.only(right: 16.0, top: 8.0),
               child: SwitchWidget(
                 value: _acStatus.power,
                 onChanged: (bool newvalue) {
-                  if (newvalue != null) {
-                    if (newvalue) {
-                      _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '01'));
-                    } else {
-                      _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '00'));
-                    }
+                  if (newvalue) {
+                    _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '01'));
+                  } else {
+                    _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '00'));
                   }
                 },
               ),
@@ -106,20 +102,22 @@ Widget buildCardContent(AcStatusCa51 acStatus, Device device) {
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.only(left: 8.0, bottom: 8.0),  // Added bottom padding
+            padding: const EdgeInsets.only(
+                left: 8.0, bottom: 8.0), // Added bottom padding
             child: Text(
               "${temperature.toInt()}°C ",
-              style: TextStyle(fontSize: 45, color: Colors.lightBlue),
+              style: const TextStyle(fontSize: 45, color: Colors.lightBlue),
             ),
           ),
         ),
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.only(left: 8.0, bottom: 16.0),  // Added bottom padding
+            padding: const EdgeInsets.only(
+                left: 8.0, bottom: 16.0), // Added bottom padding
             child: Text(
               "MHCAD_${device.mac.substring(device.mac.length - 4)}",
-              style: TextStyle(fontSize: 25, color: Colors.white),
+              style: const TextStyle(fontSize: 25, color: Colors.white),
             ),
           ),
         ),
@@ -133,7 +131,7 @@ Widget buildListView() {
     future: fetchDevices(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       } else if (snapshot.hasError) {
@@ -142,7 +140,8 @@ Widget buildListView() {
         );
       } else {
         return ListView.builder(
-          itemCount: (devices.length / 2).ceil() + (devices.length.isEven ? 1 : 0),
+          itemCount:
+              (devices.length / 2).ceil() + (devices.length.isEven ? 1 : 0),
           itemBuilder: (context, rowIndex) {
             var startIndex = rowIndex * 2;
             var endIndex = startIndex + 2;
@@ -159,14 +158,14 @@ Widget buildListView() {
                 cards.add(
                   Flexible(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 50.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: buildEmptyCardWithButton(
                         context,
-                            () {
+                        () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  PageSwitcher(),
+                              builder: (context) => const PageSwitcher(),
                             ),
                           );
                         },
@@ -176,19 +175,18 @@ Widget buildListView() {
                 );
               }
 
-
               if (devices.length % 2 == 0) {
                 cards.add(
                   Flexible(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 50.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: buildEmptyCardWithButton(
                         context,
-                            () {
+                        () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PageSwitcher(),
+                              builder: (context) => const PageSwitcher(),
                             ),
                           );
                         },
@@ -200,11 +198,11 @@ Widget buildListView() {
               if (devices.isEmpty) {
                 final emptyCardWithButton = buildEmptyCardWithButton(
                   context,
-                      () {
+                  () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PageSwitcher(),
+                        builder: (context) => const PageSwitcher(),
                       ),
                     );
                   },
@@ -214,15 +212,15 @@ Widget buildListView() {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         '請點擊這裡的',
                         style: TextStyle(fontSize: 15),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       emptyCardWithButton,
-                      SizedBox(width: 8),
-                      Text(
+                      const SizedBox(width: 8),
+                      const Text(
                         '開始新增設備',
                         style: TextStyle(fontSize: 15),
                         textAlign: TextAlign.center,
@@ -245,26 +243,27 @@ Widget buildListView() {
 
 Widget getAcModeText(AirConditionerMode mode) {
   if (_acStatus.power == false) {
-    return SizedBox();
+    return const SizedBox();
   }
 
   switch (mode) {
     case AirConditionerMode.auto:
-      return Icon(Icons.hdr_auto);
+      return const Icon(Icons.hdr_auto);
     case AirConditionerMode.cool:
-      return Icon(Icons.ac_unit);
+      return const Icon(Icons.ac_unit);
     case AirConditionerMode.heat:
-      return Icon(Icons.sunny);
+      return const Icon(Icons.sunny);
     case AirConditionerMode.dry:
-      return Icon(Icons.water_drop);
+      return const Icon(Icons.water_drop);
     case AirConditionerMode.fan:
-      return Icon(Icons.wind_power);
+      return const Icon(Icons.wind_power);
   }
 }
 
-Widget buildEmptyCardWithButton(BuildContext context, ButtonCallback onPressed) {
+Widget buildEmptyCardWithButton(
+    BuildContext context, ButtonCallback onPressed) {
   return Container(
-    margin: EdgeInsets.only(top: 8.0, right: 8.0),
+    margin: const EdgeInsets.only(top: 8.0, right: 8.0),
     child: Material(
       borderRadius: BorderRadius.circular(50.0),
       elevation: 5,
@@ -279,7 +278,7 @@ Widget buildEmptyCardWithButton(BuildContext context, ButtonCallback onPressed) 
             color: Colors.grey, // Transparent background
           ),
           alignment: Alignment.center, // Center the content
-          child: Text(
+          child: const Text(
             "+",
             style: TextStyle(
               fontSize: 50,
@@ -297,28 +296,26 @@ Future<void> _showDeleteDialog(BuildContext context, Device device) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('刪除裝置'),
-        content: Text('確定要刪除裝置嗎？'),
+        title: const Text('刪除裝置'),
+        content: const Text('確定要刪除裝置嗎？'),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(); // 關閉對話框
             },
-            child: Text('取消'),
+            child: const Text('取消'),
           ),
           TextButton(
             onPressed: () async {
               // 執行刪除裝置的操作
               await _apiService.delDevice(device.deviceid);
 
-
               Navigator.of(context).pop(); // 關閉對話框
             },
-            child: Text('確定'),
+            child: const Text('確定'),
           ),
         ],
       );
     },
   );
 }
-

@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/setting/setting_widget.dart';
 
-
-class SetPorductservice extends StatefulWidget{
-
-  SetPorductservice({Key? key}) : super(key: key);
+class SetPorductservice extends StatefulWidget {
+  const SetPorductservice({Key? key}) : super(key: key);
 
   @override
   _SetPorductserviceState createState() => _SetPorductserviceState();
 }
 
 class _SetPorductserviceState extends State<SetPorductservice> {
-
   @override
   void initState() {
     super.initState();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('產品服務'),
+        title: const Text('產品服務'),
         centerTitle: true,
       ),
       body: settingcard(),
     );
   }
 
-  Widget settingcard(){
+  Widget settingcard() {
     return Column(
       children: [
         settingurl(
@@ -60,7 +54,5 @@ class _SetPorductserviceState extends State<SetPorductservice> {
         ),
       ],
     );
-
   }
-
 }
