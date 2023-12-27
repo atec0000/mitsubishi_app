@@ -90,9 +90,15 @@ Widget buildCardContent(AcStatusCa51 acStatus, Device device) {
                 value: _acStatus.power,
                 onChanged: (bool newvalue) {
                   if (newvalue) {
-                    _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '01'));
+                    // _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '01'));
+                    _tcpService.sendCommand(air_poweron);
+                    Future.delayed(const Duration(milliseconds: 2000), () {
+                      _tcpService.sendCommand(air_poweron);
+                    });
+
                   } else {
-                    _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '00'));
+                    // _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '00'));
+                    _tcpService.sendCommand(air_poweroff);
                   }
                 },
               ),

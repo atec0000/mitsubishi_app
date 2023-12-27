@@ -17,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String email = 'mm4@aifa.com';
-  String password = 'aa';
+  String email = 'mm6@aifa.com';
+  String password = 'aaaaaaa1';
   bool showSpinner = false;
   String accessToken = '';
   String refreshToken = '';
