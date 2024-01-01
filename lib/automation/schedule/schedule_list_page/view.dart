@@ -35,7 +35,13 @@ class _ScheduleListPageViewGetX extends GetView<ScheduleListPageController> {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int position) {
               var scheduleItem = controller.scheduleList[position];
-              return ScheduleItemWidget(scheduleItem);
+              return ScheduleItemWidget(
+                scheduleItem,
+                isSelected: scheduleItem.isOn,//controller.isSelected(scheduleItem.isOn!),
+                // 选中回调
+                onSelect: (b) =>
+                   controller.onSelect(position, b),
+              );
             },
             childCount: controller.scheduleList.length,
           ),
@@ -70,7 +76,7 @@ class _ScheduleListPageViewGetX extends GetView<ScheduleListPageController> {
 
         // 栏位标题
         controller.scheduleList.isNotEmpty
-            ?  TextWidget.title2(LocaleKeys.tabBarSchedul.tr)                   
+            ?  const TextWidget.title2('排程控制')                   
                 .sliverToBoxAdapter()
                 .sliverPaddingHorizontal(AppSpace.page)
             : const SliverToBoxAdapter(),
@@ -106,7 +112,7 @@ class _ScheduleListPageViewGetX extends GetView<ScheduleListPageController> {
         return Scaffold(
           body: SmartRefresher(
             controller: controller.refreshController, // 刷新控制器
-            enablePullUp: true, // 启用上拉加载
+            //enablePullUp: true, // 启用上拉加载
             onRefresh: controller.onRefresh, // 下拉刷新回调
             //onLoading: controller.onLoading, // 上拉加载回调
             //footer: const SmartRefresherFooterWidget(), // 底部加载更多

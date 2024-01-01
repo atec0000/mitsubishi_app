@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mitsubishi_app/common/components/index.dart';
-import 'package:mitsubishi_app/common/widgets/index.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'auth_verifivation.dart';

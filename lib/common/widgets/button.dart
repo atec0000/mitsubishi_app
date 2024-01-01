@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mitsubishi_app/common/extension/ex_list.dart';
 import '../index.dart';
 
 enum ButtonWidgetType {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mitsubishi_app/automation/index.dart';
 import 'package:mitsubishi_app/automation/schedule/schedule_list_page/index.dart';
 //import 'package:mitsubishi_app/common/widgets/text.dart';
 

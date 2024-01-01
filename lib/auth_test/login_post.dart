@@ -26,6 +26,7 @@ class _LoginPostScreenState extends State<LoginPostScreen> {
     try {
       ApiService apiService = ApiService();
       final response = await apiService.login(widget.email, password);
+      //final response = await apiService.login('mm4@aifa.com', 'aa');
       if (kDebugMode) {
         Get.off(() => const TabsScreen());
         print('Login OK');
@@ -38,6 +39,7 @@ class _LoginPostScreenState extends State<LoginPostScreen> {
   @override
   void initState() {
     super.initState();
+    email = widget.email;
   }
 
   @override

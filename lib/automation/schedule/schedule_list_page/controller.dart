@@ -9,8 +9,8 @@ class ScheduleListPageController extends GetxController {
   List<Object> goOutModeList = [];
   // 排程列表數據
   List<ScheduleModel> scheduleList = [
-    ScheduleModel(name: '冷氣1'),
-    ScheduleModel(name: '冷氣2')
+    ScheduleModel(name: '冷氣1', isOn: true),
+    ScheduleModel(name: '冷氣2', isOn: false)
   ];
 
   // 刷新控制器
@@ -56,15 +56,21 @@ class ScheduleListPageController extends GetxController {
     update(["schedule_list"]);
   }
 
-  onAdd() {
-    var en = Translation.supportedLocales[0];
-    var zh = Translation.supportedLocales[1];
-    
-    ConfigService.to.onLocaleUpdate(
-        ConfigService.to.locale.toLanguageTag() == en.toLanguageTag()
-            ? zh
-            : en);
-    update(["schedule"]);
+  void onSelect(int positin, bool isSelected) {
+    print('object');
+    scheduleList[positin].isOn = isSelected;
+    if (isSelected) {
+      
+      //selectedIds.add(productId);
+    } else {
+      
+      //selectedIds.remove(productId);
+    }
+    update(["schedule_list"]);
+  }
+
+  void onAdd() {
+
   }
 
   @override

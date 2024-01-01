@@ -1,8 +1,9 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/common/index.dart';
 
-class ScheduleItemWidget extends StatelessWidget {
+class GoOutItemWidget extends StatelessWidget {
   /// 点击事件
   //final Function()? onTap;
 
@@ -21,7 +22,7 @@ class ScheduleItemWidget extends StatelessWidget {
   /// 选中事件
   final Function(bool)? onSelect;
 
-  const ScheduleItemWidget(
+  const GoOutItemWidget(
     this.model, {
     Key? key,
     required this.isSelected,
@@ -30,14 +31,6 @@ class ScheduleItemWidget extends StatelessWidget {
     this.imgHeight,
     this.onSelect,
   }) : super(key: key);
-
-  // @override
-  // State<ScheduleItemWidget> createState() => _ScheduleItemWidgetState();
-
-  
-//}
-
-//class _ScheduleItemWidgetState extends State<ScheduleItemWidget>{
 
   Widget _buildView(BoxConstraints constraints) {
     var title = <Widget>[
@@ -52,7 +45,7 @@ class ScheduleItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
         )
         .paddingHorizontal(15)
-        .expanded(flex: 3);
+        .expanded();
 
     var body = <Widget>[
       const TextWidget.body1('今天13:00執行').paddingBottom(15),
@@ -63,24 +56,24 @@ class ScheduleItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
         )
-        .paddingHorizontal(1)
-        .expanded(flex: 4);
+        .paddingHorizontal(15)
+        .expanded();
 
     var tap = <Widget>[
       CupertinoSwitch(
         value: isSelected, 
         onChanged: (isCheck)=>onSelect!(isCheck),    
       ),
-      const TextWidget.body1("編輯").paddingRight(5),
+      const TextWidget.body1("編輯"),
     ]
         .toColumn(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
         )
         .paddingTop(10)
-        .expanded(flex: 2);
+        .expanded();
 
-    var ws = <Widget>[title, body, tap]
+    return <Widget>[title, body, tap]
         .toRow(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,11 +95,6 @@ class ScheduleItemWidget extends StatelessWidget {
       //   // );
       // }
     //});
-
-    return SizedBox(
-      height: 112,
-      child: ws,
-    );
   }
 
   @override
@@ -117,5 +105,4 @@ class ScheduleItemWidget extends StatelessWidget {
       },
     );
   }
-  
 }
