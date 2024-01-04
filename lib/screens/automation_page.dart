@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mitsubishi_app/automation/home_devices/index.dart';
 import 'package:mitsubishi_app/automation/schedule/schedule_list_page/index.dart';
 //import 'package:mitsubishi_app/common/widgets/text.dart';
 
@@ -53,13 +54,10 @@ class TabControllerAuto extends StatelessWidget {
   }
 
   Widget bodyView(BuildContext context) {
-    return TabBarView(
+    return const TabBarView(
       children: [
-        const ScheduleListPage(),
-        Text(
-          'Tab',
-          style: Theme.of(context).textTheme.headlineSmall,
-        )
+        ScheduleListPage(),
+        HomeDevicesPage(),
       ],
     );
 

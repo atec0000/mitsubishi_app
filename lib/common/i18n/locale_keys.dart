@@ -4,6 +4,8 @@ class LocaleKeys {
   static const commonBottomSave = 'common_bottom_save';
   static const commonBottomRemove = 'common_bottom_remove';
   
+  //排程
+  static const addScheduleTime = 'add_schedule_time';
 
   // 样式
   static const stylesTitle = 'styles_title';

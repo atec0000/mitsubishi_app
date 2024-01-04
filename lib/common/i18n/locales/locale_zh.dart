@@ -7,5 +7,8 @@ Map<String, String> localeZh = {
   //LocaleKeys.commonBottomSave: '保存',
   
   //主導航
-  LocaleKeys.tabBarSchedul:'自動控制'
+  LocaleKeys.tabBarSchedul:'自動控制',
+
+  //排程
+  LocaleKeys.addScheduleTime:'製作定時排程',
 };

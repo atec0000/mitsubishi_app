@@ -63,6 +63,14 @@ class _ScheduleListPageViewGetX extends GetView<ScheduleListPageController> {
     return CustomScrollView(
       slivers: [
         //家庭條
+        GetBuilder<ScheduleListPageController>(
+        id: "schedule_home",
+        builder: (_) {
+          return  HomeListWidget(
+            isOpen: controller.isOpen,
+            onTap: (p0) => controller.onHomeList(p0),).
+            sliverToBoxAdapter();
+        },),
 
         // 栏位标题
         controller.scheduleList.isNotEmpty

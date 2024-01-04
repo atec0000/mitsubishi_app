@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:mitsubishi_app/automation/schedule/add_schedule_fisrt/index.dart';
 import 'package:mitsubishi_app/common/index.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ScheduleListPageController extends GetxController {
   ScheduleListPageController();
 
+  bool isOpen = false;
   // 外出模式列表數據
   List<Object> goOutModeList = [];
   // 排程列表數據
@@ -56,6 +58,7 @@ class ScheduleListPageController extends GetxController {
     update(["schedule_list"]);
   }
 
+  //排程開關
   void onSelect(int positin, bool isSelected) {
     print('object');
     scheduleList[positin].isOn = isSelected;
@@ -69,8 +72,14 @@ class ScheduleListPageController extends GetxController {
     update(["schedule_list"]);
   }
 
-  void onAdd() {
+  void onHomeList(bool open) {
+    isOpen = open;
+    
+    update(["schedule_home"]);
+  }
 
+  void onAdd() {
+    Get.to(() =>const AddScheduleFisrtPage());
   }
 
   @override

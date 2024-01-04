@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/common/index.dart';
 
-class ScheduleItemWidget extends StatelessWidget {
+class DeviceItemWidget extends StatelessWidget {
   /// 点击事件
-  //final Function()? onTap;
+  final Function()? onTap;
 
   /// 模型
   final ScheduleModel model;
@@ -15,29 +15,21 @@ class ScheduleItemWidget extends StatelessWidget {
   /// 图片高
   final double? imgHeight;
 
-  /// 是否选中
-  final bool isSelected;
+  /// 是否打開
+  final bool isOn;
 
   /// 选中事件
   final Function(bool)? onSelect;
 
-  const ScheduleItemWidget(
+  const DeviceItemWidget(
     this.model, {
     Key? key,
-    required this.isSelected,
-    //this.onTap,
+    required this.isOn,
+    this.onTap,
     this.imgWidth,
     this.imgHeight,
     this.onSelect,
   }) : super(key: key);
-
-  // @override
-  // State<ScheduleItemWidget> createState() => _ScheduleItemWidgetState();
-
-  
-//}
-
-//class _ScheduleItemWidgetState extends State<ScheduleItemWidget>{
 
   Widget _buildView(BoxConstraints constraints) {
     var title = <Widget>[
@@ -68,7 +60,7 @@ class ScheduleItemWidget extends StatelessWidget {
 
     var tap = <Widget>[
       CupertinoSwitch(
-        value: isSelected, 
+        value: isOn, 
         onChanged: (isCheck)=>onSelect!(isCheck),    
       ),
       const TextWidget.body1("編輯").paddingRight(5),
@@ -80,7 +72,7 @@ class ScheduleItemWidget extends StatelessWidget {
         .paddingTop(10)
         .expanded(flex: 2);
 
-    var ws = <Widget>[title, body, tap]
+    return <Widget>[title, body, tap]
         .toRow(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,24 +81,14 @@ class ScheduleItemWidget extends StatelessWidget {
         .card(
           blurRadius: 1,
         )
-        .padding(all: 5);
-      //   .onTap(() {
-      // if (onTap != null) {
-      //   onTap?.call();
-      // } else {
-      //   // Get.toNamed(
-      //   //   RouteNames.goodsProductDetails,
-      //   //   arguments: {
-      //   //     "id": model.id,
-      //   //   },
-      //   // );
-      // }
-    //});
-
-    return SizedBox(
-      height: 112,
-      child: ws,
-    );
+        .padding(all: 5)
+        .onTap(() {
+      if (onTap != null) {
+        onTap?.call();
+      } else {
+        
+      }
+    });
   }
 
   @override
