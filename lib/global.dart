@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:mitsubishi_app/service/api_service.dart';
 
 import 'common/index.dart';
 
@@ -17,6 +18,7 @@ class Global {
 
     // 初始化Service
     Get.put<ConfigService>(ConfigService());
+    ApiService().init();
     
   }
 

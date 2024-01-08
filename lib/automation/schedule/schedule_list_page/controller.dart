@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mitsubishi_app/automation/schedule/add_schedule_fisrt/index.dart';
 import 'package:mitsubishi_app/common/index.dart';
@@ -79,7 +81,19 @@ class ScheduleListPageController extends GetxController {
   }
 
   void onAdd() {
-    Get.to(() =>const AddScheduleFisrtPage());
+    Get.bottomSheet(
+      <Widget>[
+        const SizedBox(height: 30,),
+        for(ScheduleModel model in scheduleList)
+          Text(model.name??'')
+          .onTap(() {
+            print(model.name);
+          }).paddingLeft(15)
+          .paddingTop(5)
+      ].toListView()
+
+    );
+    //Get.to(() =>const AddScheduleFisrtPage());
   }
 
   @override

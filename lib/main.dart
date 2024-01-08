@@ -65,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (accessToken != '') {
       // Use Future.delayed to wait for the current build phase to complete.
       Future.delayed(Duration.zero, () {
+        
         // Automatically navigate to the HomeScreen.
         Navigator.pushReplacement(
           context,
@@ -72,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       });
     } else {
+      
       Future.delayed(Duration.zero, () {
         Navigator.pushReplacement(
           context,

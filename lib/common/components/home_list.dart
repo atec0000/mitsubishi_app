@@ -18,14 +18,14 @@ class HomeListWidget extends StatelessWidget {
   const HomeListWidget(
     {Key? key,
      this.model, 
-    required this.isOpen,
+     this.isOpen =false,
     this.imgHeight,
     this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return <Widget>[
+    var title = <Widget>[
       const TextWidget.body1('家庭一')
         .paddingAll(15),
       Icon((isOpen)? Icons.arrow_drop_up : Icons.arrow_drop_down),
@@ -36,5 +36,9 @@ class HomeListWidget extends StatelessWidget {
         
       }
     });
+    return <Widget>[
+      title,
+      //isOpen ? 
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.start);
   }
 }

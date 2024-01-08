@@ -34,7 +34,7 @@ class DeviceItemWidget extends StatelessWidget {
   Widget _buildView(BoxConstraints constraints) {
     var title = <Widget>[
       // 图片
-      const Icon(Icons.album, color: Colors.cyan, size: 45),
+      const Icon(Icons.album, color: Colors.cyan, size: 30),
 
       // 描述
       const TextWidget.title2('定時排程'),

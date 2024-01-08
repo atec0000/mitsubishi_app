@@ -4,15 +4,19 @@ import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ApiService {
-  final String _baseUrl = 'https://apitest.aifaremote.com';
-  //final String _baseUrl ='https://api.wificontrolbox.com';
-  final String _clientId = 'cfRwMJsPFWqTobZ5';
-  //final String _clientId = 'Ecp5TUQxtOjdQ24u';
+  // 单例写法
+  static final ApiService _instance = ApiService._internal();
+  factory ApiService() => _instance;
+
+  final String _baseUrl ='https://api.wificontrolbox.com';
+  final String _clientId = 'Ecp5TUQxtOjdQ24u';
 
   Dio _dio = Dio();
   final SecureStorageService _secureStorageService = SecureStorageService();
 
-  ApiService() {
+  ApiService._internal();
+
+  void init() {
     _dio = Dio(BaseOptions(
         baseUrl: _baseUrl, connectTimeout: const Duration(seconds: 5)));
     _dio.interceptors
@@ -52,7 +56,7 @@ class ApiService {
   Future<int?> checkUser(String email) async {
     try {
       final response = await _dio.post(
-        '/v1/user/check',
+        '/v1/users/check',
         data: {'email': email},
       );
 
@@ -72,7 +76,7 @@ class ApiService {
   ) async {
     try {
       final response = await _dio.post(
-        '/v1/user/register',
+        '/v1/users/register',
         data: {
           "email": email,
           "password": password,
@@ -94,8 +98,8 @@ class ApiService {
   Future<Response<dynamic>> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        '/oauth2/token',
-        //'/v1/user/auth',
+        //'/oauth2/token',
+        '/v1/users/auth',
         data: {
           'email': email,
           'password': password,
