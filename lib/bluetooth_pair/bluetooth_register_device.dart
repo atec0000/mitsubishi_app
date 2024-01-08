@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/service/api_service.dart';
 import 'package:mitsubishi_app/model/device.dart';
-import 'package:flutter_blufi/flutter_blufi.dart';
 
+import '../bluetooth_pair/first_family.dart';
 import '../screens/tabs.dart';
 import '../widget/static_style.dart';
 
@@ -47,14 +47,13 @@ class _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
     }
   }
 
-  void _connectdevice(String mac) async {
+  void _connectdevice() async {
     try {
       //await widget.apiService.StartSock();
-      await widget.apiService.addDevice(mac);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const TabsScreen(),
+          builder: (context) => Addfamily(),
         ),
       );
     } catch (error) {
@@ -73,7 +72,6 @@ class _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
   }
 
   Widget content() {
-    var espBlufi = EspBlufi.instance.getMac();
     return Center(
       child: Column(
         children: [
@@ -96,8 +94,8 @@ class _BluetoothselectdeviceState extends State<Bluetoothselectdevice> {
             '確認完請點擊',
             style: TextStyle(fontSize: 24),
           ),
-          Theam().next_step_Buttons('註冊設備', context, () {
-            _connectdevice(espBlufi);
+          Theam().next_step_Buttons('完成新增', context, () {
+            _connectdevice();
           }),
           const SizedBox(
             height: 60,

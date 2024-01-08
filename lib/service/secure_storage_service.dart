@@ -37,4 +37,25 @@ class SecureStorageService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('user_email', email);
   }
+
+  Future<String> getSavedPassword() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_pwd') ?? '';
+  }
+
+  Future<void> savePassword(String pwd) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_pwd', pwd);
+  }
+
+
+  Future<String> getSavedFamily() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_family') ?? '';
+  }
+
+  Future<void> saveFamily(String family) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_family', family);
+  }
 }
