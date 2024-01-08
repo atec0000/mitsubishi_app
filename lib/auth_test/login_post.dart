@@ -28,7 +28,7 @@ class _LoginPostScreenState extends State<LoginPostScreen> {
       final response = await apiService.login(widget.email, password);
       //final response = await apiService.login('mm4@aifa.com', 'aa');
       if (kDebugMode) {
-        Get.off(() => const TabsScreen());
+        Get.offAll(() => const TabsScreen());
         print('Login OK');
       }
     } catch (e) {

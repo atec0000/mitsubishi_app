@@ -29,15 +29,8 @@ Future<void> connectToMqttServer() async {
 //   }
 // }
 
-Future<void> publishHexMessage(String hexString, String deviceMac) async {
+Future<void> publishHexMessage(List<int> hexData, String deviceMac) async {
   final topic = 'devices/$deviceMac/control/raw';
-
-  // Convert the hexadecimal string to a list of integers
-  List<int> hexData = hexString
-      .replaceAll(' ', '') // Remove any spaces in the hex string
-      .split('')
-      .map((e) => int.parse(e, radix: 16))
-      .toList();
 
   if (_mqttClient != null &&
       _mqttClient!.connectionStatus!.state == MqttConnectionState.connected) {
@@ -48,7 +41,7 @@ Future<void> publishHexMessage(String hexString, String deviceMac) async {
     builder.addBuffer(buffer);
 
     _mqttClient!.publishMessage(topic, MqttQos.atMostOnce, builder.payload!);
-    print('Published to topic: $topic, message: $hexString');
+    print('Published to topic: $topic, message: ${hexData.map((e) => e.toRadixString(16).padLeft(2, '0')).join(',')}');
   } else {
     print('Not connected to MQTT broker');
   }

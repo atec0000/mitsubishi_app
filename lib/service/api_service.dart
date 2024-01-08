@@ -1,13 +1,12 @@
 import 'package:mitsubishi_app/model/device.dart';
+import 'package:mitsubishi_app/model/family.dart';
 import 'package:mitsubishi_app/service/secure_storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ApiService {
-  final String _baseUrl = 'https://apitest.aifaremote.com';
-  //final String _baseUrl ='https://api.wificontrolbox.com';
-  final String _clientId = 'cfRwMJsPFWqTobZ5';
-  //final String _clientId = 'Ecp5TUQxtOjdQ24u';
+  final String _baseUrl ='https://api.wificontrolbox.com';
+  final String _clientId = 'Ecp5TUQxtOjdQ24u';
 
   Dio _dio = Dio();
   final SecureStorageService _secureStorageService = SecureStorageService();
@@ -24,7 +23,7 @@ class ApiService {
         final accessToken = await _secureStorageService
             .getAccessToken(); // Replace with your logic
         options.headers['Authorization'] = 'Bearer $accessToken';
-        //print("accessToken:成功的$accessToken");
+        print("accessToken:成功的$accessToken");
         return handler.next(options);
       },
       onError: (DioException e, ErrorInterceptorHandler handler) async {
@@ -32,9 +31,9 @@ class ApiService {
           final responseData = e.response?.data;
           if (responseData != null && responseData['name'] == 'JWT_EXPIRED') {
             // Token expired, trigger token refresh and retry the original request
-            final newAccessToken = await _refreshTokenIfNeeded();
+            final newAccessToken = await refreshTokenIfNeeded();
             e.requestOptions.headers['Authorization'] =
-                'Bearer $newAccessToken';
+            'Bearer $newAccessToken';
             //print("newAccessToken:刷新後$newAccessToken");
             return handler.resolve(await _dio.fetch(e.requestOptions));
           }
@@ -49,13 +48,12 @@ class ApiService {
       },
     ));
   }
-  Future<int?> checkUser(String email) async {
+  Future<int?> checkUser(String email) async {   //驗證信箱
     try {
       final response = await _dio.post(
-        '/v1/user/check',
+        '/v1/users/check',
         data: {'email': email},
       );
-
       return response.statusCode;
     } on DioException catch (error) {
       if (error.response != null) {
@@ -66,13 +64,13 @@ class ApiService {
     }
   }
 
-  Future<Response<dynamic>> register(
-    String email,
-    String password,
-  ) async {
+  Future<Response<dynamic>> register(  //註冊
+      String email,
+      String password,
+      ) async {
     try {
       final response = await _dio.post(
-        '/v1/user/register',
+        '/v1/users/register',
         data: {
           "email": email,
           "password": password,
@@ -91,11 +89,10 @@ class ApiService {
     }
   }
 
-  Future<Response<dynamic>> login(String email, String password) async {
+  Future<Response<dynamic>> login(String email, String password) async {  //登入
     try {
       final response = await _dio.post(
-        '/oauth2/token',
-        //'/v1/user/auth',
+        '/v1/users/auth',
         data: {
           'email': email,
           'password': password,
@@ -109,6 +106,7 @@ class ApiService {
         _secureStorageService.saveAccessToken(responseData['access_token']);
         _secureStorageService.saveRefreshToken(responseData['refresh_token']);
         _secureStorageService.saveEmail(email);
+        _secureStorageService.savePassword(password);
         final accessToken = await _secureStorageService.getAccessToken();
         //print("accessToken:登入後取出$accessToken");
       }
@@ -121,7 +119,7 @@ class ApiService {
 
   bool isAccessTokenExpired(String accessToken) {
     final decodedToken =
-        JwtDecoder.decode(accessToken); // Assuming you're using JW
+    JwtDecoder.decode(accessToken); // Assuming you're using JW
 
     final expirationTimestamp = decodedToken['exp'] as int;
     final currentTimestamp =
@@ -130,7 +128,7 @@ class ApiService {
     return expirationTimestamp < currentTimestamp;
   }
 
-  Future<String> _refreshTokenIfNeeded() async {
+  Future<String> refreshTokenIfNeeded() async {
     final accessToken = await _secureStorageService.getAccessToken();
     // Simulate checking if token needs refreshing
     if (isAccessTokenExpired(accessToken)) {
@@ -139,12 +137,11 @@ class ApiService {
 
       try {
         final response = await _dio.post(
-          '/oauth2/token',
-          //'/v1/user/auth',
+          '/v1/users/auth',
           data: {
-            'refresh_token': refreshToken,
+            'grant_type': 'refresh_token',
             'client_id': _clientId,
-            'grant_type': 'refresh_token'
+            'refresh_token': refreshToken,
           },
         );
 
@@ -155,6 +152,7 @@ class ApiService {
 
           // Update the access token for future requests
           _dio.options.headers['Authorization'] = 'Bearer $newAccessToken';
+          print("成功更新");
           _secureStorageService.saveAccessToken(newAccessToken);
           _secureStorageService.saveRefreshToken(newRefreshToken);
           return newAccessToken;
@@ -168,36 +166,161 @@ class ApiService {
     return accessToken;
   }
 
-  Future<void> addDevice(String inMac) async {
-    final SecureStorageService secureStorageService = SecureStorageService();
-    final accessToken = await secureStorageService.getAccessToken();
-    final response = await _dio.post(
-      '/devices',
-      data: {
-        'mac': inMac,
-      },
-      // options: Options(
-      //   headers: {'Authorization':'Bearer $accessToken'}, // 手动添加头部
-      // ),
-    );
-    if (response.statusCode == 201) {
-      return response.data;
-    } else {
-      print('HTTP Status: ${response.statusCode}');
-      throw Exception('Failed to add device');
+  Future<String> no_time_refreshTokenIfNeeded() async {
+    final accessToken = await _secureStorageService.getAccessToken();
+    // Simulate checking if token needs refreshing
+
+    final refreshToken = await _secureStorageService
+        .getRefreshToken(); // Replace with your logic
+
+    try {
+      final response = await _dio.post(
+        '/v1/users/auth',
+        data: {
+          'grant_type': 'refresh_token',
+          'client_id': _clientId,
+          'refresh_token': refreshToken,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = response.data as Map<String, dynamic>;
+        final newAccessToken = responseData['access_token'];
+        final newRefreshToken = responseData['refresh_token'];
+
+        // Update the access token for future requests
+        _dio.options.headers['Authorization'] = 'Bearer $newAccessToken';
+        print("成功更新");
+        _secureStorageService.saveAccessToken(newAccessToken);
+        _secureStorageService.saveRefreshToken(newRefreshToken);
+        return newAccessToken;
+      } else {
+        throw Exception('Failed to refresh token');
+      }
+    } catch (error) {
+      throw Exception('Failed to refresh token');
     }
   }
 
+
+  Future <void> creatfamily(String name) async{  //創建家庭
+    try{
+      final response = await _dio.post('/v1/families',
+        data:{
+          'name':name,
+        },
+      );
+      if(response.statusCode == 200){
+        _secureStorageService.saveFamily(name);
+      }
+    }on DioException catch (error) {
+      throw Exception('Failed to $error');
+    }
+  }
+
+  Future<List<Home>> getfamily() async {
+    try {
+      final response = await _dio.get('/v1/families');
+      if (response.statusCode == 200) {
+        final List<dynamic> familyList = response.data;
+
+        if (familyList.isNotEmpty) {
+          final home = familyList.map((json) => Home.fromJson(json)).toList();
+          return home;
+        } else {
+          print('No families available.');
+          return []; // Return an empty list if no families are available
+        }
+      } else {
+        print('HTTP Status: ${response.statusCode}');
+        throw Exception('Failed to get families');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to get families');
+    }
+  }
+
+  Future<void> updateFamily(String familyId,String name) async {
+    try {
+      final response = await _dio.put(
+          '/v1/families/$familyId',
+          data: {
+            {
+              "name": name,
+            }
+          });
+
+      if (response.statusCode == 200) {
+        print('Family updated successfully');
+      } else {
+        print('HTTP Status: ${response.statusCode}');
+        throw Exception('Failed to update family');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to update family');
+    }
+  }
+
+  Future<void> deleteFamily(String familyId) async {
+    try {
+      final response = await _dio.delete('/v1/families/$familyId');
+
+      if (response.statusCode == 204) {
+        print('Family deleted successfully');
+      } else {
+        print('HTTP Status: ${response.statusCode}');
+        throw Exception('Failed to delete family');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to delete family');
+    }
+  }
+
+  Future<void>adduser(String familyId,String userId) async{
+    try {
+      final response = await _dio.post('/v1/families/$familyId/user/$userId');
+
+      if (response.statusCode == 204) {
+        print('Add User to Family OK');
+      } else {
+        print('HTTP Status: ${response.statusCode}');
+        throw Exception('Failed to delete family');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to delete family');
+    }
+  }
+
+  Future<void> delusertofamily(String familyId,String userId) async{
+    try {
+      final response = await _dio.delete('/v1/families/$familyId/user/$userId');
+
+      if(response.statusCode == 204){
+        print('del user from family OK');
+      }
+      else{
+        print('HTTP Status: ${response.statusCode}');
+        throw Exception('Failed to delete user from fmaily');
+      }
+    }catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to delete user from fmaily');
+    }
+  }
+
+
+
   Future<List<Device>> getDevices() async {
     try {
-      final response = await _dio.get('/devices');
+      final response = await _dio.get('/v1/devices');
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = response.data;
-
-        final List<dynamic> deviceList = data['devices'];
-        final devices =
-            deviceList.map((json) => Device.fromJson(json)).toList();
-        return devices; //顯示模型裡面印射出來的列表
+        final List<dynamic> deviceList = response.data;
+        final devices = deviceList.map((json) => Device.fromJson(json)).toList();
+        return devices;
       } else {
         print('HTTP Status: ${response.statusCode}');
         throw Exception('Failed to get devices');
@@ -208,9 +331,25 @@ class ApiService {
     }
   }
 
-  Future<void> delDevice(int id) async {
+
+  Future<void> addDevice(int familyId, String mac) async {
+    final SecureStorageService secureStorageService = SecureStorageService();
+    final accessToken = await secureStorageService.getAccessToken();
+    final response = await _dio.post(
+        '/v1/families/$familyId/mac/$mac');
+    if (response.statusCode == 204) {
+      return response.data;
+    } else {
+      print('HTTP Status: ${response.statusCode}');
+      throw Exception('Failed to add device');
+    }
+  }
+
+
+
+  Future<void> delDevice(int familyId, String mac) async {
     try {
-      final response = await _dio.delete('/devices/$id');
+      final response = await _dio.delete('/v1/families/$familyId/mac/$mac');
       if (response.statusCode == 204) {
         print('Device deleted successfully');
       } else {
@@ -223,87 +362,7 @@ class ApiService {
     }
   }
 
-  Future<void> delsubDevice(int id) async {
-    try {
-      final response = await _dio.delete('/sub-devices/$id');
-      if (response.statusCode == 200) {
-        print('Device deleted successfully');
-      } else {
-        print('HTTP Status: ${response.statusCode}');
-        throw Exception('Failed to del sub-devices');
-      }
-    } catch (e) {
-      print('Error: $e');
-      throw Exception('Failed to del sub-devices');
-    }
-  }
 
-  Future<void> addsubDevice(int subid) async {
-    try {
-      List<Device> devices = await getDevices();
 
-      // 首先找到具有匹配 subid 的设备
-      final targetDevice =
-          devices.firstWhere((device) => device.subDeviceIds == subid);
 
-      final postData = {
-        'deviceId': subid,
-        'name': targetDevice.subDevicesNames,
-        'type': targetDevice.subDevicetype,
-      };
-
-      // 如果目标设备具有 subDevicesubtype，则将其添加到 postData 中
-      if (targetDevice.subDevicesubtype.isNotEmpty) {
-        postData['subType'] = targetDevice.subDevicesubtype;
-      }
-
-      final response = await _dio.post('/sub-devices', data: postData);
-
-      if (response.statusCode == 201) {
-        print('Subdevice added successfully');
-      } else {
-        print('HTTP Status: ${response.statusCode}');
-        throw Exception('Failed to add subdevice');
-      }
-    } catch (e) {
-      print('Error: $e');
-      throw Exception('Failed to add subdevice');
-    }
-  }
-
-  // Future<void> addfunction(int id) async {
-  //   final SecureStorageService _secureStorageService = SecureStorageService();
-  //   final accessToken = await _secureStorageService.getAccessToken();
-  //   if (accessToken != null) {
-  //     final response = await _dio.post(
-  //       '/functions',
-  //       data: {
-  //         'deviceId': id,
-  //         'name':,
-  //         'category':,
-  //         'days':,
-  //         'notification':,
-  //         "active": true,
-  //         "time": {
-  //           "start": 650,
-  //           "length": 60
-  //         },
-  //         "commands": [
-  //         {
-  //           "subDeviceId": 12,
-  //           "command": "fff3f2f0",
-  //         }
-  //       ]
-  //
-  //
-  //       },
-  //     );
-  //     if (response.statusCode == 201) {
-  //       return response.data;
-  //     } else {
-  //       print('HTTP Status: ${response.statusCode}');
-  //       throw Exception('Failed to add function');
-  //     }
-  //   }
-  // }
 }

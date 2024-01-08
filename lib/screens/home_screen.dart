@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mitsubishi_app/model/device.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:mitsubishi_app/service/secure_storage_service.dart';
 
 import '../auth_test/start_login.dart';
-import '../home_info/device_card.dart';
+import '../home_info/device/controller.dart';
+import '../home_info/device/view.dart';
+import '../service/mqtt_service.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,44 +18,60 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final SecureStorageService secureStorageService = SecureStorageService();
-
-  List<Device> devices = [];
-  bool isLoading = false;
-  bool isConnecting = false;
-  bool connectionSuccess = false;
+  final DeviceController deviceController = Get.put(DeviceController());
 
   @override
   void initState() {
     super.initState();
     print('Getting devices');
+    connectToMqttServer();
   }
 
   void _logout() async {
     await secureStorageService.deleteAccessToken();
     await secureStorageService.deleteRefreshToken();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+    Get.offAll(LoginScreen());
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.black,
-        // title: Image.asset("assets/logo.png"),
         title: const Text('空調'),
         actions: [
           IconButton(
-              onPressed: () => fetchDevices(), icon: const Icon(Icons.refresh)),
+            onPressed: () => deviceController.fetchDevices(),
+            icon: const Icon(Icons.refresh),
+          ),
           IconButton(onPressed: _logout, icon: const Icon(Icons.logout))
         ],
       ),
-      body: buildListView(),
-      //body: MqttConnectionScreen(deviceMac: 'CCA614230008',),
+      body: Device_card(),
+      // body: Center(
+      //   child: ElevatedButton(
+      //     onPressed: () {
+      //       // 使用 Get.to 显示 FamilyView 页面
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => Addfamily(),
+      //         ),
+      //       );
+      //     },
+      //     child: Text('Add device to family.'),
+      //   ),
+      // ),
+    );
+  }
+
+  Widget informaction() {
+    return Column(
+      children: [
+        Device_card(),
+        // buildListView(),
+      ],
     );
   }
 }
