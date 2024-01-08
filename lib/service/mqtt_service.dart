@@ -8,11 +8,13 @@ import 'mqtt_server.dart';
 
 MqttServerClient? _mqttClient;
 
-Future<void> connectToMqttServer() async {
+Future<bool> connectToMqttServer() async {
   try {
     _mqttClient = await connect();
+    return true; // Connection successful
   } catch (e) {
-    print("fail to $e");
+    print("Failed to connect: $e");
+    return false; // Connection failed
   }
 }
 

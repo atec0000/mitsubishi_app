@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/service/tcp_service.dart';
 
 import '../../model/temp_hum.dart';
+import '../service/mqtt_service.dart';
 
 
 
@@ -27,12 +28,11 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
   bool isConnecting = false;
   bool connectionSuccess = false;
   AcStatusCa51 _acStatus = AcStatusCa51.off();
-  final TextEditingController _codeController = TextEditingController();
-  double _temp = 0;
-  double _hum = 0;
+
 
   int _AirtemperatureValue = 16;
   late double _newAirtemperatureValue = 16.0;
+
   Timer? _debounce;
   bool _isLoading = false;
   bool power = false;
@@ -42,32 +42,15 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
   @override
   void initState() {
     super.initState();
-    print('Getting devices');
     connectToDevice();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _tcpService.disconnect();
     // super.dispose();
   }
 
-  Future<double> _loadData() async {
-    final temperature = _acStatus.temperature;
-    _AirtemperatureValue = temperature;
-    _newAirtemperatureValue = temperature.toDouble();
-    //print(_newAirtemperatureValue);
-
-    // 如果温度大于16度，则返回
-    if (_newAirtemperatureValue > 16.0) {
-      return _newAirtemperatureValue;
-    }
-
-    // 否则，继续调用_loadData
-    await Future.delayed(Duration(milliseconds: 75));
-    return await _loadData();
-  }
 
   void connectToDevice() async {
     setState(() {
@@ -75,37 +58,15 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
     });
 
     // Attempt to connect to the device using TcpService
-    final connected = await _tcpService.connectToServer(widget.deviceMac);
+    // final connected = await _tcpService.connectToServer(widget.deviceMac);
+    final connected = await connectToMqttServer();
 
     setState(() {
       isConnecting = false; // Set connecting state to false after the attempt
       connectionSuccess = connected;
     });
-
     if(connected) {
-      _tcpService.addResponseListener((response) {
-        // AC Status response
-        try {
-          final jsonString = utf8.decode(response);
-          final cleanedJsonString = jsonString.replaceFirst('SENSOR', '');
-          final jsonResponse = json.decode(cleanedJsonString);
-          final myResponse = MyJsonResponse.fromJson(jsonResponse);
-          // 数据是 JSON，可以進一步處理
-          setState(() {
-            _temp = getRealTemperatureV3(myResponse.temp);
-            _hum = getRealHumidityV3(myResponse.hum);
-          });
-        } catch (e) {
-          // print("Error decoding JSON: $e");
-        }
-        if(response.length == 21 && response[0] == 0xfa && response[1] == 0x14) {
-          AcStatusCa51 newStatus = AcStatusCa51.fromBytes(response);
-          setState(() {
-            _acStatus = newStatus;
-            _loadData();
-          });
-        }
-      });
+      subscribeToTopic(widget.deviceMac);
     }
   }
 
@@ -146,10 +107,8 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                           // _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '01'));
                           setState(() {
                             power = newvalue;
-                            _tcpService.sendCommand(air_poweron);
-                            Future.delayed(const Duration(milliseconds: 100), () {
-                              _tcpService.sendCommand(air_poweron);
-                            });
+                            // _tcpService.sendCommand(air_poweron);
+                            publishHexMessage(air_poweron,widget.deviceMac);
                           });
 
 
@@ -157,7 +116,8 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                           setState(() {
                             power = newvalue;
                             // _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '00'));
-                            _tcpService.sendCommand(air_poweroff);
+                            // _tcpService.sendCommand(air_poweroff);
+                            publishHexMessage(air_poweroff,widget.deviceMac);
                           });
 
                         }
@@ -205,7 +165,7 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                       children: [
                         SizedBox(height: 2),
                         Text(
-                          '${_temp.toInt()}°C',
+                          '23°C',
                           style: TextStyle(fontSize: 30, color: Colors.blueAccent),
                         ),
                         SizedBox(height: 2),
@@ -229,12 +189,12 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                       children: [
                         SizedBox(height: 2),
                         Text(
-                          '${_hum.toInt()}%',
+                          '19°C',
                           style: TextStyle(fontSize: 30, color: Colors.blueAccent),
                         ),
                         SizedBox(height: 2),
                         Text(
-                          '濕度',
+                          '室外溫度',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
                       ],

@@ -1,70 +1,86 @@
-class Device {
+class Family {
+  final int id;
   final String name;
+  final User owner;
+  final String createdAt;
+  final String updatedAt;
+
+  Family({
+    required this.id,
+    required this.name,
+    required this.owner,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory Family.fromJson(Map<String, dynamic> json) {
+    return Family(
+      id: json['id'],
+      name: json['name'],
+      owner: User.fromJson(json['owner']),
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+    );
+  }
+}
+
+class User {
+  final int id;
+  final String email;
+  final String username;
+  final String phone;
+  final String avatar;
+  final String createdAt;
+  final String updatedAt;
+  final int rank;
+
+  User({
+    required this.id,
+    required this.email,
+    required this.username,
+    required this.phone,
+    required this.avatar,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.rank,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      email: json['email'],
+      username: json['username'],
+      phone: json['phone'],
+      avatar: json['avatar'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+      rank: json['rank'],
+    );
+  }
+}
+
+class Device {
+  final int id;
   final String mac;
-  final int deviceid;
-  late final List<String> subDevicesNames;
-  final List<int> subDevicetype;
-  final Map<String, int>
-      subDeviceIds; // Map to store subDeviceName -> subDeviceid
-  final List<int> subDevicesubtype;
-  final double? temperature;
-  final double? humidity;
+  final String name;
+  final String firmware;
+  final Family family;
 
   Device({
-    required this.name,
+    required this.id,
     required this.mac,
-    required this.deviceid,
-    required this.subDevicesNames,
-    required this.subDevicetype,
-    required this.subDeviceIds,
-    required this.subDevicesubtype,
-    required this.temperature,
-    required this.humidity,
+    required this.name,
+    required this.firmware,
+    required this.family,
   });
 
   factory Device.fromJson(Map<String, dynamic> json) {
-    final subDevices =
-        json['subDevices'] as List<dynamic>?; // Extract subDevices as a list
-    final subDevicesNames = <String>[]; // Initialize an empty list of strings
-    final subDeviceIds = <String, int>{}; // Initialize an empty map
-
-    final subDevicetype = <int>[];
-    final subDevicesubtype = <int>[];
-    int subDeviceid = 0;
-
-    if (subDevices != null) {
-      for (final subDevice in subDevices) {
-        if (subDevice is Map<String, dynamic> &&
-            subDevice.containsKey('name') &&
-            subDevice.containsKey('type')) {
-          String subDeviceName = subDevice['name'] as String;
-          subDevicesNames.add(subDeviceName); // Add the name as a string
-          subDeviceIds[subDeviceName] =
-              subDevice['id'] as int; // Map subDeviceName to subDeviceid
-          subDevicetype.add(subDevice['type']);
-          subDeviceid = subDevice['id'] as int;
-        }
-        if (subDevice is Map<String, dynamic> &&
-            subDevice.containsKey('subType')) {
-          subDevicesubtype.add(subDevice['subType']);
-        }
-      }
-    }
-
     return Device(
-      name: json['name'],
+      id: json['id'],
       mac: json['mac'],
-      deviceid: json['id'],
-      subDevicesNames: subDevicesNames,
-      subDevicetype: subDevicetype,
-      subDeviceIds: subDeviceIds,
-      subDevicesubtype: subDevicesubtype,
-      temperature: (json['sensors']['temperature'] is int)
-          ? (json['sensors']['temperature'] as int).toDouble()
-          : json['sensors']['temperature'],
-      humidity: (json['sensors']['humidity'] is int)
-          ? (json['sensors']['humidity'] as int).toDouble()
-          : json['sensors']['humidity'],
+      name: json['name'],
+      firmware: json['firmware'],
+      family: Family.fromJson(json['family']), // Nested Family object
     );
   }
 }
