@@ -5,13 +5,19 @@ import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ApiService {
+  // 单例写法
+  static final ApiService _instance = ApiService._internal();
+  factory ApiService() => _instance;
+
   final String _baseUrl ='https://api.wificontrolbox.com';
   final String _clientId = 'Ecp5TUQxtOjdQ24u';
 
   Dio _dio = Dio();
   final SecureStorageService _secureStorageService = SecureStorageService();
 
-  ApiService() {
+  ApiService._internal();
+
+  void init() {
     _dio = Dio(BaseOptions(
         baseUrl: _baseUrl, connectTimeout: const Duration(seconds: 5)));
     _dio.interceptors
@@ -93,6 +99,7 @@ class ApiService {
     try {
       final response = await _dio.post(
         '/v1/users/auth',
+        
         data: {
           'email': email,
           'password': password,

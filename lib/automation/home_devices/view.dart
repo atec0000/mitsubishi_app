@@ -30,7 +30,9 @@ class _HomeDevicesViewGetX extends GetView<HomeDevicesController> {
     return GetBuilder<HomeDevicesController>(
       id: "device_list",
       builder: (_) {
-        return const GroupWidget(isSelected: true,);
+        return const SingleChildScrollView(
+
+        );
       },
     );
   }

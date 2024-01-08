@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/common/index.dart';
 
 
 class GroupWidget extends StatelessWidget {
   ///設備列表
   //final List<ScheduleModel> scheduleList;
+
+  /// 是否展開
+  final bool isOpen;
+
+  /// 展開事件
+  final Function(bool)? onOpen;
 
   /// 是否选中
   final bool isSelected;
@@ -15,16 +22,26 @@ class GroupWidget extends StatelessWidget {
   const GroupWidget({
     Key? key,
     //required this.scheduleList,
+    this.isOpen = true,
+    this.onOpen,
     required this.isSelected,
     this.onSelect,
   }): super(key: key);
 
+  Widget groupList(){
+    return <Widget>[
+      Text('11'),
+    ].toListView();
+  }
 
   @override
   Widget build(BuildContext context) {
     var groupTitle = <Widget>[
       <Widget>[
-        const TextWidget.body1("客廳").paddingLeft(10),
+        Icon((isOpen)? Icons.arrow_drop_up : Icons.arrow_drop_down)
+        .paddingLeft(10)
+        .onTap(() => onOpen!(!isOpen)),
+        const TextWidget.body1("客廳").paddingLeft(5),
       ].toRow(),
       
       <Widget>[
@@ -38,9 +55,10 @@ class GroupWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
     ).paddingBottom(5);
 
-    return <Widget>[
+     return isOpen ? <Widget>[
       groupTitle,
-
-      ].toColumn();
+      groupList(),
+      ].toColumn()
+      : groupTitle;
   }
 }
