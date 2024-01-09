@@ -37,10 +37,10 @@ class _ScheduleListPageViewGetX extends GetView<ScheduleListPageController> {
               var scheduleItem = controller.scheduleList[position];
               return ScheduleItemWidget(
                 scheduleItem,
-                isSelected: scheduleItem.isOn,//controller.isSelected(scheduleItem.isOn!),
+                isSelected: scheduleItem
+                    .isOn, //controller.isSelected(scheduleItem.isOn!),
                 // 选中回调
-                onSelect: (b) =>
-                   controller.onSelect(position, b),
+                onSelect: (b) => controller.onSelect(position, b),
               );
             },
             childCount: controller.scheduleList.length,
@@ -64,49 +64,48 @@ class _ScheduleListPageViewGetX extends GetView<ScheduleListPageController> {
       slivers: [
         //家庭條
         GetBuilder<ScheduleListPageController>(
-        id: "schedule_home",
-        builder: (_) {
-          return  HomeListWidget(
-            isOpen: controller.isOpen,
-            onTap: (p0) => controller.onHomeList(p0),).
-            sliverToBoxAdapter();
-        },),
+          id: "schedule_home",
+          builder: (_) {
+            return HomeListWidget(
+              isOpen: controller.isOpen,
+              onTap: (p0) => controller.onHomeList(p0),
+            ).sliverToBoxAdapter();
+          },
+        ),
 
         // 栏位标题
         controller.scheduleList.isNotEmpty
-            ? const TextWidget.title2('外出模式')                   
+            ? const TextWidget.title2('外出模式')
                 .sliverToBoxAdapter()
                 .sliverPaddingHorizontal(AppSpace.page)
             : const SliverToBoxAdapter(),
 
         //外出列表
 
-
         // 栏位标题
         controller.scheduleList.isNotEmpty
-            ?  const TextWidget.title2('排程控制')                   
+            ? const TextWidget.title2('排程控制')
                 .sliverToBoxAdapter()
                 .sliverPaddingHorizontal(AppSpace.page)
             : const SliverToBoxAdapter(),
-        
+
         //排程列表
         _buildSchedules(),
         ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    side: const BorderSide(
-                      color: Colors.black,
-                    ),
-                    minimumSize: const Size(353, 56),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.all(0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(1),
-                    )),
-                onPressed: controller.onAdd,
-                child: const Text('+'),
-              ).sliverToBoxAdapter()
-                .sliverPaddingHorizontal(AppSpace.page),
+          style: ElevatedButton.styleFrom(
+              side: const BorderSide(
+                color: Colors.black,
+              ),
+              minimumSize: const Size(353, 56),
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              padding: const EdgeInsets.all(0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(1),
+              )),
+          onPressed: controller.onAdd,
+          child: const Text('+'),
+        ).sliverToBoxAdapter().sliverPaddingHorizontal(AppSpace.page),
       ],
     );
   }

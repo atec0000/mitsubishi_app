@@ -1,4 +1,3 @@
-
 class Member {
   final int id;
   final String email;
@@ -46,7 +45,8 @@ class Home {
     List<Member> membersList = [];
     if (json['members'] != null) {
       var membersJson = json['members'] as List;
-      membersList = membersJson.map((member) => Member.fromJson(member)).toList();
+      membersList =
+          membersJson.map((member) => Member.fromJson(member)).toList();
     }
 
     return Home(

@@ -3,7 +3,7 @@ class LocaleKeys {
   // 通用
   static const commonBottomSave = 'common_bottom_save';
   static const commonBottomRemove = 'common_bottom_remove';
-  
+
   //排程
   static const addScheduleTime = 'add_schedule_time';
 
@@ -21,7 +21,7 @@ class LocaleKeys {
   // 欢迎页
   static const welcomeOneTitle = 'welcome_one_title';
   static const welcomeOneDesc = 'welcome_one_desc';
-  
+
   static const welcomeSkip = 'welcome_skip';
   static const welcomeNext = 'welcome_next';
   static const welcomeStart = 'welcome_start';
@@ -53,13 +53,9 @@ class LocaleKeys {
   static const loginBackFieldEmail = 'login_back_field_email';
   static const loginBackFieldPassword = 'login_back_field_password';
 
-
-
   // 商品 - 列表
   static const gFlashSellTitle = "goods_flash_sell_title";
   static const gNewsTitle = "goods_news_title";
-
-
 
   // 个人信息修改
   static const profileEditTitle = "profile_edit_title";

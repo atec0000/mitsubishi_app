@@ -24,7 +24,6 @@ class _LoginPostScreenState extends State<LoginPostScreen> {
 
   void goToNext() async {
     try {
-      
       final response = await ApiService().login(widget.email, password);
       //final response = await apiService.login('mm4@aifa.com', 'aa');
       if (kDebugMode) {

@@ -18,7 +18,6 @@ class Addfamily extends StatefulWidget {
 }
 
 class _AddfamilyState extends State<Addfamily> {
-
   bool isLoading = false;
   final SecureStorageService secureStorageService = SecureStorageService();
   Set<Home> selectedHomes = Set<Home>();
@@ -36,7 +35,8 @@ class _AddfamilyState extends State<Addfamily> {
             width: 300.0, // Set your desired width
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start, // Use min to wrap content
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // Use min to wrap content
               children: [
                 const Text('請輸入家庭名稱'),
                 TextField(
@@ -66,7 +66,6 @@ class _AddfamilyState extends State<Addfamily> {
     );
   }
 
-
   Widget _buildFamilyList(List<Home> homes) {
     return ListView.builder(
       itemCount: homes.length,
@@ -93,22 +92,21 @@ class _AddfamilyState extends State<Addfamily> {
 
   void _adddevice() async {
     try {
-        var familyId = selectedHomeId;
-        var espBlufi = EspBlufi.instance.getMac();
-        print('ID: $familyId');
-        print('MAC: $espBlufi');
+      var familyId = selectedHomeId;
+      var espBlufi = EspBlufi.instance.getMac();
+      print('ID: $familyId');
+      print('MAC: $espBlufi');
 
-        await widget.apiService.no_time_refreshTokenIfNeeded();
-        await widget.apiService.addDevice(familyId!, espBlufi);
+      await widget.apiService.no_time_refreshTokenIfNeeded();
+      await widget.apiService.addDevice(familyId!, espBlufi);
 
-
-        // Navigate to TabsScreen
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TabsScreen(),
-          ),
-        );
+      // Navigate to TabsScreen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TabsScreen(),
+        ),
+      );
     } catch (error) {
       print('Error connecting device: $error');
       // Handle errors
@@ -119,7 +117,6 @@ class _AddfamilyState extends State<Addfamily> {
   void initState() {
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +167,8 @@ class _AddfamilyState extends State<Addfamily> {
                 ],
               ),
               onTap: () {
-                _showDeleteDialog(context); // Add parentheses to call the method
+                _showDeleteDialog(
+                    context); // Add parentheses to call the method
               },
             ),
           ),
@@ -190,13 +188,13 @@ class _AddfamilyState extends State<Addfamily> {
               }
             },
           ),
-     // FloatingActionButton(
-     //    onPressed: () {
-     //      _showDeleteDialog(context);
-     //    },
-     //    tooltip: '新增家庭',
-     //    child: Icon(Icons.add),
-     //  ),
+          // FloatingActionButton(
+          //    onPressed: () {
+          //      _showDeleteDialog(context);
+          //    },
+          //    tooltip: '新增家庭',
+          //    child: Icon(Icons.add),
+          //  ),
           const SizedBox(
             height: 20,
           ),

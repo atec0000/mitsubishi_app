@@ -3,8 +3,6 @@ import 'package:mitsubishi_app/model/family.dart';
 
 import '../../service/api_service.dart';
 
-
-
 class FamilyController extends GetxController {
   var families = <Home>[].obs;
   final ApiService _apiService = ApiService();

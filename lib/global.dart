@@ -14,12 +14,11 @@ class Global {
 
     // 工具类
     await Storage().init();
-    
 
     // 初始化Service
     Get.put<ConfigService>(ConfigService());
     ApiService().init();
-    
+    Get.put<UserService>(UserService());
   }
 
   // 系统样式

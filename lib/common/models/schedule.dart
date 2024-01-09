@@ -11,7 +11,7 @@ class ScheduleModel {
         id: json['id'] as int?,
         isOn: json['isOn'] as bool,
         name: json['name'] as String?,
-        mac: json['slug'] as String?, 
+        mac: json['slug'] as String?,
       );
 
   Map<String, dynamic> toJson() => {

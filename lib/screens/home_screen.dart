@@ -8,7 +8,6 @@ import '../home_info/device/controller.dart';
 import '../home_info/device/view.dart';
 import '../service/mqtt_service.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -32,8 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
     await secureStorageService.deleteRefreshToken();
     Get.offAll(LoginScreen());
   }
-
-
 
   @override
   Widget build(BuildContext context) {

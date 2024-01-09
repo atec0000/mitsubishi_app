@@ -30,23 +30,21 @@ class _HomeDevicesViewGetX extends GetView<HomeDevicesController> {
     return GetBuilder<HomeDevicesController>(
       id: "device_list",
       builder: (_) {
-        return const SingleChildScrollView(
-
-        );
+        return const SingleChildScrollView();
       },
     );
   }
 
   // 主视图
   Widget _buildView() {
-    return  <Widget>[
+    return <Widget>[
       const TextWidget.title1('Jeffery'),
-        //家庭條
+      //家庭條
 
-        //設備列表橫向
+      //設備列表橫向
 
-        //設備列表資料
-        _buildDevices(),
+      //設備列表資料
+      _buildDevices(),
     ].toColumn();
   }
 

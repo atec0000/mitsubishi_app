@@ -65,10 +65,8 @@ class ScheduleListPageController extends GetxController {
     print('object');
     scheduleList[positin].isOn = isSelected;
     if (isSelected) {
-      
       //selectedIds.add(productId);
     } else {
-      
       //selectedIds.remove(productId);
     }
     update(["schedule_list"]);
@@ -76,23 +74,23 @@ class ScheduleListPageController extends GetxController {
 
   void onHomeList(bool open) {
     isOpen = open;
-    
+
     update(["schedule_home"]);
   }
 
   void onAdd() {
-    Get.bottomSheet(
-      <Widget>[
-        const SizedBox(height: 30,),
-        for(ScheduleModel model in scheduleList)
-          Text(model.name??'')
-          .onTap(() {
-            print(model.name);
-          }).paddingLeft(15)
-          .paddingTop(5)
-      ].toListView()
-
-    );
+    Get.bottomSheet(<Widget>[
+      const SizedBox(
+        height: 30,
+      ),
+      for (ScheduleModel model in scheduleList)
+        Text(model.name ?? '')
+            .onTap(() {
+              print(model.name);
+            })
+            .paddingLeft(15)
+            .paddingTop(5)
+    ].toListView());
     //Get.to(() =>const AddScheduleFisrtPage());
   }
 

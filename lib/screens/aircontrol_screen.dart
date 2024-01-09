@@ -6,13 +6,10 @@ import 'package:mitsubishi_app/service/command_parser_ca51.dart';
 import 'package:mitsubishi_app/widget/static_style.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:mitsubishi_app/service/tcp_service.dart';
 
 import '../../model/temp_hum.dart';
 import '../service/mqtt_service.dart';
-
-
 
 class AircontrolScreen extends StatefulWidget {
   final String deviceMac;
@@ -29,15 +26,12 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
   bool connectionSuccess = false;
   AcStatusCa51 _acStatus = AcStatusCa51.off();
 
-
   int _AirtemperatureValue = 16;
   late double _newAirtemperatureValue = 16.0;
 
   Timer? _debounce;
   bool _isLoading = false;
   bool power = false;
-
-
 
   @override
   void initState() {
@@ -50,7 +44,6 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
     super.dispose();
     // super.dispose();
   }
-
 
   void connectToDevice() async {
     setState(() {
@@ -65,7 +58,7 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
       isConnecting = false; // Set connecting state to false after the attempt
       connectionSuccess = connected;
     });
-    if(connected) {
+    if (connected) {
       subscribeToTopic(widget.deviceMac);
     }
   }
@@ -75,17 +68,20 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('臥室冷氣',style: TextStyle(color: Colors.white),),
+        title: Text(
+          '臥室冷氣',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
       backgroundColor: Colors.black,
       body: isConnecting
           ? const Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : connectionSuccess
-          ? _buildConnectedUI()
-          : _buildConnectionErrorUI(),
+              ? _buildConnectedUI()
+              : _buildConnectionErrorUI(),
     );
   }
 
@@ -100,7 +96,7 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: 16.0),
                   child: SwitchWidget(
-                    value:power,
+                    value: power,
                     onChanged: (bool newvalue) {
                       if (newvalue != null) {
                         if (newvalue) {
@@ -108,28 +104,25 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                           setState(() {
                             power = newvalue;
                             // _tcpService.sendCommand(air_poweron);
-                            publishHexMessage(air_poweron,widget.deviceMac);
+                            publishHexMessage(air_poweron, widget.deviceMac);
                           });
-
-
                         } else {
                           setState(() {
                             power = newvalue;
                             // _tcpService.sendCommand(get_TaiSEIA_other('80', 1, '00'));
                             // _tcpService.sendCommand(air_poweroff);
-                            publishHexMessage(air_poweroff,widget.deviceMac);
+                            publishHexMessage(air_poweroff, widget.deviceMac);
                           });
-
                         }
                       }
                     },
                   ),
                 ),
-
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 20), // Adjust the top margin as needed
+              margin:
+                  EdgeInsets.only(top: 20), // Adjust the top margin as needed
               child: CustomSlider(
                 value: _newAirtemperatureValue,
                 min: _acStatus.power ? 16.0 : 0,
@@ -166,7 +159,8 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                         SizedBox(height: 2),
                         Text(
                           '23°C',
-                          style: TextStyle(fontSize: 30, color: Colors.blueAccent),
+                          style:
+                              TextStyle(fontSize: 30, color: Colors.blueAccent),
                         ),
                         SizedBox(height: 2),
                         Text(
@@ -190,7 +184,8 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                         SizedBox(height: 2),
                         Text(
                           '19°C',
-                          style: TextStyle(fontSize: 30, color: Colors.blueAccent),
+                          style:
+                              TextStyle(fontSize: 30, color: Colors.blueAccent),
                         ),
                         SizedBox(height: 2),
                         Text(
@@ -203,7 +198,9 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Theam().buildCustomGradientRectangle(
               context,
               [
@@ -220,15 +217,30 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildIconButton(Icons.ac_unit,(){_tcpService.sendCommand(get_TaiSEIA_other('81', 1, '00'));}, iconColor: Colors.white),
+                        buildIconButton(Icons.ac_unit, () {
+                          _tcpService
+                              .sendCommand(get_TaiSEIA_other('81', 1, '00'));
+                        }, iconColor: Colors.white),
                         SizedBox(width: 35),
-                        buildIconButton(Icons.wind_power,(){_tcpService.sendCommand(get_TaiSEIA_other('81', 1, '02'));}, iconColor: Colors.white),
+                        buildIconButton(Icons.wind_power, () {
+                          _tcpService
+                              .sendCommand(get_TaiSEIA_other('81', 1, '02'));
+                        }, iconColor: Colors.white),
                         SizedBox(width: 35),
-                        buildIconButton(Icons.water_drop,(){_tcpService.sendCommand(get_TaiSEIA_other('81', 1, '01'));}, iconColor: Colors.white),
+                        buildIconButton(Icons.water_drop, () {
+                          _tcpService
+                              .sendCommand(get_TaiSEIA_other('81', 1, '01'));
+                        }, iconColor: Colors.white),
                         SizedBox(width: 35),
-                        buildIconButton(Icons.sunny,(){_tcpService.sendCommand(get_TaiSEIA_other('81', 1, '04'));}, iconColor: Colors.white),
+                        buildIconButton(Icons.sunny, () {
+                          _tcpService
+                              .sendCommand(get_TaiSEIA_other('81', 1, '04'));
+                        }, iconColor: Colors.white),
                         SizedBox(width: 35),
-                        buildIconButton(Icons.hdr_auto,(){_tcpService.sendCommand(get_TaiSEIA_other('81', 1, '03'));}, iconColor: Colors.white),
+                        buildIconButton(Icons.hdr_auto, () {
+                          _tcpService
+                              .sendCommand(get_TaiSEIA_other('81', 1, '03'));
+                        }, iconColor: Colors.white),
                         // Add more widgets here if needed
                       ],
                     ),
@@ -238,27 +250,33 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
               80,
               30,
             ),
-            SizedBox(height: 3,),
+            SizedBox(
+              height: 3,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Theam().buildCustomRectangle(context, "風   速", _acStatus.windSpeed, Icons.air,(){_tcpService.sendCommand(get_windspeed(5));}),
+                Theam().buildCustomRectangle(
+                    context, "風   速", _acStatus.windSpeed, Icons.air, () {
+                  _tcpService.sendCommand(get_windspeed(5));
+                }),
                 // Theam().buildCustomRectangle(context, "上下風向", _acStatus.windDirectionud, Icons.arrow_upward,(){get_winddirection_updown(17);}),
-                Theam().buildCustomRectangle(context, "上下風向", Text('上下風向'), Icons.arrow_upward,(){
+                Theam().buildCustomRectangle(
+                    context, "上下風向", Text('上下風向'), Icons.arrow_upward, () {
                   _tcpService.sendCommand(air_updown);
                   Future.delayed(const Duration(milliseconds: 100), () {
                     _tcpService.sendCommand(air_updown);
                   });
                 }),
-                Theam().buildCustomRectangle(context, "左右風向", _acStatus.windDirectionlr, Icons.arrow_forward,(){_tcpService.sendCommand(get_winddirection_leftright(17));}),
+                Theam().buildCustomRectangle(context, "左右風向",
+                    _acStatus.windDirectionlr, Icons.arrow_forward, () {
+                  _tcpService.sendCommand(get_winddirection_leftright(17));
+                }),
                 Theam().buildCustomRectangleSwitch(context, "定時開關1小時"),
                 // 添加其他部件
                 // ...
-
               ],
             )
-
-
 
             // 添加其他部件
             // ...
@@ -282,6 +300,7 @@ class _AircontrolScreenState extends State<AircontrolScreen> {
         return const Text('Mode: Fan');
     }
   }
+
   Widget _buildConnectionErrorUI() {
     // Implement UI for the connection error state.
     return const Center(

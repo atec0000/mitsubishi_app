@@ -9,7 +9,7 @@ class ApiService {
   static final ApiService _instance = ApiService._internal();
   factory ApiService() => _instance;
 
-  final String _baseUrl ='https://api.wificontrolbox.com';
+  final String _baseUrl = 'https://api.wificontrolbox.com';
   final String _clientId = 'Ecp5TUQxtOjdQ24u';
 
   Dio _dio = Dio();
@@ -39,7 +39,7 @@ class ApiService {
             // Token expired, trigger token refresh and retry the original request
             final newAccessToken = await refreshTokenIfNeeded();
             e.requestOptions.headers['Authorization'] =
-            'Bearer $newAccessToken';
+                'Bearer $newAccessToken';
             //print("newAccessToken:刷新後$newAccessToken");
             return handler.resolve(await _dio.fetch(e.requestOptions));
           }
@@ -54,7 +54,41 @@ class ApiService {
       },
     ));
   }
-  Future<int?> checkUser(String email) async {   //驗證信箱
+
+  Future<Response> get(
+    String url, {
+    Map<String, dynamic>? params,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    Options requestOptions = options ?? Options();
+    Response response = await _dio.get(
+      url,
+      queryParameters: params,
+      options: requestOptions,
+      cancelToken: cancelToken,
+    );
+    return response;
+  }
+
+  Future<Response> post(
+    String url, {
+    dynamic data,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    var requestOptions = options ?? Options();
+    Response response = await _dio.post(
+      url,
+      data: data ?? {},
+      options: requestOptions,
+      cancelToken: cancelToken,
+    );
+    return response;
+  }
+
+  Future<int?> checkUser(String email) async {
+    //驗證信箱
     try {
       final response = await _dio.post(
         '/v1/users/check',
@@ -70,10 +104,11 @@ class ApiService {
     }
   }
 
-  Future<Response<dynamic>> register(  //註冊
-      String email,
-      String password,
-      ) async {
+  Future<Response<dynamic>> register(
+    //註冊
+    String email,
+    String password,
+  ) async {
     try {
       final response = await _dio.post(
         '/v1/users/register',
@@ -95,11 +130,11 @@ class ApiService {
     }
   }
 
-  Future<Response<dynamic>> login(String email, String password) async {  //登入
+  Future<Response<dynamic>> login(String email, String password) async {
+    //登入
     try {
       final response = await _dio.post(
         '/v1/users/auth',
-        
         data: {
           'email': email,
           'password': password,
@@ -126,7 +161,7 @@ class ApiService {
 
   bool isAccessTokenExpired(String accessToken) {
     final decodedToken =
-    JwtDecoder.decode(accessToken); // Assuming you're using JW
+        JwtDecoder.decode(accessToken); // Assuming you're using JW
 
     final expirationTimestamp = decodedToken['exp'] as int;
     final currentTimestamp =
@@ -209,18 +244,19 @@ class ApiService {
     }
   }
 
-
-  Future <void> creatfamily(String name) async{  //創建家庭
-    try{
-      final response = await _dio.post('/v1/families',
-        data:{
-          'name':name,
+  Future<void> creatfamily(String name) async {
+    //創建家庭
+    try {
+      final response = await _dio.post(
+        '/v1/families',
+        data: {
+          'name': name,
         },
       );
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         _secureStorageService.saveFamily(name);
       }
-    }on DioException catch (error) {
+    } on DioException catch (error) {
       throw Exception('Failed to $error');
     }
   }
@@ -248,15 +284,13 @@ class ApiService {
     }
   }
 
-  Future<void> updateFamily(String familyId,String name) async {
+  Future<void> updateFamily(String familyId, String name) async {
     try {
-      final response = await _dio.put(
-          '/v1/families/$familyId',
-          data: {
-            {
-              "name": name,
-            }
-          });
+      final response = await _dio.put('/v1/families/$familyId', data: {
+        {
+          "name": name,
+        }
+      });
 
       if (response.statusCode == 200) {
         print('Family updated successfully');
@@ -286,7 +320,7 @@ class ApiService {
     }
   }
 
-  Future<void>adduser(String familyId,String userId) async{
+  Future<void> adduser(String familyId, String userId) async {
     try {
       final response = await _dio.post('/v1/families/$familyId/user/$userId');
 
@@ -302,31 +336,29 @@ class ApiService {
     }
   }
 
-  Future<void> delusertofamily(String familyId,String userId) async{
+  Future<void> delusertofamily(String familyId, String userId) async {
     try {
       final response = await _dio.delete('/v1/families/$familyId/user/$userId');
 
-      if(response.statusCode == 204){
+      if (response.statusCode == 204) {
         print('del user from family OK');
-      }
-      else{
+      } else {
         print('HTTP Status: ${response.statusCode}');
         throw Exception('Failed to delete user from fmaily');
       }
-    }catch (e) {
+    } catch (e) {
       print('Error: $e');
       throw Exception('Failed to delete user from fmaily');
     }
   }
-
-
 
   Future<List<Device>> getDevices() async {
     try {
       final response = await _dio.get('/v1/devices');
       if (response.statusCode == 200) {
         final List<dynamic> deviceList = response.data;
-        final devices = deviceList.map((json) => Device.fromJson(json)).toList();
+        final devices =
+            deviceList.map((json) => Device.fromJson(json)).toList();
         return devices;
       } else {
         print('HTTP Status: ${response.statusCode}');
@@ -338,12 +370,10 @@ class ApiService {
     }
   }
 
-
   Future<void> addDevice(int familyId, String mac) async {
     final SecureStorageService secureStorageService = SecureStorageService();
     final accessToken = await secureStorageService.getAccessToken();
-    final response = await _dio.post(
-        '/v1/families/$familyId/mac/$mac');
+    final response = await _dio.post('/v1/families/$familyId/mac/$mac');
     if (response.statusCode == 204) {
       return response.data;
     } else {
@@ -351,8 +381,6 @@ class ApiService {
       throw Exception('Failed to add device');
     }
   }
-
-
 
   Future<void> delDevice(int familyId, String mac) async {
     try {
@@ -368,8 +396,4 @@ class ApiService {
       throw Exception('Failed to del devices');
     }
   }
-
-
-
-
 }

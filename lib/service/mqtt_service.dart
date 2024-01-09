@@ -43,7 +43,8 @@ Future<void> publishHexMessage(List<int> hexData, String deviceMac) async {
     builder.addBuffer(buffer);
 
     _mqttClient!.publishMessage(topic, MqttQos.atMostOnce, builder.payload!);
-    print('Published to topic: $topic, message: ${hexData.map((e) => e.toRadixString(16).padLeft(2, '0')).join(',')}');
+    print(
+        'Published to topic: $topic, message: ${hexData.map((e) => e.toRadixString(16).padLeft(2, '0')).join(',')}');
   } else {
     print('Not connected to MQTT broker');
   }

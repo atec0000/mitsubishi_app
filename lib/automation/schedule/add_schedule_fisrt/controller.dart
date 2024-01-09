@@ -7,9 +7,7 @@ class AddScheduleFisrtController extends GetxController {
     update(["add_schedule_fisrt"]);
   }
 
-  void onAdd(int tag) {
-
-  }
+  void onAdd(int tag) {}
 
   @override
   void onReady() {

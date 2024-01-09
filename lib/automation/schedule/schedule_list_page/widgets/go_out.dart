@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/common/index.dart';
@@ -61,8 +60,8 @@ class GoOutItemWidget extends StatelessWidget {
 
     var tap = <Widget>[
       CupertinoSwitch(
-        value: isSelected, 
-        onChanged: (isCheck)=>onSelect!(isCheck),    
+        value: isSelected,
+        onChanged: (isCheck) => onSelect!(isCheck),
       ),
       const TextWidget.body1("編輯"),
     ]
@@ -83,17 +82,17 @@ class GoOutItemWidget extends StatelessWidget {
           blurRadius: 1,
         )
         .padding(all: 5);
-      //   .onTap(() {
-      // if (onTap != null) {
-      //   onTap?.call();
-      // } else {
-      //   // Get.toNamed(
-      //   //   RouteNames.goodsProductDetails,
-      //   //   arguments: {
-      //   //     "id": model.id,
-      //   //   },
-      //   // );
-      // }
+    //   .onTap(() {
+    // if (onTap != null) {
+    //   onTap?.call();
+    // } else {
+    //   // Get.toNamed(
+    //   //   RouteNames.goodsProductDetails,
+    //   //   arguments: {
+    //   //     "id": model.id,
+    //   //   },
+    //   // );
+    // }
     //});
   }
 

@@ -10,22 +10,23 @@ class AddScheduleFisrtPage extends GetView<AddScheduleFisrtController> {
 
   // 主视图
   Widget _buildView() {
-    return  GetBuilder<AddScheduleFisrtController>(
-      builder: (_){
+    return GetBuilder<AddScheduleFisrtController>(
+      builder: (_) {
         return <Widget>[
           <Widget>[
             const TextWidget.body2('定時排程的說明').paddingBottom(10),
             ButtonWidget.text(LocaleKeys.addScheduleTime.tr,
-            onTap: ()=> controller.onAdd(0)),
-          ].toColumn(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            ).paddingTop(10),
-          
+                onTap: () => controller.onAdd(0)),
+          ]
+              .toColumn(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+              )
+              .paddingTop(10),
           <Widget>[
             TextWidget.body2('週期排程的說明'),
             ButtonWidget.text(LocaleKeys.addScheduleTime.tr,
-            onTap: ()=> controller.onAdd(1)),
+                onTap: () => controller.onAdd(1)),
           ].toColumn().paddingTop(10),
         ].toColumn().paddingLeft(15);
       },

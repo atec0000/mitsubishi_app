@@ -34,7 +34,6 @@ class ScheduleItemWidget extends StatelessWidget {
   // @override
   // State<ScheduleItemWidget> createState() => _ScheduleItemWidgetState();
 
-  
 //}
 
 //class _ScheduleItemWidgetState extends State<ScheduleItemWidget>{
@@ -68,8 +67,8 @@ class ScheduleItemWidget extends StatelessWidget {
 
     var tap = <Widget>[
       CupertinoSwitch(
-        value: isSelected, 
-        onChanged: (isCheck)=>onSelect!(isCheck),    
+        value: isSelected,
+        onChanged: (isCheck) => onSelect!(isCheck),
       ),
       const TextWidget.body1("編輯").paddingRight(5),
     ]
@@ -90,17 +89,17 @@ class ScheduleItemWidget extends StatelessWidget {
           blurRadius: 1,
         )
         .padding(all: 5);
-      //   .onTap(() {
-      // if (onTap != null) {
-      //   onTap?.call();
-      // } else {
-      //   // Get.toNamed(
-      //   //   RouteNames.goodsProductDetails,
-      //   //   arguments: {
-      //   //     "id": model.id,
-      //   //   },
-      //   // );
-      // }
+    //   .onTap(() {
+    // if (onTap != null) {
+    //   onTap?.call();
+    // } else {
+    //   // Get.toNamed(
+    //   //   RouteNames.goodsProductDetails,
+    //   //   arguments: {
+    //   //     "id": model.id,
+    //   //   },
+    //   // );
+    // }
     //});
 
     return SizedBox(
@@ -117,5 +116,4 @@ class ScheduleItemWidget extends StatelessWidget {
       },
     );
   }
-  
 }

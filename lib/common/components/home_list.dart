@@ -7,7 +7,7 @@ class HomeListWidget extends StatelessWidget {
   final Function(bool)? onTap;
 
   /// 模型
-  final  model;
+  final model;
 
   /// 是否展開
   final bool isOpen;
@@ -15,10 +15,10 @@ class HomeListWidget extends StatelessWidget {
   /// 高
   final double? imgHeight;
 
-  const HomeListWidget(
-    {Key? key,
-     this.model, 
-     this.isOpen =false,
+  const HomeListWidget({
+    Key? key,
+    this.model,
+    this.isOpen = false,
     this.imgHeight,
     this.onTap,
   }) : super(key: key);
@@ -26,19 +26,17 @@ class HomeListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var title = <Widget>[
-      const TextWidget.body1('家庭一')
-        .paddingAll(15),
-      Icon((isOpen)? Icons.arrow_drop_up : Icons.arrow_drop_down),
-    ].toRow().onTap((){
+      const TextWidget.body1('家庭一').paddingAll(15),
+      Icon((isOpen) ? Icons.arrow_drop_up : Icons.arrow_drop_down),
+    ].toRow().onTap(() {
       if (onTap != null) {
         bool a = !isOpen;
         onTap!(a);
-        
       }
     });
     return <Widget>[
       title,
-      //isOpen ? 
+      //isOpen ?
     ].toColumn(crossAxisAlignment: CrossAxisAlignment.start);
   }
 }

@@ -10,27 +10,26 @@ import '../../widget/static_style.dart';
 import 'controller.dart';
 
 class Device_card extends StatelessWidget {
-
   final DeviceController deviceController = Get.put(DeviceController());
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DeviceController>(
-            builder: (controller) =>
-                buildListView(controller.devices),
-          );
-
+      builder: (controller) => buildListView(controller.devices),
+    );
   }
 
   Widget buildListView(List<Device> devices) {
     return GetBuilder<DeviceController>(
-      init: DeviceController(), // Initialize your controller here if not done elsewhere
+      init:
+          DeviceController(), // Initialize your controller here if not done elsewhere
       initState: (_) {
         Get.find<DeviceController>().fetchDevices();
       },
       builder: (controller) {
         return ListView.builder(
-          itemCount: (devices.length / 2).ceil() + (devices.length.isEven ? 1 : 0),
+          itemCount:
+              (devices.length / 2).ceil() + (devices.length.isEven ? 1 : 0),
           itemBuilder: (context, rowIndex) {
             var startIndex = rowIndex * 2;
             var endIndex = startIndex + 2;
@@ -68,13 +67,17 @@ class Device_card extends StatelessWidget {
                         style: TextStyle(fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 3,),
+                      SizedBox(
+                        height: 3,
+                      ),
                       const Text(
                         '正式開始你的智慧生活!',
                         style: TextStyle(fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 5,),
+                      SizedBox(
+                        height: 5,
+                      ),
                       emptyCardWithButton,
                     ],
                   ),

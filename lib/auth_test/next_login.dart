@@ -29,16 +29,13 @@ class _NextLoginScreenState extends State<NextLoginScreen> {
     //   // ignore: use_build_context_synchronously
     //   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPostScreen(email)));
     // }
-    else if (response == 404)
-    {
+    else if (response == 404) {
       Future.delayed(Duration.zero, () {
         Get.to(() => RegisterPage(email));
-        
       });
     } else {
       Get.to(() => LoginPostScreen(email));
     }
-  
   }
 
   @override
@@ -109,7 +106,7 @@ class _NextLoginScreenState extends State<NextLoginScreen> {
                   padding: const EdgeInsets.all(0),
                 ),
                 onPressed: () {
-                   goToNext();
+                  goToNext();
                   //Get.to(() => LoginPostScreen(email));
                 },
                 child: const Text('下一步'),

@@ -1,3 +1,3 @@
-library pages;
+library schedule;
 
 export 'schedule/index.dart';

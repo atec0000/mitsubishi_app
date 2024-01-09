@@ -48,7 +48,6 @@ class SecureStorageService {
     await prefs.setString('user_pwd', pwd);
   }
 
-
   Future<String> getSavedFamily() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('user_family') ?? '';

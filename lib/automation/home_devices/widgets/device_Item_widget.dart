@@ -60,8 +60,8 @@ class DeviceItemWidget extends StatelessWidget {
 
     var tap = <Widget>[
       CupertinoSwitch(
-        value: isOn, 
-        onChanged: (isCheck)=>onSelect!(isCheck),    
+        value: isOn,
+        onChanged: (isCheck) => onSelect!(isCheck),
       ),
       const TextWidget.body1("編輯").paddingRight(5),
     ]
@@ -85,9 +85,7 @@ class DeviceItemWidget extends StatelessWidget {
         .onTap(() {
       if (onTap != null) {
         onTap?.call();
-      } else {
-        
-      }
+      } else {}
     });
   }
 
@@ -99,5 +97,4 @@ class DeviceItemWidget extends StatelessWidget {
       },
     );
   }
-  
 }

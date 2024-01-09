@@ -28,8 +28,8 @@ set newAirtemperatureValue(double value) {
 set AirtemperatureValue(int value) {
   _AirtemperatureValue = value;
 }
-class DataProcessing {
 
+class DataProcessing {
   void initCallback() {
     _tcpService.addResponseListener((response) {
       // AC Status response

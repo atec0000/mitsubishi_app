@@ -4,7 +4,6 @@ import 'package:mitsubishi_app/model/family.dart';
 
 import 'controller.dart';
 
-
 class FamilyView extends StatelessWidget {
   final FamilyController familyController = Get.put(FamilyController());
 
@@ -15,7 +14,7 @@ class FamilyView extends StatelessWidget {
         title: Text('Family Members'),
       ),
       body: Obx(
-            () => ListView.builder(
+        () => ListView.builder(
           itemCount: familyController.families.length,
           itemBuilder: (context, index) {
             Home family = familyController.families[index];
@@ -25,7 +24,6 @@ class FamilyView extends StatelessWidget {
       ),
     );
   }
-
 
   Widget buildFamilyCard(Home family) {
     return Card(

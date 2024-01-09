@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mitsubishi_app/common/index.dart';
 
-
 class GroupWidget extends StatelessWidget {
   ///設備列表
   //final List<ScheduleModel> scheduleList;
@@ -26,9 +25,9 @@ class GroupWidget extends StatelessWidget {
     this.onOpen,
     required this.isSelected,
     this.onSelect,
-  }): super(key: key);
+  }) : super(key: key);
 
-  Widget groupList(){
+  Widget groupList() {
     return <Widget>[
       Text('11'),
       Text('22'),
@@ -39,27 +38,30 @@ class GroupWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var groupTitle = <Widget>[
       <Widget>[
-        Icon((isOpen)? Icons.arrow_drop_up : Icons.arrow_drop_down)
-        .paddingLeft(10)
-        .onTap(() => onOpen!(!isOpen)),
+        Icon((isOpen) ? Icons.arrow_drop_up : Icons.arrow_drop_down)
+            .paddingLeft(10)
+            .onTap(() => onOpen!(!isOpen)),
         const TextWidget.body1("客廳").paddingLeft(5),
       ].toRow(),
-      
       <Widget>[
         const TextWidget.body1("群組開關").paddingRight(5),
         CupertinoSwitch(
-          value: isSelected, 
-          onChanged: (isCheck)=>onSelect!(isCheck),    
+          value: isSelected,
+          onChanged: (isCheck) => onSelect!(isCheck),
         ).paddingRight(10),
       ].toRow(),
-    ].toRow(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    ]
+        .toRow(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-    ).paddingBottom(5);
+        )
+        .paddingBottom(5);
 
-    return isOpen ? <Widget>[
-      groupTitle,
-      groupList(),
-      ].toColumn()
-      : groupTitle;
+    return isOpen
+        ? <Widget>[
+            groupTitle,
+            groupList(),
+          ].toColumn()
+        : groupTitle;
   }
 }

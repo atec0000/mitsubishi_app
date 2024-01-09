@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../service/api_service.dart';
 
-
-
-
 class MyCheckbox extends StatefulWidget {
   final String label;
   final bool isSelected;
@@ -15,7 +12,6 @@ class MyCheckbox extends StatefulWidget {
     required this.label,
     required this.onToggle,
     required this.isSelected,
-
   });
 
   @override
@@ -65,19 +61,19 @@ class _MyCheckboxState extends State<MyCheckbox> {
                                       Container(
                                         child: widget.isSelected
                                             ? const Icon(
-                                          Icons.check,
-                                          size: 30.0,
-                                          color: Colors.blue,
-                                        )
+                                                Icons.check,
+                                                size: 30.0,
+                                                color: Colors.blue,
+                                              )
                                             : null,
                                       ),
-                                       Text(
-                                          widget.label,
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      Text(
+                                        widget.label,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
                                         ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -117,5 +113,3 @@ class _MyCheckboxState extends State<MyCheckbox> {
     return otherCheckboxes;
   }
 }
-
-
