@@ -31,6 +31,7 @@ class GroupWidget extends StatelessWidget {
   Widget groupList(){
     return <Widget>[
       Text('11'),
+      Text('22'),
     ].toListView();
   }
 
@@ -55,7 +56,7 @@ class GroupWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
     ).paddingBottom(5);
 
-     return isOpen ? <Widget>[
+    return isOpen ? <Widget>[
       groupTitle,
       groupList(),
       ].toColumn()
